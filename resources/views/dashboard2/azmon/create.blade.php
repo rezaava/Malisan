@@ -1,0 +1,387 @@
+@extends('dashboard2.layout.app')
+
+@section('start')
+
+    <link href="{{("/style/assets/css/scrollspyNav.css")}}" rel="stylesheet" type="text/css"/>
+    <link href="{{("/style/plugins/bootstrap-select/bootstrap-select.min.css")}}" rel="stylesheet" type="text/css"/>
+
+
+    <link rel="stylesheet" href="https://unpkg.com/persian-datepicker@latest/dist/css/persian-datepicker.css">
+    <script src="https://unpkg.com/persian-date@latest/dist/persian-date.js"></script>
+    <script src="https://unpkg.com/persian-datepicker@latest/dist/js/persian-datepicker.js"></script>
+
+
+@endsection
+@section('main')
+
+    <div id="content" class="main-content">
+        {{--<div class="container">--}}
+
+        <div class="row layout-top-spacing">
+
+            @include('dashboard.layout.message')
+
+        </div>
+        <div class="row">
+
+
+            <div class="col-lg-12 col-12  layout-spacing">
+                <div class="statbox widget box box-shadow">
+                    <div class="widget-header">
+                        <div class="row">
+                            <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                <h4>
+                                    @if(isset($azmon))
+                                        ویرایش آزمون
+                                    @else
+                                        ایجاد آزمون
+                                    @endif
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget-content widget-content-area">
+                        <form method="post"
+                              action="@if(isset($azmon)){{'/dashboard/azmon/edit/'.$azmon->id}}@else{{'/dashboard/azmon/create'}}@endif"
+                              enctype="multipart/form-data">
+                            @csrf
+                            <div class="form-group ">
+                                <input type="text" class="form-control" id="formGroupExampleInput"
+                                       value="{{$course->id}}" name="id"
+                                       required
+                                       hidden
+                                >
+                            </div>
+                            <div class="form-group ">
+                                <label for="formGroupExampleInput">کد آزمون</label>
+                                <input type="text" class="form-control" id="formGroupExampleInput" disabled
+                                       value="@if(isset($azmon)){{$azmon->code}} @else {{$code}} @endif"
+                                >
+                            </div>
+
+                            <div class="form-group " hidden>
+                                <label for="formGroupExampleInput">کد آزمون</label>
+                                <input type="text" class="form-control" id="formGroupExampleInput" hidden
+                                       value="@if(isset($azmon)){{$azmon->code}} @else {{$code}} @endif" name="code"
+                                       required
+                                >
+                            </div>
+
+                            <div class="form-group ">
+                                <label for="formGroupExampleInput">عنوان آزمون</label>
+                                <input type="text" class="form-control" id="formGroupExampleInput"
+                                       placeholder="مثال : ریاضی"
+                                       value="@if(isset($azmon)){{$azmon->title}}@endif" name="title"
+                                       required
+                                >
+                            </div>
+                            <div class="form-group @if ($errors->has('text')) has-error @endif">
+                                <label>توضیحات (اختیاری )</label>
+                                <div class="input-group mb-3">
+                                    <div class="col-lg-12">
+                                                        <textarea class="form-control btn-square" name="description"
+                                                                  id="description">@if(isset($azmon)){!! $azmon->description !!}@endif</textarea>
+                                    </div>
+                                </div>
+                                <span class="text-danger" id="description"
+                                      style="color: red;">{{$errors->first('$session')}}</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label>سطح سوالات</label>
+                                <div class="input-group">
+                                    <div class="form-check">
+                                        <select class="selectpicker" title="یک گزینه را انتخاب کنید" name="sath">
+                                            <option selected value="3">عالی و خوب</option>
+                                            <option @if(isset($azmon)) @if($azmon->sath==2) selected
+                                                    @endif @endif value="2">خوب
+                                            </option>
+                                            <option @if(isset($azmon)) @if($azmon->sath==3) selected
+                                                    @endif @endif value="1">عالی
+                                            </option>
+                                            <option @if(isset($azmon)) @if($azmon->sath==4) selected
+                                                    @endif @endif value="4">سوالات ستاره دار شده
+                                            </option>
+                                            <option @if(isset($azmon)) @if($azmon->sath==5) selected
+                                                    @endif @endif value="5">فقط سوالات استاد
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group ">
+                                <label>جلسات</label>
+                                <div class="input-group">
+                                    <div class="form-check">
+                                        <select name="sessions[]" class="selectpicker" multiple data-actions-box="true"
+                                                required>
+
+                                            @foreach($sessions as $session)
+                                                <option value="{{$session->id}}"
+                                                        @if(isset($ss[$session->id])) selected @endif >{{$session->name}}</option>
+
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>تعداد سوالات</label>
+                                <div class="input-group">
+                                    <input
+                                            required
+                                            type="number"
+                                            name="num"
+                                            class="form-control rtl"
+                                            @if(isset($azmon)) value="{{$azmon->num}}" @else value="10" @endif
+                                    >
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>زمان بندی</label>
+                            </div>
+                            {{--//start--}}
+                            <div class="form-group">
+
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">شروع</span>
+                                    </div>
+                                    <input
+                                            placeholder="زمان شروع را مشخص کنید" name="start"
+                                            {{--@if(!$edit) disabled @endif--}}
+                                            class="normal-example form-control example1"
+                                            value=@if(isset($azmon)) @if($azmon->start) {{$azmon->start}}  @endif @endif
+                                    >
+                                </div>
+                                @if ($errors->any()&& $errors->first('birthdate'))
+                                    <p class="mt-2 text-danger mr-1">{{$errors->first('birthdate')}}</p>
+                            @endif
+                            <!-- /.input group -->
+                            </div>
+                            {{--//end--}}
+                            <div class="form-group">
+
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">پایان</span>
+                                    </div>
+                                    <input
+                                            placeholder="زمان پایان را مشخص کنید" name="end"
+                                            {{--@if(!$edit) disabled @endif--}}
+                                            class="normal-example form-control example1"
+                                            value=@if(isset($azmon)) @if($azmon->end) {{$azmon->end}}  @endif @endif
+                                    >
+                                </div>
+                                @if ($errors->any()&& $errors->first('birthdate'))
+                                    <p class="mt-2 text-danger mr-1">{{$errors->first('birthdate')}}</p>
+                            @endif
+                            <!-- /.input group -->
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>زمان امتحان به دقیقه</label>
+                                <div class="input-group">
+                                    <input
+                                            required
+                                            type="number"
+                                            name="time"
+                                            class="form-control rtl"
+                                            @if(isset($azmon)) value="{{$azmon->time}}" @else value="60" @endif
+                                    >
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>شیوه دسترسی</label>
+                                {{--<div class="input-group">--}}
+                                {{--<div class="form-check">--}}
+                                {{--<select class="selectpicker" title="یک گزینه را انتخاب کنید" name="sath">--}}
+                                {{--<option selected value="1">عالی</option>--}}
+                                {{--<option @if(0) selected @endif value="1">عالی</option>--}}
+                                {{--<option @if(0) selected @endif value="2">خوب</option>--}}
+                                {{--<option @if(0) selected @endif value="3">عالی و خوب</option>--}}
+                                {{--<option @if(0) selected @endif value="4">سوالات ستاره دار شده</option>--}}
+                                {{--<option @if(0) selected @endif value="5">فقط سوالات استاد</option>--}}
+                                {{--</select>--}}
+                                {{--</div>--}}
+                                {{--</div>--}}
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="form-check">
+                                        <input type="checkbox" name="show_nomre"
+                                               class="form-check-input"
+                                               id="exampleCheck1"
+                                               @if(isset($azmon)) @if($azmon->show_nomre==1) checked @endif @endif
+                                        >
+
+                                    </div>
+                                    <label>نمره آزمون به دانشجو نشان داده شود.</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="form-check">
+                                        <input type="checkbox" name="show_ans"
+                                               class="form-check-input"
+                                               id="exampleCheck1"
+                                               @if(isset($azmon)) @if($azmon->show_ans==1) checked @endif @endif
+                                        >
+
+                                    </div>
+                                    <label>پاسخ سوالات به دانشجو نشان داده شود.</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="form-check">
+                                        <input type="checkbox" name="changeable"
+                                               class="form-check-input"
+                                               id="exampleCheck1"
+                                               @if(isset($azmon)) @if($azmon->changeable==1) checked @endif @endif
+                                        >
+
+                                    </div>
+                                    <label>دانشجو امکان اینکه پاسخش را تغییر دهد داشته باشد</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="form-check">
+                                        <input type="checkbox" name="show_remain"
+                                               class="form-check-input"
+                                               id="exampleCheck1"
+                                               @if(isset($azmon)) @if($azmon->show_remain==1) checked @endif @endif
+                                        >
+
+                                    </div>
+                                    <label>نمایش زمان باقیمانده آزمون به دانشجو</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="form-check">
+                                        <input type="checkbox" name="show_state"
+                                               class="form-check-input"
+                                               id="exampleCheck1"
+                                               @if(isset($azmon)) @if($azmon->show_state==1) checked @endif @endif
+                                        >
+
+                                    </div>
+                                    <label>نمایش موقعیت سوال درحال پاسخگویی به دانشجو</label>
+                                </div>
+                            </div>
+
+
+                            <input type="submit"
+                                   value=" @if(isset($azmon))
+                                           بروزرسانی
+@else
+                                           ایجاد
+                                           @endif"
+                                   class="btn btn-primary">
+                            @if(isset($azmon))
+                                <a href="{{'/dashboard/azmon/delete/'.$azmon->id}}" class="btn btn-danger">
+                                حذف آزمون
+                                </a>
+                            @endif
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        {{--</div>--}}
+        @include('dashboard2.layout.footer')
+
+    </div>
+
+
+@endsection
+
+@section('end')
+
+    <script src="{{("/style/assets/js/scrollspyNav.js")}}"></script>
+
+    <script src="{{asset('/cuba-style/assets/ckeditor/ckeditor.js')}}"></script>
+    <script>
+        CKEDITOR.replace('description', {
+            filebrowserUploadUrl: '/admin/panel/upload-image',
+            filebrowserImageUploadUrl: '/admin/panel/upload-image'
+        });
+        CKEDITOR.config.toolbar = [
+            ['Styles', 'Format', 'Font', 'FontSize'],
+            '/',
+            ['Bold', 'Italic', 'Underline', 'StrikeThrough', '-', 'Undo', 'Redo', '-', 'Cut', 'Copy', 'Paste', 'Find', 'Replace', '-', 'Outdent', 'Indent', '-', 'Print'],
+            '/',
+            ['NumberedList', 'BulletedList', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'],
+            ['Table', '-', 'Link', 'Smiley', 'TextColor', 'BGColor']
+        ];
+        // CKEDITOR.config.setDirectionMarker('rtl');
+        CKEDITOR.config.contentsLangDirection = 'rtl';
+
+        CKEDITOR.replace('text', {
+            filebrowserUploadUrl: '/admin/panel/upload-image',
+            filebrowserImageUploadUrl: '/admin/panel/upload-image'
+        });
+
+        $(document).ready(function () {
+            $('#categories').select2();
+        });
+        $(document).ready(function () {
+            $('#tags').select2();
+        });
+    </script>
+
+    <script src="{{("/style/plugins/bootstrap-select/bootstrap-select.min.js")}}"></script>
+    <script src="{{("/style/assets/js/components/ui-accordions.js")}}"></script>
+
+
+
+
+    {{--<script type="text/javascript">--}}
+    {{--$(document).ready(function () {--}}
+    {{--$(".datapicker").pDatepicker({--}}
+    {{--format: 'YYYY/MM/DD ',--}}
+    {{--});--}}
+    {{--$("#form").submit(function () {--}}
+    {{--$("#factories").prop('disabled', true);--}}
+    {{--return true;--}}
+    {{--});--}}
+    {{--});--}}
+
+    {{--</script>--}}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".example1").persianDatepicker({
+                    format: 'YYYY/MM/DD HH:mm',
+                    responsive: true,
+                    timePicker: {
+                        enabled: true,
+                        meridiem: {
+                            enabled: true
+                        }
+                    },
+                    toolbox: {
+                        submitButton: {
+                            enabled: true
+                        }
+                    }
+                }
+            );
+        });
+    </script>
+@endsection

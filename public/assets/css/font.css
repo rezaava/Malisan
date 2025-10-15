@@ -1,0 +1,12 @@
+@font-face {
+  font-family: "diroz";
+  src: url("https://chubeen.ir/wp-content/themes/phlox-pro/css/fonts/fonts/Dirooz-FD.eot"); /* IE9 Compat Modes */
+  src: url("https://chubeen.ir/wp-content/themes/phlox-pro/css/fonts/fonts/Dirooz-FD.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+    url("https://chubeen.ir/wp-content/themes/phlox-pro/css/fonts/fonts/Dirooz-FD.otf") format("opentype"), /* Open Type Font */
+    url("https://chubeen.ir/wp-content/themes/phlox-pro/css/fonts/fonts/Dirooz-FD.svg") format("svg"), /* Legacy iOS */
+    url("https://chubeen.ir/wp-content/themes/phlox-pro/css/fonts/fonts/Dirooz-FD.ttf") format("truetype"), /* Safari, Android, iOS */
+    url("https://chubeen.ir/wp-content/themes/phlox-pro/css/fonts/fonts/Dirooz-FD.woff") format("woff"), /* Modern Browsers */
+    url("https://chubeen.ir/wp-content/themes/phlox-pro/css/fonts/fonts/Dirooz-FD.woff2") format("woff2"); /* Modern Browsers */
+  font-weight: normal;
+  font-style: normal;
+}
