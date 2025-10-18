@@ -27,19 +27,22 @@ class AuthController extends Controller
     }
     public function loginpost(Request $request)
     {
-
+  
+        $user = User::where('national', $request->national)->first();
+        
         //            teacher
         $user = User::where('national', $request->national)->where('role', 2)->first();
         if ($user && Hash::check($request->password, $user->password)) {
             Auth::login($user);
             return redirect()->route('dashboard');
         }
+ 
         //            student
         $user = User::where('national', $request->national)->where('role', 3)->first();
         if ($user && Hash::check($request->password, $user->password)) {
             Auth::login($user);
             $courses = $user->courses()->pluck('course_id');
-           
+
             $teacherCourses = CourseUser::where('role_id', '2')->whereIn('course_id', $courses)->pluck('user_id');
             return $teacherCourses;
             foreach ($teacherCourses as $item) {
@@ -72,6 +75,7 @@ class AuthController extends Controller
             Auth::login($user);
             return redirect()->route('dashboard');
         }
+  
         return back()->with('error', 'نام کاربری یا کلمه عبور صحیح نمی باشد');
 
 
@@ -173,7 +177,7 @@ class AuthController extends Controller
                     return redirect()->back()->with('danger', 'تکراری است');
             }
         }
-    
+
         $user = new User();
         $user->name = $request->name;
         $user->family = $request->family;
@@ -181,7 +185,7 @@ class AuthController extends Controller
         $user->mobile = $request->mobile;
         $user->password = bcrypt($request->password);
         $user->save();
-   
+
         if ($request->type == '2') {
             $user->role = 2;
             $user->save();

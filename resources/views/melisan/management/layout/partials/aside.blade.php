@@ -50,7 +50,7 @@
         @endif
 
 
-        @if($user->hasRole('teacher') || $content)
+        @elseif($user->hasRole('teacher') || $content)
             <li class="bold">
                 <a class="waves-effect waves-cyan " href="/dashboard/konkor">
                     <i  class="material-icons">content_paste</i>

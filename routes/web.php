@@ -15,7 +15,7 @@ use App\Http\Controllers\site\AuthController;
 use App\Http\Controllers\site\CourseController;
 use App\Http\Controllers\site\UserController;
 use App\Http\Controllers\site\DashboardController;
-
+use App\Http\Controllers\site\LayoutController;
 
 //use Illuminate\Support\Facades\Route;
 
@@ -45,8 +45,6 @@ Route::get('/reg', [AuthController::class, 'reg'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 Route::get('/global', [AuthController::class, 'reg'])->name('global');
 Route::post('/survey-answer', [AuthController::class, 'Survey'])->name('survey.answer');
-
-
 
 
 Route::group(['namespace' => 'Dashboard'], function () {
