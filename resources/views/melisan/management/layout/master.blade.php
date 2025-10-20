@@ -1,20 +1,8 @@
 <!DOCTYPE html>
-<!--
-Template Name: Materialize - Material Design Admin Template
-Author: PixInvent
-Website: http://www.pixinvent.com/
-Contact: hello@pixinvent.com
-Follow: www.twitter.com/pixinvents
-Like: www.facebook.com/pixinvents
-Purchase: https://themeforest.net/item/materialize-material-design-admin-template/11446068?ref=pixinvent
-Renew Support: https://themeforest.net/item/materialize-material-design-admin-template/11446068?ref=pixinvent
-License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
 
--->
-<html class="loading" lang="en" data-textdirection="rtl">
-<!-- BEGIN: Head-->
+<html class="loading" lang="En" data-textdirection="rtl">
 
-<head>
+<header>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="author" content="Reza avareh">
@@ -26,9 +14,9 @@ License: You must have a valid license purchased only from themeforest(the above
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('files/main.png') }}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- BEGIN: VENDOR CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/vendors.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('all-css/app-assets/vendors.min.css') }}">
     <!-- END: VENDOR CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css-rtl/style-rtl.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('all-css/app-assets/style-rtl.min.css') }}">
     <!-- BEGIN: Page Level CSS-->
     <link rel="stylesheet" type="text/css"
         href="{{ asset('app-assets/css-rtl/themes/vertical-menu-nav-dark-template/materialize.min.css') }}">
@@ -49,10 +37,10 @@ License: You must have a valid license purchased only from themeforest(the above
     data-menu="vertical-modern-menu" data-col="2-columns">
 
     <!-- BEGIN: Header-->
-    @include('management.layout.partials.top-header')
+    @include('melisan.management.layout.partials.top-header')
     <!-- END: Header-->
     <!-- BEGIN: SideNav-->
-    @include('management.layout.partials.aside')
+    @include('melisan.management.layout.partials.aside')
     <!-- END: SideNav-->
 
     <!-- BEGIN: Page Main-->

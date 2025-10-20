@@ -1,15 +1,15 @@
 <?php
 
 
-use App\Http\Controllers\Api\TourController;
+// use App\Http\Controllers\Api\TourController;
 
-use App\Http\Controllers\Api\QuestionController;
+// use App\Http\Controllers\Api\QuestionController;
 // use App\Http\Controllers\Auth\AuthController;
 // use App\Http\Controllers\Dashboard\DashboardController;
-use App\Http\Controllers\Dashboard\EvaluationController;
-use App\Http\Controllers\Dashboard\SessionController;
-use App\Http\Controllers\Dashboard\SurveyController;
-use App\Http\Controllers\FooController;
+// use App\Http\Controllers\Dashboard\EvaluationController;
+// use App\Http\Controllers\Dashboard\SessionController;
+// use App\Http\Controllers\Dashboard\SurveyController;
+// use App\Http\Controllers\FooController;
 //////////////////////
 use App\Http\Controllers\site\AuthController;
 use App\Http\Controllers\site\CourseController;
@@ -39,7 +39,7 @@ use App\Http\Controllers\site\LayoutController;
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'loginpost'])->name('loginpost');
-
+ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/ref', [AuthController::class, 'ref'])->name('ref');
 Route::get('/reg', [AuthController::class, 'reg'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
@@ -47,9 +47,11 @@ Route::get('/global', [AuthController::class, 'reg'])->name('global');
 Route::post('/survey-answer', [AuthController::class, 'Survey'])->name('survey.answer');
 
 
-Route::group(['namespace' => 'Dashboard'], function () {
-    Route::get('dashboard/actuality', [UserController::class, 'findActuality']);
-});
+
+
+// Route::group(['namespace' => 'Dashboard'], function () {
+//     Route::get('dashboard/actuality', [UserController::class, 'findActuality']);
+// });
 
 Route::middleware('auth')->group(function () {
 

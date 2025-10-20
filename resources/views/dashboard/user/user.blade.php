@@ -1,9 +1,9 @@
 @extends('dashboard.layout.app')
 @section('title','صفحه نمایش دوره')
 @push('css')
-    <link rel="stylesheet" type="text/css" href="{{asset('/cuba-style/assets/css/datatables.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('/cuba-style/assets/css/style.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('/cuba-style/assets/css/owlcarousel.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('all-css/datatables.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('all-css/style.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('all-css/owlcarousel.css')}}">
 
 @endpush
 @section('content')

@@ -10,35 +10,35 @@
         data-menu="menu-navigation" data-collapsible="menu-accordion">
         <li class="bold">
             <a class="waves-effect waves-cyan active mt-5" href="{{ route('dashboard') }}">
-            <i class="material-icons">settings_input_svideo</i>
-                    <span class="menu-title"   data-i18n="Mail">میزکار</span>
-                </a>
+                <i class="material-icons">settings_input_svideo</i>
+                <span class="menu-title" data-i18n="Mail">میزکار</span>
+            </a>
         </li>
 
         @if($user->hasRole('content') || 1)
             <li class="bold">
                 <a class="waves-effect waves-cyan " href="{{ route('course.list') }}">
-                <i class="material-icons">format_list_bulleted</i>
-                <span class="menu-title" data-i18n="Chat">درس های  من</span>
-               </a>
+                    <i class="material-icons">format_list_bulleted</i>
+                    <span class="menu-title" data-i18n="Chat">درس های من</span>
+                </a>
             </li>
         @endif
 
-      
+
         <li class="bold">
             <a class="waves-effect waves-cyan " href="{{ route('publics') }}">
-            <i  class="material-icons">dvr</i>
-            <span class="menu-title" data-i18n="Contacts">دوره های ملیسان</span>
-                </a>
+                <i class="material-icons">dvr</i>
+                <span class="menu-title" data-i18n="Contacts">دوره های ملیسان</span>
+            </a>
         </li>
 
         <li class="bold">
             <a class="waves-effect waves-cyan " href="{{ route('konkors') }}">
-            <i  class="material-icons dp48">event_available</i>
-            <span class="menu-title" data-i18n="Calendar">آزمون  ها</span>
-           </a>
+                <i class="material-icons dp48">event_available</i>
+                <span class="menu-title" data-i18n="Calendar">آزمون ها</span>
+            </a>
         </li>
-      
+
         @if($user->hasRole('content'))
             <li class="bold">
                 <a class="waves-effect waves-cyan " href="/dashboard/survey/cats">
@@ -53,9 +53,9 @@
         @if($user->hasRole('teacher') || $content)
             <li class="bold">
                 <a class="waves-effect waves-cyan " href="/dashboard/konkor">
-                    <i  class="material-icons">content_paste</i>
-                    <span class="menu-title" data-i18n="File Manager"> تولید  محتوا</span>
-                    </a>
+                    <i class="material-icons">content_paste</i>
+                    <span class="menu-title" data-i18n="File Manager"> تولید محتوا</span>
+                </a>
             </li>
         @endif
 
@@ -64,8 +64,8 @@
         <li class="bold">
             <a class="waves-effect waves-cyan " href="{{ route('baroms') }}">
                 <i class="material-icons">border_all</i>
-                    <span class="menu-title" data-i18n="File Manager"> بارم   بندی</span>
-                </a>
+                <span class="menu-title" data-i18n="File Manager"> بارم بندی</span>
+            </a>
         </li>
         <li class="bold"><a class="waves-effect waves-cyan " href="{{ route('angizesh') }}"><i
                     class="material-icons">receipt</i>

@@ -14,9 +14,10 @@ use App\Models\Touradmin;
 use App\Models\Touruser;
 use App\Models\User;
 use App\Models\Coworker;
-use Illuminate\Support\Facades\Auth;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+
 
 
 
@@ -29,41 +30,27 @@ class DashboardController extends Controller
         $content = Coworker::where('user_id', $user->id)->first();
         $aneto = null;
         $angizesh = Angizesh::whereIn('level', [7, 8])->inRandomOrder()->first();
-
-        // $mosabeghat = Touradmin::where('user_id', $user->id)->count();
         $mosabeghat = Touruser::where('user_id', $user->id)->count();
 
-        // return $angizesh;
-
-        if ($user->hasRole('student')) {
-                $user2 = User::where('national', $user->national)->where('role', 1)->first();
-      
-            return view('melisan/dashbord/user/students/dashboard/index', compact('user', 'angizesh', 'content', ))
+        if ($user->role=3) {
+            $user2 = User::where('national', $user->national)->where('role', 2)->first();
+            return view('melisan.dashbord.user.index', compact('user', 'user2', 'angizesh', 'content', 'mosabeghat'))
                 ->with([
                     'pageTitle' => 'صفحه دانشجو',
                     'pageName' => 'دانشجو',
                     'pageDescription' => '    خوش امدید',
                 ]);
-        } elseif ($user->hasRole('touradmin')) {
-            $mosabeghat = Touradmin::where('user_id', $user->id)->count();
-        } 
-        elseif ($user->hasRole('teacher'))
-             {
- 
-                $user2 = User::where('national', $user->national)->where('role', 2)->first();
-           
-        } elseif ($user->hasRole('student')) {
-            
-                $user2 = User::where('national', $user->national)->where('role', 1)->first();
-          
-        }
-        else {
-            return view('melisan/dashbord/user/teachers/dashboard/index', compact('user', 'aneto', 'angizesh', 'content'))
+        } elseif ($user->role=2) {
+        //  return 'test';
+            $user2 = User::where('national', $user->national)->where('role', 3)->first();
+            return view('melisan.dashbord.user.index', compact('user', 'user2', 'aneto', 'angizesh', 'content', 'mosabeghat'))
                 ->with([
                     'pageTitle' => 'صفحه مدرس',
                     'pageName' => 'مدرس',
                     'pageDescription' => ' خوش امدید',
                 ]);
+        } elseif ($user->hasRole('touradmin')) {
+            $mosabeghat = Touradmin::where('user_id', $user->id)->count();
         }
     }
     /////////////////////////////////////////////////////////////////////////

@@ -78,50 +78,6 @@ class AuthController extends Controller
   
         return back()->with('error', 'نام کاربری یا کلمه عبور صحیح نمی باشد');
 
-
-        //            $user = User::where('national', $request->national)->first();
-//
-//            if ($user && Hash::check($request->password, $user->password)) {
-//                Auth::login($user);
-//
-//                if ($user->hasRole('student')) {
-//                    $courses = $user->courses()->pluck('course_id');
-//                    $teacherCourses = CourseUser::where('role_id', '2')->whereIn('course_id', $courses)->pluck('user_id');
-//                    foreach ($teacherCourses as $item) {
-//                        $item = -$item;
-//                    }
-//                    $answers = OptionUser::where('user_id', $user->id)->pluck('survey_id');
-//                    $surveys = Survey::where(function ($query) use ($courses, $teacherCourses) {
-//                        $query->whereIn('group', $courses)->orWhere('group', '0')->orWhereIn('user_id', $teacherCourses);
-//                    })->whereNotIn('id', $answers)->where('active', '1')->get();
-//                    if (count($surveys)) {
-//                        $random = $surveys->random();
-//                        if ($random->type != '1') {
-//                            $options = Option::where('survey_id', $random->id)->get();
-//                            $random['options'] = $options;
-//                        }
-//                        return view('management.users.students.servays.survays', compact('random', 'user'))
-//                            ->with([
-//                                'pageTitle' => 'صفحه نظرسنجی',
-//                                'pageName' => 'نظرسنجی',
-//                                'pageDescription' => 'دوست من ! این یه فرم نظرسنجیه لطفا با دقت جواب بده',
-//                            ]);
-//                    } else {
-////                        Auth::login($user);
-//                        return redirect('/dashboard/courses/list');
-//                    }
-//                }
-//                Auth::login($user);
-//                return redirect()->route('dashboard');
-////                return redirect('/dashboard/courses/list');
-//            } else {
-//                return back()->with('error', 'نام کاربری یا کلمه عبور صحیح نمی باشد');
-//            }
-
-
-        // } else {
-        //     return abort('404');
-        // }
     }
 
 
@@ -130,10 +86,10 @@ class AuthController extends Controller
         $users = User::all();
         foreach ($users as $user) {
             if ($user->hasRole('student')) {
-                $user->role = 2;
+                $user->role = 3;
                 $user->save();
             } elseif ($user->hasRole('teacher')) {
-                $user->role = 1;
+                $user->role = 2;
                 $user->save();
             }
         }
@@ -201,6 +157,11 @@ class AuthController extends Controller
         Auth::login($user);
         return redirect('/dashboard/courses/list');
 
+    }
+   public function logout()
+    {
+        Auth::logout();
+        return redirect('login');
     }
 
 }
