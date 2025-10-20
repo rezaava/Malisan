@@ -108,6 +108,7 @@
                     class="material-icons">chat_bubble_outline</i><span class="menu-title" data-i18n="File Manager">
                     مکالمات</span></a>
         </li>
+        
         @if($user->hasRole('teacher'))
 
             @if($user2)
@@ -117,6 +118,8 @@
                 </li>
             @endif
         @endif
+
+
         @if($user->hasRole('student'))
 
             @if($user2)

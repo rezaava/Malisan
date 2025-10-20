@@ -11,7 +11,7 @@ use Laratrust\Contracts\LaratrustUser;
 use Laratrust\Traits\HasRolesAndPermissions;
 use Illuminate\Support\Facades\Cache;
 // use App\Models\Shop;
-
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements LaratrustUser
 {

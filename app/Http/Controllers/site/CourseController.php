@@ -30,41 +30,30 @@ use Illuminate\Support\Str;
 class CourseController extends Controller
 {
     //
-      public function list(Request $request)
+    public function list()
     {
         $user = Auth::user();
+        // $courses = $user->courses()->get();
         if ($user->hasRole('teacher')) {
 
             $courses = $user->courses()->get();
+            foreach ($courses as $course) {
+                $teacher = $course->users()->where('role_id', '2')->pluck('user_id');
+                $course['teacher'] = User::findOrFail($teacher)->first();
+            }
         } elseif ($user->hasRole('student')) {
-
+            // active درس های فعال
             $courses = $user->courses()->where('active', '1')->get();
-        }
-        $teacher_role = Role::where("name", "teacher")->pluck('id');
-        $student_role = Role::where("name", "student")->pluck('id');
+            foreach ($courses as $course) {
+                $students = $course->users()->where('role_id', '3')->count();
+                $course['students'] = $students;
+            }
 
-        foreach ($courses as $course) {
-            $teacher = $course->users()->where('role_id', $teacher_role)->pluck('user_id');
-            $course['teacher'] = User::findOrFail($teacher)->first();
-
-            $students = $course->users()->where('role_id', $student_role)->count();
-            $course['students'] = $students;
         }
 
-
-        // return response()->json(
-        //     [
-        //         'status' => 'ok',
-        //         'message' => 'لیست دروس',
-        //         'courses' => $courses,
-        //     ],
-        //     200,
-        //     array('Content-Type' => 'application/json; charset=utf-8'),
-        //     JSON_UNESCAPED_UNICODE
-        // );
-        //            }
+        return view('melisan.management.courses.index', compact('courses','user'));
     }
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function progress(Request $request)
     {
         // $course = Course::findOrFail($request->course_id);
@@ -320,7 +309,7 @@ class CourseController extends Controller
     }
 
 
-  
+
     public function course(Request $request, $id)
     {
         $course = Course::findOrFail($id);

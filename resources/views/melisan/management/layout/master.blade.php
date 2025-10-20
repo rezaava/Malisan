@@ -6,7 +6,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="author" content="Reza avareh">
+
     <title>ملیسان | @yield('title')</title>
+    
     <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
 
@@ -19,16 +21,16 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('all-css/app-assets/style-rtl.min.css') }}">
     <!-- BEGIN: Page Level CSS-->
     <link rel="stylesheet" type="text/css"
-        href="{{ asset('app-assets/css-rtl/themes/vertical-menu-nav-dark-template/materialize.min.css') }}">
+        href="{{ asset('all-css/app-assets/css-rtl/themes/vertical-menu-nav-dark-template/materialize.min.css') }}">
     <link rel="stylesheet" type="text/css"
-        href="{{ asset('app-assets/css-rtl/themes/vertical-menu-nav-dark-template/style.min.css') }}">
+        href="{{ asset('all-css/app-assets/css-rtl/themes/vertical-menu-nav-dark-template/style.min.css') }}">
     <!-- END: Page Level CSS-->
     <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css-rtl/custom/custom.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('all-css/app-assets/css-rtl/custom/custom.css') }}">
     <!-- END: Custom CSS-->
-    <link rel="stylesheet" href="{{ asset('app-assets/css-rtl/custom/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('all-css/app-assets/css-rtl/custom/style.css') }}">
     {{-- here For Add Specify Page Styles --}}
-    <link rel="stylesheet" href="{{ asset('app-assets/css/custom/my-style.css') }}">
+    <link rel="stylesheet" href="{{ asset('all-css/app-assets/css/custom/my-style.css') }}">
     @yield('add-styles')
 </head>
 <!-- END: Head-->
@@ -47,7 +49,7 @@
     <div id="main">
         <div class="row">
             <!-- bread crumbs-->
-            @include('management.layout.partials.page-detial')
+            @include('melisan.management.layout.partials.page-detial')
             <div class="col s12">
                 <div class="container">
 

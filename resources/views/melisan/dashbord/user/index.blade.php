@@ -63,13 +63,13 @@
                                          <p>درس ها</p>
                                      </div>
                                      <div class="col s5 m5 right-align">
-                                         <h5 class="mb-0 white-text">{{\Illuminate\Support\Facades\Auth::user()->courses()->count()}}</h5>
+                                    
                                          <p class="no-margin">درس فعال</p>
 
                                      </div>
                                  </div>
                              </a>
-                             @if(\Illuminate\Support\Facades\Auth::user()->hasRole('teacher'))
+                             @if($user->hasRole('teacher'))
                              <div class="col s12 m6 l3 card-width">
                                  <div class="card row  gradient-45deg-purple-light-blue gradient-shadow white-text padding-4 mt-5">
                                      <div class="col s7 m7 text-center">

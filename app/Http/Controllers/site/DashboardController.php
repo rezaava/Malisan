@@ -32,7 +32,7 @@ class DashboardController extends Controller
         $angizesh = Angizesh::whereIn('level', [7, 8])->inRandomOrder()->first();
         $mosabeghat = Touruser::where('user_id', $user->id)->count();
 
-        if ($user->role=3) {
+        if ($user->hasRole('teacher')) {
             $user2 = User::where('national', $user->national)->where('role', 2)->first();
             return view('melisan.dashbord.user.index', compact('user', 'user2', 'angizesh', 'content', 'mosabeghat'))
                 ->with([
@@ -40,7 +40,7 @@ class DashboardController extends Controller
                     'pageName' => 'دانشجو',
                     'pageDescription' => '    خوش امدید',
                 ]);
-        } elseif ($user->role=2) {
+        } elseif ($user->hasRole('student')) {
         //  return 'test';
             $user2 = User::where('national', $user->national)->where('role', 3)->first();
             return view('melisan.dashbord.user.index', compact('user', 'user2', 'aneto', 'angizesh', 'content', 'mosabeghat'))

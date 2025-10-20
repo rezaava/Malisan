@@ -54,7 +54,7 @@ Route::post('/survey-answer', [AuthController::class, 'Survey'])->name('survey.a
 // });
 
 Route::middleware('auth')->group(function () {
-
+    Route::get('/change', 'AuthController@change')->name('change');
         Route::group(['namespace' => 'Dashboard'], function () {
             Route::get('/active', [CourseController::class, 'active'])->name('rotbe');
             Route::get('/publics', [CourseController::class, 'publics'])->name('publics');
