@@ -93,7 +93,6 @@
                                      <div class="col s5 m5 right-align">
                                          <h5 class="mb-0 white-text">80</h5>
                                          <p class="no-margin">دوره در حال برگزاری</p>
-
                                      </div>
                                  </div>
                              </a>

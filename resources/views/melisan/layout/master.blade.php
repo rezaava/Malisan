@@ -10,27 +10,27 @@
     <title>ملیسان | @yield('title')</title>
     
     <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+    <link rel="stylesheet"  href="{{ asset('all-css/app-assets/vendors.min.css') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
 
     <link rel="apple-touch-icon" href="{{ asset('files/main.png') }}">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('files/main.png') }}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- BEGIN: VENDOR CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('all-css/app-assets/vendors.min.css') }}">
     <!-- END: VENDOR CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('all-css/app-assets/style-rtl.min.css') }}">
     <!-- BEGIN: Page Level CSS-->
+    <link rel="stylesheet"  href="{{ asset('all-css/custom.css') }}">
     <link rel="stylesheet" type="text/css"
-        href="{{ asset('all-css/app-assets/css-rtl/themes/vertical-menu-nav-dark-template/materialize.min.css') }}">
+        href="{{ asset('all-css/materialize.min.css') }}">
     <link rel="stylesheet" type="text/css"
-        href="{{ asset('all-css/app-assets/css-rtl/themes/vertical-menu-nav-dark-template/style.min.css') }}">
+        href="{{ asset('all-css/style.min.css') }}">
     <!-- END: Page Level CSS-->
     <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('all-css/app-assets/css-rtl/custom/custom.css') }}">
     <!-- END: Custom CSS-->
-    <link rel="stylesheet" href="{{ asset('all-css/app-assets/css-rtl/custom/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('all-css/style.css') }}">
     {{-- here For Add Specify Page Styles --}}
-    <link rel="stylesheet" href="{{ asset('all-css/app-assets/css/custom/my-style.css') }}">
+    <link rel="stylesheet" href="{{ asset('all-css/my-style.css') }}">
     @yield('add-styles')
 </head>
 <!-- END: Head-->
@@ -39,17 +39,17 @@
     data-menu="vertical-modern-menu" data-col="2-columns">
 
     <!-- BEGIN: Header-->
-    @include('melisan.management.layout.partials.top-header')
+    @include('melisan.layout.partials.top-header')
     <!-- END: Header-->
     <!-- BEGIN: SideNav-->
-    @include('melisan.management.layout.partials.aside')
+    @include('melisan.layout.partials.aside')
     <!-- END: SideNav-->
 
     <!-- BEGIN: Page Main-->
     <div id="main">
         <div class="row">
             <!-- bread crumbs-->
-            @include('melisan.management.layout.partials.page-detial')
+            @include('melisan.layout.partials.page-detial')
             <div class="col s12">
                 <div class="container">
 
