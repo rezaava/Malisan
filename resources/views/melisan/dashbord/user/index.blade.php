@@ -1,4 +1,4 @@
-@extends('melisan.management.layout.master')
+@extends('melisan.layout.master')
 @section('add-styles')
 <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
