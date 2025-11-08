@@ -120,10 +120,6 @@ class AuthController extends Controller
 
 
 
-    public function test(Request $request)
-    {
-        return $this->sms("ok", "09133934677");
-    }
 
     public function sms($msg, $rec)
     {

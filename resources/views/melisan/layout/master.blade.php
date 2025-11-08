@@ -23,40 +23,48 @@
     {{-- here For Add Specify Page Styles --}}
     <link rel="stylesheet" href="{{ asset('all-css/my-style.css') }}">
     @yield('add-styles')
+<!-- Boxicons -->
+<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
     </head>
+
     <body class="vertical-layout vertical-menu-collapsible page-header-dark vertical-modern-menu 2-columns"
         data-open="click" data-menu="vertical-modern-menu" data-col="2-columns">
+        <div class="container">
+            <!-- BEGIN: Header-->
+            @include('melisan.layout.partials.top-header')
+            <!-- END: Header-->
+            <!-- BEGIN: SideNav-->
+            @include('melisan.layout.partials.aside')
+            <!-- END: SideNav-->
 
-        <!-- BEGIN: Header-->
-        @include('melisan.layout.partials.top-header')
-        <!-- END: Header-->
-        <!-- BEGIN: SideNav-->
-        @include('melisan.layout.partials.aside')
-        <!-- END: SideNav-->
+            <!-- BEGIN: Page Main-->
+            <div id="main">
+                <div class="row">
+                    <!-- bread crumbs-->
+                    @include('melisan.layout.partials.page-detial')
+                    <div class="col s12">
+                        <div class="container">
 
-        <!-- BEGIN: Page Main-->
-        <div id="main">
-            <div class="row">
-                <!-- bread crumbs-->
-                @include('melisan.layout.partials.page-detial')
-                <div class="col s12">
-                    <div class="container">
+                            @yield('main-content')
 
-                        @yield('main-content')
-
+                        </div>
                     </div>
                 </div>
-            </div> 
-            <footer
-                class="page-footer footer footer-static footer-dark gradient-45deg-purple-deep-orange gradient-shadow navbar-border navbar-shadow">
-                <div class="footer-copyright">
-                    <div class="container"><span>&copy; 2020 <a href="http://mana-group.ir/" target="_blank">تیم
-                                مانا</a>
-                            تمامی حقوق محفوظ است.</span><span class="right hide-on-small-only"> </span></div>
-                </div>
-            </footer>
+                <footer
+                    class="page-footer footer footer-static footer-dark gradient-45deg-purple-deep-orange gradient-shadow navbar-border navbar-shadow">
+                    <div class="footer-copyright">
+                        <div class="container">
+                            <span>
+                                &copy; 2020
+                                <a href="http://mana-group.ir/" target="_blank">تیم مانا</a>
+                                تمامی حقوق محفوظ است.</span>
+                            <span class="right hide-on-small-only"> </span>
+                        </div>
+                    </div>
+                </footer>
 
-
+            </div>
     </body>
 
     <script src="{{ asset('app-assets/js/vendors.min.js') }}"></script>
@@ -65,6 +73,14 @@
     <script src="{{ asset('app-assets/js-rtl/custom/custom-script-rtl.min.js') }}"></script>
     <script src="{{ asset('app-assets/js/scripts/ui-alerts.min.js') }}"></script>
     <script src="{{ asset('app-assets/js/axios.min.js') }}"></script>
+    <script>
+    const mobileBtn = document.getElementById('mobileMenuBtn');
+    const mainMenu = document.getElementById('mainMenu');
+
+    mobileBtn.addEventListener('click', () => {
+        mainMenu.classList.toggle('show');
+    });
+</script>
     @yield('js')
 
 </html>

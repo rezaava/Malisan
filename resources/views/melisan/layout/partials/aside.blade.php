@@ -1,131 +1,159 @@
-<aside class="sidenav-main nav-expanded nav-lock nav-collapsible sidenav-light navbar-full sidenav-active-rounded">
-    <div class="brand-sidebar">
-        <h1 class="logo-wrapper">
-            <a class="brand-logo darken-1" href=""><img src="{{ asset('files/main.png') }}" alt="materialize logo">
-                <span class="logo-text hide-on-med-and-down">ملیسان</span>
-            </a>
-            <a class="navbar-toggler" href="#">
+<div class="brand-sidebar">
+    <h1 class="logo-wrapper">
+        <a class="brand-logo darken-1" href="">
+            <img src="{{ asset('files/main.png') }}" alt="materialize logo">
+            <span class="logo-text hide-on-med-and-down">ملیسان</span>
+        </a>
+        <a class="navbar-toggler" href="#"></a>
+    </h1>
+</div>
+<!-- دکمه موبایل -->
+<button class="btnMenuIcon d-lg-none" id="mobileMenuBtn">
+    <i class='bx bx-menu-alt-left fs-3'></i>
+</button>
 
-            </a>
-        </h1>
-    </div>
-    <ul class="sidenav sidenav-collapsible leftside-navigation collapsible sidenav-fixed menu-shadow" id="slide-out"
-        data-menu="menu-navigation" data-collapsible="menu-accordion">
-        <li class="bold">
-            <a class="waves-effect waves-cyan active mt-5" href="{{ route('dashboard') }}">
-                <i class="material-icons">settings_input_svideo</i>
-                <span class="menu-title" data-i18n="Mail">میزکار</span>
-            </a>
+<!-- منوی واحد -->
+<div class="menu-container" id="mainMenu">
+    <ul class="nav flex-column">
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('dashboard') }}">
+                <i class='bx bx-desktop fs-4 text-primary'></i>میزکار </a>
         </li>
-        @if($user->hasRole('content') || 4)
-            <li class="bold">
-                <a class="waves-effect waves-cyan " href="{{ route('course.list') }}">
-                    <i class="material-icons">format_list_bulleted</i>
-                    <span class="menu-title" data-i18n="Chat">درس های من</span>
-                </a>
+        @if($user->hasRole('student'))
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('course.list') }}">
+                    <i class='bx bx-book fs-4 text-primary'></i>درس های من </a>
             </li>
         @endif
-
-        <li class="bold">
-            <a class="waves-effect waves-cyan " href="{{ route('publics') }}">
-                <i class="material-icons">dvr</i>
-                <span class="menu-title" data-i18n="Contacts">دوره های ملیسان</span>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('publics') }}">
+                <i class='bx bx-video fs-4 text-success'></i>دوره های ملیسان
             </a>
         </li>
-
-        <li class="bold">
-            <a class="waves-effect waves-cyan " href="{{ route('konkors') }}">
-                <i class="material-icons dp48">event_available</i>
-                <span class="menu-title" data-i18n="Calendar">آزمون ها</span>
-            </a>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('konkors') }}">
+                <i class='bx bx-task fs-4 text-warning'></i>
+                آزمون ها</a>
         </li>
-
-        @if($user->hasRole('content'))
-            <li class="bold">
-                <a class="waves-effect waves-cyan " href="/dashboard/survey/cats">
-                    <i class="material-icons">import_contacts</i>
-                    <span class="menu-title" data-i18n="File Manager"> نظر
-                        سنجی</span>
-                </a>
-            </li>
-        @endif
-
-        @if($user->hasRole('teacher') || $content)
-            <li class="bold">
-                <a class="waves-effect waves-cyan " href="/dashboard/konkor">
-                    <i class="material-icons">content_paste</i>
-                    <span class="menu-title" data-i18n="File Manager"> تولید محتوا</span>
-                </a>
-            </li>
-        @elseif($user->hasRole('admin'))
-
-            <li class="bold">
-                <a class="waves-effect waves-cyan " href="{{ route('baroms') }}">
+        <!-- منو بر اساس نقش کاربر -->
+        @if($user->hasRole('admin'))
+            <!-- منوی ادمین -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('baroms') }}">
                     <i class="material-icons">border_all</i>
-                    <span class="menu-title" data-i18n="File Manager"> بارم بندی</span>
+                    بارم بندی
                 </a>
             </li>
-            <li class="bold"><a class="waves-effect waves-cyan " href="{{ route('angizesh') }}"><i
-                        class="material-icons">receipt</i>
-                    <span class="menu-title" data-i18n="File Manager"> پیام انگیزشی</span></a>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('angizesh') }}">
+                    <i class="material-icons">receipt</i>
+                    پیام انگیزشی
+                </a>
             </li>
-            <li class="bold"><a class="waves-effect waves-cyan " href="/dashboard/konkor"><i
-                        class="material-icons">content_paste</i><span class="menu-title" data-i18n="File Manager"> تولید
-                        محتوا</span></a>
-            </li>
-            <li class="bold"><a class="waves-effect waves-cyan " href="/dashboard/user"><i
-                        class="material-icons">person_outline</i>
-                    <span class="menu-title" data-i18n="File Manager"> کاربران</span></a>
+            <li class="nav-item">
+                <a class="nav-link" href="/dashboard/konkor">
+                    <i class="material-icons">content_paste</i>
+                    تولید محتوا
+                </a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link" href="/dashboard/user">
+                    <i class="material-icons">person_outline</i>
+                    کاربران
+                </a>
+            </li>
         @elseif($user->hasRole('touradmin'))
-
-            <li class="bold"><a class="waves-effect waves-cyan " href="/dashboard/tour/create"><i
-                        class="material-icons">border_all</i><span class="menu-title" data-i18n="File Manager"> ساخت
-                        مسابقه</span></a>
+            <!-- منوی ادمین مسابقات -->
+            <li class="nav-item">
+                <a class="nav-link" href="/dashboard/tour/create">
+                    <i class="material-icons">border_all</i>
+                    ساخت مسابقه</a>
             </li>
-
-        @elseif($mosabeghat > 0 || $user->hasRole('touradmin'))
-            <li class="bold"><a class="waves-effect waves-cyan " href="/dashboard/tour"><i
-                        class="material-icons">border_all</i><span class="menu-title" data-i18n="File Manager">
-                        مسابقات</span></a>
-            </li>
-        @elseif($user->hasRole('content'))
-
-            <li class="bold"><a class="waves-effect waves-cyan " href="{{ route('survey.cat') }}"><i
-                        class="material-icons">content_paste</i><span class="menu-title" data-i18n="File Manager">
-                        نظرسنجی</span></a>
-            </li>
-            <li class="bold"><a class="waves-effect waves-cyan " href="/dashboard/chat"><i
-                        class="material-icons">chat_bubble_outline</i><span class="menu-title" data-i18n="File Manager">
-                        مکالمات</span></a>
-            </li>
-
         @elseif($user->hasRole('teacher'))
-
-            @if($user2)
-                <li class="bold"><a class="waves-effect waves-cyan " href="{{ route('change') }}"><i
-                            class="material-icons dp48">exit_to_app</i><span class="menu-title" data-i18n="File Manager"> انتقال
-                            به پنل دانشجو</span></a>
+            <!-- منوی استاد -->
+            @if($content)
+                <li class="nav-item">
+                    <a class="nav-link" href="/dashboard/konkor">
+                        <i class="material-icons">content_paste</i>
+                        تولید محتوا
+                    </a>
                 </li>
             @endif
 
+        @elseif($user->hasRole('content'))
+            <!-- منوی محتوا -->
+            <li class="nav-item">
+                <a class="nav-link" href="/dashboard/survey/cats">
+                    <i class="material-icons">import_contacts</i>
+                    نظر سنجی
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('survey.cat') }}">
+                    <i class='bx bx-poll fs-4 text-info'></i>
+                    نظرسنجی
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/dashboard/chat">
+                    <i class='bx bx-message fs-4 text-secondary'></i>
+                    مکالمات
+                </a>
+            </li>
+        @endif
 
-        @elseif($user->hasRole('student'))
+        <!-- منوی مسابقات برای شرایط خاص -->
+        @if($mosabeghat > 0 || $user->hasRole('touradmin'))
+            <li class="nav-item">
+                <a class="nav-link" href="/dashboard/tour">
+                    <i class="material-icons">border_all</i>
+                    مسابقات </a>
+            </li>
+        @endif
 
-            @if($user2)
-                <li class="bold"><a class="waves-effect waves-cyan " href="{{ route('change') }}"><i
-                            class="material-icons dp48">exit_to_app</i><span class="menu-title" data-i18n="File Manager"> انتقال
-                            به پنل استاد</span></a>
+        <!-- قابلیت تغییر پنل -->
+        @if($user2)
+            @if($user->hasRole('teacher'))
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('change') }}">
+                        <i class='bx bx-refresh fs-4'></i>
+                        انتقال به پنل دانشجو
+                    </a>
+                </li>
+            @elseif($user->hasRole('student'))
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('change') }}">
+                        <i class='bx bx-refresh fs-4'></i>
+                        انتقال به پنل استاد
+                    </a>
                 </li>
             @endif
         @endif
-        <li class="bold"><a class="waves-effect waves-cyan " href="{{ route('logout') }}"><i
-                    class="material-icons">keyboard_tab</i><span class="menu-title" data-i18n="File Manager"> خروج از
-                    حساب</span></a>
+
+        <li class="nav-item mt-3">
+            <a class="nav-link" href="{{ route('logout') }}">
+                <i class='bx bx-log-out fs-4'></i>
+                خروج از حساب
+            </a>
         </li>
+
     </ul>
-    <div class="navigation-background"></div>
-    <a class="sidenav-trigger btn-sidenav-toggle btn-floating btn-medium waves-effect waves-light hide-on-large-only"
-        href="#" data-target="slide-out"><i class="material-icons">menu</i></a>
-</aside>
+
+</div>
+
+<!-- محتوای اصلی -->
+<div class="main-content">
+    <h1 class="text-white">سلام!</h1>
+
+</div>
+
+<script>
+    const mobileBtn = document.getElementById('mobileMenuBtn');
+    const mainMenu = document.getElementById('mainMenu');
+
+    mobileBtn.addEventListener('click', () => {
+        mainMenu.classList.toggle('show');
+    });
+</script>
