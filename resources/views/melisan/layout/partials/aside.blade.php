@@ -1,12 +1,4 @@
-<div class="brand-sidebar">
-    <h1 class="logo-wrapper">
-        <a class="brand-logo darken-1" href="">
-            <img src="{{ asset('files/main.png') }}" alt="materialize logo">
-            <span class="logo-text hide-on-med-and-down">ملیسان</span>
-        </a>
-        <a class="navbar-toggler" href="#"></a>
-    </h1>
-</div>
+
 <!-- دکمه موبایل -->
 <button class="btnMenuIcon d-lg-none" id="mobileMenuBtn">
     <i class='bx bx-menu-alt-left fs-3'></i>
@@ -14,10 +6,12 @@
 
 <!-- منوی واحد -->
 <div class="menu-container" id="mainMenu">
+    <br><br>
     <ul class="nav flex-column">
-
-        <li class="nav-item">
+<li></li>
+        <li class="nav-item" style="  background:var( --gradient-primary);  border-radius: 20px 0 0 20px ;">
             <a class="nav-link" href="{{ route('dashboard') }}">
+
                 <i class='bx bx-desktop fs-4 text-primary'></i>میزکار </a>
         </li>
         @if($user->hasRole('student'))

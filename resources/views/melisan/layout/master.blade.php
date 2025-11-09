@@ -23,45 +23,51 @@
     {{-- here For Add Specify Page Styles --}}
     <link rel="stylesheet" href="{{ asset('all-css/my-style.css') }}">
     @yield('add-styles')
-<!-- Boxicons -->
-<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-
+    <!-- Boxicons -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <style>
+        #main {
+            padding-right: 50px;
+        }
+        footer{
+                padding-right: 40%;
+        }
+    </style>
     </head>
 
-    <body class="vertical-layout vertical-menu-collapsible page-header-dark vertical-modern-menu 2-columns"
+    <body class=""
         data-open="click" data-menu="vertical-modern-menu" data-col="2-columns">
-        <div class="container">
+        <div class="container_fluid">
             <!-- BEGIN: Header-->
             @include('melisan.layout.partials.top-header')
             <!-- END: Header-->
             <!-- BEGIN: SideNav-->
+
             @include('melisan.layout.partials.aside')
             <!-- END: SideNav-->
 
             <!-- BEGIN: Page Main-->
             <div id="main">
-                <div class="row">
-                    <!-- bread crumbs-->
-                    @include('melisan.layout.partials.page-detial')
-                    <div class="col s12">
-                        <div class="container">
 
-                            @yield('main-content')
+                <!-- bread crumbs-->
+                @include('melisan.layout.partials.page-detial')
 
-                        </div>
-                    </div>
+                <div class="container-dushbord">
+
+                    @yield('main-content')
+
                 </div>
-                <footer
-                    class="page-footer footer footer-static footer-dark gradient-45deg-purple-deep-orange gradient-shadow navbar-border navbar-shadow">
-                    <div class="footer-copyright">
-                        <div class="container">
+
+                <footer  class="footer-dashbord">
+          
+                        <div class="container-dushbord ">
                             <span>
                                 &copy; 2020
-                                <a href="http://mana-group.ir/" target="_blank">تیم مانا</a>
+                                <a href="http://mana-group.ir/" style="color: black;">تیم مانا</a>
                                 تمامی حقوق محفوظ است.</span>
                             <span class="right hide-on-small-only"> </span>
                         </div>
-                    </div>
+
                 </footer>
 
             </div>
@@ -74,13 +80,36 @@
     <script src="{{ asset('app-assets/js/scripts/ui-alerts.min.js') }}"></script>
     <script src="{{ asset('app-assets/js/axios.min.js') }}"></script>
     <script>
-    const mobileBtn = document.getElementById('mobileMenuBtn');
-    const mainMenu = document.getElementById('mainMenu');
+        const mobileBtn = document.getElementById('mobileMenuBtn');
+        const mainMenu = document.getElementById('mainMenu');
 
-    mobileBtn.addEventListener('click', () => {
-        mainMenu.classList.toggle('show');
-    });
-</script>
+        mobileBtn.addEventListener('click', () => {
+            mainMenu.classList.toggle('show');
+        });
+    </script>
+    <script>
+        // اضافه کردن اینتراکشن‌های ساده
+        const buttons = document.querySelectorAll('.icon-btn, .profile-btn');
+        buttons.forEach(btn => {
+            btn.addEventListener('click', function () {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+
+        // شبیه‌سازی کلیک روی دکمه‌ها
+        buttons.forEach(btn => {
+            btn.addEventListener('click', function () {
+                const title = this.getAttribute('title');
+                if (title) {
+                    console.log(`${title} clicked!`);
+                    // اینجا می‌تونی عملکرد واقعی رو اضافه کنی
+                }
+            });
+        });
+    </script>
     @yield('js')
 
 </html>
