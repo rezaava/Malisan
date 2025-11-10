@@ -41,77 +41,76 @@
             </form>
         </div>
     @else
-
-        <div class="card">
+     <div class="card">
             <div class="card-content">
                 <p class="caption mb-0">
                     {!!$angizesh->text!!}
             </div>
         </div>
-        <div id="cards-extended">
-            <div class="card">
-                <div class="card-content">
-
-                    <div class="row" id="gradient-Analytics">
-                        <a href="dashboard/courses/list" class="col s12 m6 l3 card-width">
-                            <div class="card row gradient-45deg-orange-amber gradient-shadow white-text padding-4 mt-5">
-                                <div class="col s7 m7">
-                                    <i class="material-icons background-round mt-5 mb-5">format_list_bulleted</i>
-                                    <p>درس ها</p>
-                                </div>
-                                <div class="col s5 m5 right-align">
-
-                                    <p class="no-margin">درس فعال</p>
-
-                                </div>
-                            </div>
-                        </a>
-                        @if($user->hasRole('teacher'))
-                            <div class="col s12 m6 l3 card-width">
-                                <div class="card row  gradient-45deg-purple-light-blue gradient-shadow white-text padding-4 mt-5">
-                                    <div class="col s7 m7 text-center">
-                                        <i class="material-icons background-round mt-5 mb-5">perm_identity</i>
-                                        <p>دانشجو ها</p>
-                                    </div>
-                                    <div class="col s5 m5 right-align">
-                                        <h5 class="mb-0 white-text">50</h5>
-                                        <p class="no-margin">دانشجوی فعال</p>
-
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
-                        <a href="/publics" class="col s12 m6 l3 card-width">
-                            <div class="card row gradient-45deg-indigo-light-blue gradient-shadow white-text padding-4 mt-5">
-                                <div class="col s7 m7">
-                                    <i class="material-icons background-round mt-5 mb-5">dvr</i>
-                                    <p>دوره ها</p>
-                                </div>
-                                <div class="col s5 m5 right-align">
-                                    <h5 class="mb-0 white-text">80</h5>
-                                    <p class="no-margin">دوره در حال برگزاری</p>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="/dashboard/konkor/list" class="col s12 m6 l3 card-width">
-                            <div class="card row gradient-45deg-green-teal gradient-shadow white-text padding-4 mt-5">
-                                <div class="col s7 m7">
-                                    <i class="material-icons dp48 background-round mt-5 mb-5">event_available</i>
-                                    <p>ازمون ها</p>
-                                </div>
-                                <div class="col s5 m5 right-align">
-                                    <h5 class="mb-0 white-text">50</h5>
-                                    <p class="no-margin">ازمون در حال برگزاری</p>
-
-                                </div>
-                            </div>
-                        </a>
+          <div class="main-card-dashboard">
+        <div class="row g-4">
+            <!-- درس‌ها -->
+            <div class="col-12 col-md-6">
+                <a href="dashboard/courses/list" class="btn-card-dashboard lessons-dashboard" 
+                       style=" background: linear-gradient(135deg, #43cea2, #185a9d);" >
+                    <div class="btn-content-dashboard">
+                                    <i class="fas fa-book fa-2x"></i>
+                        <div class="btn-title-dashboard">درس‌ها</div>
                     </div>
-                </div>
+                    <div class="icon-container-dashboard">
+                        <div class="btn-count-dashboard">3</div>
+                        <div class="btn-info-dashboard"> دروس فعال</div>
+                    </div>
+                </a>
             </div>
-            <div class="divider mt-2"></div>
-
+          <!-- دوره‌ها -->
+            <div class="col-12 col-md-6 ">
+                <a href="/publics" class="btn-card-dashboard lessons-dashboard" 
+                style="   background: linear-gradient(135deg, #6a11cb, #2575fc);" >
+                    <div class="btn-content-dashboard">
+                              <i class="fas fa-graduation-cap fa-2x"></i>
+                        <div class="btn-title-dashboard">دوره ها</div>
+                    </div>
+                    <div class="icon-container-dashboard">
+                        <div class="btn-count-dashboard">5</div>
+                        <div class="btn-info-dashboard"> دوره فعال</div>
+                    </div>
+                </a>
+            </div>
+            <!-- آزمون‌ها -->
+               <div class="col-12 col-md-6 ">
+                <a href="/dashboard/konkor/list" class="btn-card-dashboard lessons-dashboard" 
+                style="
+                background: linear-gradient(135deg, #db5e15, #185a9d);" >
+                    <div class="btn-content-dashboard">
+                                  <i class="fas fa-clipboard-list fa-2x"></i>
+                        <div class="btn-title-dashboard">آزمون ها</div>
+                    </div>
+                    <div class="icon-container-dashboard">
+                        <div class="btn-count-dashboard">5</div>
+                        <div class="btn-info-dashboard"> آزمون های درحال برگزاری</div>
+                    </div>
+                </a>
+            </div>
+        @if($user->hasRole('teacher'))
+         <div class="col-12 col-md-6">
+                <a href="dashboard/courses/list" class="btn-card-dashboard lessons-dashboard" 
+                       style=" background: linear-gradient(135deg, #43cea2, #185a9d);" >
+                    <div class="btn-content-dashboard">
+                                     <i class="fas fa-user-graduate fa-2x"></i>
+                        <div class="btn-title-dashboard">دانشجوها</div>
+                    </div>
+                    <div class="icon-container-dashboard">
+                        <div class="btn-count-dashboard">3</div>
+                        <div class="btn-info-dashboard"> دانشجوی فعال</div>
+                    </div>
+                </a>
+            </div>
+        @endif
         </div>
+    </div>
+   
+    
     @endif
 
 @endsection

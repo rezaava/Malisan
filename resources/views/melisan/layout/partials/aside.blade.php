@@ -139,7 +139,7 @@
 
 <!-- محتوای اصلی -->
 <div class="main-content">
-    <h1 class="text-white">سلام!</h1>
+    <!-- <h1 class="text-white">سلام!</h1> -->
 
 </div>
 
