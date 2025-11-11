@@ -9,23 +9,23 @@
     <br><br>
     <ul class="nav flex-column">
 <li></li>
-        <li class="nav-item" style="  background:var( --gradient-primary);  border-radius: 20px 0 0 20px ;">
+        <li class="nav-item {{ request()->routeIs('dashboard') ? 'nav_active' : '' }}" >
             <a class="nav-link" href="{{ route('dashboard') }}">
 
                 <i class='bx bx-desktop fs-4 text-primary'></i>میزکار </a>
         </li>
         @if($user->hasRole('student'))
-            <li class="nav-item">
+            <li class="nav-item {{ request()->routeIs('course.list') ? 'nav_active' : '' }}">
                 <a class="nav-link" href="{{ route('course.list') }}">
                     <i class='bx bx-book fs-4 text-primary'></i>درس های من </a>
             </li>
         @endif
-        <li class="nav-item">
+        <li class="nav-item {{ request()->routeIs('publics') ? 'nav_active' : '' }}">
             <a class="nav-link" href="{{ route('publics') }}">
                 <i class='bx bx-video fs-4 text-success'></i>دوره های ملیسان
             </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item {{ request()->routeIs('konkors') ? 'nav_active' : '' }}">
             <a class="nav-link" href="{{ route('konkors') }}">
                 <i class='bx bx-task fs-4 text-warning'></i>
                 آزمون ها</a>

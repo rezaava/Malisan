@@ -49,7 +49,7 @@
             @include('melisan.layout.partials.aside')
 
             <!-- BEGIN: Page Main-->
-            <div id="main">
+            <div id="main" style="margin-top:5%">
                 @include('melisan.layout.partials.page-detial')
                 <div class="container-dushbord">
                     <br>

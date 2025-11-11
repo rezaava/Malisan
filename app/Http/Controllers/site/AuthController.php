@@ -21,22 +21,17 @@ class AuthController extends Controller
 {
     public function login()
     {
-
         return view('melisan.auth.login');
-
     }
     public function loginpost(Request $request)
     {
-  
         $user = User::where('national', $request->national)->first();
-        
         //            teacher
         $user = User::where('national', $request->national)->where('role', 2)->first();
         if ($user && Hash::check($request->password, $user->password)) {
             Auth::login($user);
             return redirect()->route('dashboard');
         }
- 
         //            student
         $user = User::where('national', $request->national)->where('role', 3)->first();
         if ($user && Hash::check($request->password, $user->password)) {
@@ -75,12 +70,8 @@ class AuthController extends Controller
             Auth::login($user);
             return redirect()->route('dashboard');
         }
-  
         return back()->with('error', 'نام کاربری یا کلمه عبور صحیح نمی باشد');
-
     }
-
-
     public function reg()
     {
         $users = User::all();
@@ -98,9 +89,7 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-
         $data = $request->all();
-
         $rule = [
             'name' => 'required|max:255',
             'family' => 'required|max:255',
@@ -121,7 +110,6 @@ class AuthController extends Controller
         if ($user) {
             if ($user->mobile != $request->mobile || $user->national != $request->national) {
                 return redirect()->back()->with('danger', 'اطلاعات غلط است');
-
             }
             if ($request->type == '2') {
                 if ($user->role == 2) {
@@ -158,10 +146,57 @@ class AuthController extends Controller
         return redirect('/dashboard/courses/list');
 
     }
-   public function logout()
+    public function logout()
     {
         Auth::logout();
         return redirect('login');
     }
+    public function change(Request $request)
+    {
+        // return $request;
+        $user = Auth::user();
 
+        $user2 = User::where('national', $user->national)->where('role', '!=', $user->role)->first();
+
+        if ($user2) {
+            Auth::logout();
+            if ($user2->role == 2) {
+                Auth::login($user2);
+                return redirect()->route('dashboard');
+            } else {
+                Auth::login($user2);
+                $courses = $user->courses()->pluck('course_id');
+                // return $courses;
+                $teacherCourses = CourseUser::where('role_id', '3')->whereIn('course_id', $courses)->pluck('user_id');
+                foreach ($teacherCourses as $item) {
+                    $item = -$item;
+                }
+                // return $teacherCourses;
+                $answers = OptionUser::where('user_id', $user->id)->pluck('survey_id');
+                        //  return $answers;
+                $surveys = Survey::where(function ($query) use ($courses, $teacherCourses) {
+                    $query->whereIn('group', $courses)->orWhere('group', '0')->orWhereIn('user_id', $teacherCourses);
+                })->whereNotIn('id', $answers)->where('active', '1')->get();
+
+                if (count($surveys)) {
+                    $random = $surveys->random();
+                    if ($random->type != '1') {
+                        $options = Option::where('survey_id', $random->id)->get();
+                        $random['options'] = $options;
+                    }
+                    $user = $user2;
+                    return view('melisan.management.courses.students.survays', compact('random', 'user'))
+                        ->with([
+                            'pageTitle' => 'صفحه نظرسنجی',
+                            'pageName' => 'نظرسنجی',
+                            'pageDescription' => 'دوست من ! این یه فرم نظرسنجیه لطفا با دقت جواب بده',
+                        ]);
+                }
+                 else {
+                    //                        Auth::login($user);
+                    return redirect('/dashboard/courses/list');
+                }
+            }
+        }
+    }
 }

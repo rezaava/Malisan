@@ -1,4 +1,5 @@
       :root {
+          --gradient-nav: linear-gradient(-45deg, #8d24aab7, #ff6d40bd);
           --gradient-primary: linear-gradient(-45deg, #8e24aa, #ff6e40);
           --gradient-secondary: linear-gradient(-45deg, #7b1fa2, #ff5722);
           --text-color: #ffffff;
@@ -40,6 +41,10 @@
           transform: scale(0.95) rotate(0deg);
       }
 
+      .nav {
+          margin-top: 10%;
+      }
+
       /* منوی واحد */
       .menu-container {
           position: fixed;
@@ -72,9 +77,16 @@
       }
 
       .menu-container .nav-link:hover {
-          background: var(--gradient-primary);
-          color: #fff !important;
+          background: rgb(235, 235, 235);
+          color: #000000 !important;
           transform: translateX(5px);
+      }
+
+      .nav_active {
+          background: var(--gradient-nav);
+          /* border-radius: 20px 0 0 20px ; */
+          color: #fff;
+          /* transform: translateX(5px); */
       }
 
       .menu-container .footer {
@@ -621,11 +633,23 @@
       .container-dushbord {
           width: 73%;
           margin-right: 20%;
-          margin-top: 6%;
+          /* margin-top: 6%; */
       }
 
       @media(max-width: 768px) {
           .container-dushbord {
               width: 100%
           }
+      }
+
+      /* قسمت نظرسنجی 
+       */
+
+      .mtn-nazr {
+        font-size: large;
+      }
+
+      .box-nazr {
+          text-align: right;
+          padding: 24px;
       }
