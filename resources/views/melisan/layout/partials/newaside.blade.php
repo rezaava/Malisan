@@ -1,8 +1,7 @@
 <aside class="sidenav-main nav-expanded nav-lock nav-collapsible sidenav-light navbar-full sidenav-active-rounded">
     <div class="brand-sidebar">
         <h1 class="logo-wrapper">
-            <a class="brand-logo darken-1" href=""><img src="{{ asset('files/main.png') }}"
-                                                        alt="materialize logo"/><span
+            <a class="brand-logo darken-1" href=""><img src="{{ asset('files/main.png') }}"    alt="materialize logo"/><span
                     class="logo-text hide-on-med-and-down">ملیسان</span></a><a class="navbar-toggler" href="#"></a>
         </h1>
     </div>

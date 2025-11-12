@@ -1,4 +1,4 @@
-<nav class="navbar">
+<nav class="navbar " id="menu">
     <div class="nav-container">
         <!-- سمت راست - لوگو و نام سایت -->
         <div class="logo-section">

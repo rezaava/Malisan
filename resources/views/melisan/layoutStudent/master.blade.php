@@ -46,10 +46,8 @@
 <!-- END: Head-->
 {{-- import Notifications Program Status --}}
 @include('melisan.layoutStudent.notifications.notifications')
-
-{{-- import Error Program --}}
 @include('melisan.layoutStudent.notifications.error')
-{{-- Main Content Is Here --}}
+
 
 <body class="" data-open="click" data-menu="vertical-modern-menu" data-col="2-columns">
     <div class="container_fluid">
@@ -58,12 +56,11 @@
         <!-- BEGIN: Page Main-->
         <div id="main" style="margin-top:5%">
             <div class="row">
-                <div class="content-wrapper-before gradient-45deg-indigo-purple"></div>
+                <div class=""></div>
                 {{-- this Is For Page Detials -- Page-title -- Page Breadcrumb --}}
                 @include('melisan.layoutStudent.page-detial')
                 {{-- end Of Page Details --}}
                 <div class="col s12">
-                    <div class="container">
                         <div class="section">
                             <div class="card">
                                 <div class="box-nazr">
@@ -87,7 +84,7 @@
                                         class="material-icons">mail_outline</i></a></li>
                         </ul>
                     </div> -->
-                    </div>
+        
                     <div class="content-overlay"></div>
                 </div>
             </div>
@@ -111,10 +108,10 @@
         <!-- BEGIN PAGE VENDOR JS-->
         <!-- END PAGE VENDOR JS-->
         <!-- BEGIN THEME  JS-->
-        <script src="../../../app-assets/js/plugins.min.js"></script>
-        <script src="../../../app-assets/js/search.min.js"></script>
-        <script src="../../../app-assets/js-rtl/custom/custom-script-rtl.min.js"></script>
-        <script src="../../../app-assets/js/scripts/customizer.min.js"></script>
+        <script src="app-assets/js/plugins.min.js"></script>
+        <script src="app-assets/js/search.min.js"></script>
+        <script src="app-assets/js-rtl/custom/custom-script-rtl.min.js"></script>
+        <script src="app-assets/js/scripts/customizer.min.js"></script>
         <!-- END THEME  JS-->
         <!-- BEGIN PAGE LEVEL JS-->
         <!-- END PAGE LEVEL JS-->

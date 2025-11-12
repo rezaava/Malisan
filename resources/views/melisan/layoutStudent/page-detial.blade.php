@@ -157,6 +157,7 @@
                     <li class="breadcrumb-item"><a href="/dashboard">
 
 
+                    
                         </a></li>
                     <li class="breadcrumb-item " aria-current="page"><a
                             href="/dashboard/courses/sessions?course_id={{$course->id}}">

@@ -7,7 +7,51 @@
           --shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
           --border: 1px solid rgba(255, 255, 255, 0.1);
       }
+/* start font */
 
+
+      @font-face {
+    font-family: 'vazir1';
+    src: url(assets/fonts/Vazirmatn-Black.ttf);
+    src: url(assets/fonts/Vazirmatn-Black.woff2) format('woff');
+}
+
+@font-face {
+    font-family: 'vazir3';
+    src: url(assets/fonts/Vazirmatn-Medium.ttf);
+    src: url(assets/fonts/Vazirmatn-Medium.woff2) format('woff');
+}
+
+@font-face {
+    font-family: 'vazir2';
+    src: url(assets/fonts/Vazirmatn-Bold.ttf);
+    src: url(assets/fonts/Vazirmatn-Bold.woff2) format('woff');
+}
+
+* {
+    font-family: kalame3;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: vazir2;
+
+}
+
+.font {
+    font-family: vazir3;
+}
+
+.font-bold {
+    font-family: vazir1;
+    position: relative;
+    z-index: 999;
+}
+/* end font */
       body {
           background-color: #f2f4f8;
       }
@@ -153,11 +197,6 @@
           font-family: sans !important;
       }
 
-      @font-face {
-          font-family: "sans";
-          src: url("../font-awesome/Sans.ttf");
-          font-weight: bold;
-      }
 
       .swingX,
       .swingY {
@@ -646,10 +685,20 @@
        */
 
       .mtn-nazr {
-        font-size: large;
+          font-size: large;
       }
 
       .box-nazr {
           text-align: right;
           padding: 24px;
+      }
+
+      footer {
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          padding: 15px;
+          text-align: center;
+
       }
