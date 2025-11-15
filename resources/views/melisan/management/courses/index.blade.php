@@ -31,7 +31,7 @@
     </div>
 
     <div class="row" style="margin-right:10px">
-        @if(\Illuminate\Support\Facades\Auth::user()->hasRole('teacher'))
+        @if($user->hasRole('teacher'))
         @if(Route::current()->getName() != 'course.arch')
         <div class="row mt-4">
             <div class=" s7 mt-1 right-align ">

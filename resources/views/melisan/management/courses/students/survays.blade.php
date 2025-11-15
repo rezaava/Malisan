@@ -85,7 +85,7 @@
 
         /* end font */
 
-        body {
+        .body-nazr {
             background: #ebdbee;
             color: var(--text-color);
             min-height: 100vh;
@@ -96,13 +96,7 @@
             line-height: 1.6;
         }
 
-        .container-floud {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            flex: 1;
-        }
+
 
         .welcome-section {
             /* background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); */
@@ -114,7 +108,9 @@
             text-align: center;
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(203, 6, 230, 0.2);
+            width: 80%;
+            margin: auto;
         }
 
         .welcome-section::before {
@@ -197,6 +193,8 @@
 
         .input-field {
             margin-top: 20px;
+            display: flex;
+            justify-content: flex-end;
         }
 
         .nazar-img {
@@ -218,6 +216,11 @@
             transition: var(--transition);
             border: none;
             font-size: 1rem;
+
+            /* position: fixed; */
+
+            z-index: 1000;
+
         }
 
         .btn:hover {
@@ -338,9 +341,9 @@
     </style>
 </head>
 
-<body>
+<body class="body-nazr ">
 
-    <div class="container-floud">
+    <div class="container-fluid">
         <br><br>
         <div class="welcome-section pulse-effect">
 
@@ -355,9 +358,9 @@
         <hr><br>
         <div class="row">
 
-            <div class="col-md-6">
-
-                <div class="box-nazr">
+            <div class="col-md-6" style=" min-height: 50vh;">
+        
+                <div class="card h-100 box-nazr">
                     <div class="">
                         <div class="row">
                             <div class="">
@@ -371,28 +374,33 @@
                         <input name="random_id" value="{{ $random->id }}" hidden>
                         <input name="type" value="{{ $random->type }}" hidden>
                         <div class="row">
-                            <div class="col s12">
+                            <div class="col-md-12">
                                 @if ($random->type == 1)
                                     @include('melisan.layoutStudent.survay-textarea')
                                 @else
                                     @include('melisan.layoutStudent.survay-radio')
                                 @endif
 
-                                <div class="input-field">
-                                </div>
+                                <!-- <div class="input-field">
+                                </div> -->
                             </div>
-                            <div class="input-field col s12">
-                                <button class="btn waves-effect waves-light right iransans" type="submit"
-                                    name="action">ارسال پاسخ
-                                    <i class="material-icons right custom-send-material-icon">send</i>
-                                </button>
-                            </div>
+
+                        </div>
+                        <div class="input-field col-md-12 ">
+                            <button class="btn " type="submit" name="action" style="font-size:15px">ارسال پاسخ
+                                <i class="material-icons right custom-send-material-icon"
+                                    style="font-size:15px">send</i>
+                            </button>
                         </div>
                     </form>
                 </div>
             </div>
+
             <div class="col-md-6">
-                <div class=""><img src="{{ asset('files/main.png') }}" class="nazar-img" alt="materialize logo" />
+         
+                <div class="card h-100" style='box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;'>
+
+                    <img src="{{ asset('files/main.png') }}" class="nazar-img mt-2" alt="materialize logo">
                     <br>
                     <p class="mtn-nazr">{{ isset($pageDescription) ? $pageDescription : '' }}</p>
                 </div>

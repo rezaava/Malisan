@@ -57,7 +57,7 @@ class AuthController extends Controller
                     ->with([
                         'pageTitle' => 'صفحه نظرسنجی',
                         'pageName' => 'نظرسنجی',
-                        'pageDescription' => 'دوست من ! این یه فرم نظرسنجیه لطفا با دقت جواب بده',
+                        'pageDescription' => 'دوست من ! این یه فرم نظرسنجی هست لطفا با دقت جواب بده',
                     ]);
             } else {
                 Auth::login($user);
@@ -173,17 +173,24 @@ class AuthController extends Controller
                 }
                 // return $teacherCourses;
                 $answers = OptionUser::where('user_id', $user->id)->pluck('survey_id');
-                        //  return $answers;
-                $surveys = Survey::where(function ($query) use ($courses, $teacherCourses) {
-                    $query->whereIn('group', $courses)->orWhere('group', '0')->orWhereIn('user_id', $teacherCourses);
-                })->whereNotIn('id', $answers)->where('active', '1')->get();
+                //  return $answers;
+                $surveys = Survey::query()
+                    ->where(function ($query) use ($courses, $teacherCourses) {
+                        $query->whereIn('group', $courses)
+                            ->orWhere('group', '0')
+                            ->orWhereIn('user_id', $teacherCourses);
+                    })
+                    ->whereNotIn('id', $answers)
+                    ->where('active', true) // استفاده از boolean به جای string
+                    ->get();
 
                 if (count($surveys)) {
                     $random = $surveys->random();
                     if ($random->type != '1') {
-                        $options = Option::where('survey_id', $random->id)->get();
-                        $random['options'] = $options;
+
+                        $random['options'] =  Option::where('survey_id', $random->id)->get();
                     }
+                    // return $random;
                     $user = $user2;
                     return view('melisan.management.courses.students.survays', compact('random', 'user'))
                         ->with([
@@ -191,8 +198,7 @@ class AuthController extends Controller
                             'pageName' => 'نظرسنجی',
                             'pageDescription' => 'دوست من ! این یه فرم نظرسنجیه لطفا با دقت جواب بده',
                         ]);
-                }
-                 else {
+                } else {
                     //                        Auth::login($user);
                     return redirect('/dashboard/courses/list');
                 }

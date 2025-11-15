@@ -56,7 +56,9 @@
         <!-- BEGIN: Page Main-->
         <div id="main" style="margin-top:5%">
             <div class="row">
-                <div class=""></div>
+                <div class="">
+                    
+                </div>
                 {{-- this Is For Page Detials -- Page-title -- Page Breadcrumb --}}
                 @include('melisan.layoutStudent.page-detial')
                 {{-- end Of Page Details --}}
