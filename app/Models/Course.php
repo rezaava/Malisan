@@ -9,22 +9,22 @@ class Course extends Model
 
     public function users()
     {
-        return $this->belongsToMany('App\User', 'course_user')->withPivot('role_id');
+        return $this->belongsToMany('App\Models\User', 'course_user')->withPivot('role_id');
     }
 
     public function sessions()
     {
-        return $this->hasMany("App\Session");
+        return $this->hasMany("App\Models\Session");
     }
 
     public function setting()
     {
-        return $this->hasOne("App\Setting");
+        return $this->hasOne("App\Models\Setting");
     }
 
     public function questions()
     {
-        return $this->hasMany("App\Question");
+        return $this->hasMany("App\Models\Question");
     }
 
     public function quizCount($course)

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\site;
 
+use App\Models\Touradmin;
+use App\Models\Touruser;
 use App\Models\User;
 use App\Models\Amali;
 use App\Models\Answer;
@@ -50,8 +52,24 @@ class CourseController extends Controller
             }
 
         }
+        $mosabeghat = Touruser::where('user_id', $user->id)->count();
 
-        return view('melisan.management.courses.index', compact('courses','user'));
+
+        if ($user->hasRole('teacher')) {
+            $user2 = User::where('national', $user->national)->where('role', 3)->first();
+        } elseif ($user->hasRole('student')) {
+            //  return 'test';
+            $user2 = User::where('national', $user->national)->where('role', 2)->first();
+        } elseif ($user->hasRole('touradmin')) {
+            $mosabeghat = Touradmin::where('user_id', $user->id)->count();
+        }
+
+
+        return view(
+            'melisan.management.courses.index'
+            ,
+            compact('courses', 'user', 'mosabeghat','user2')
+        );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function progress(Request $request)

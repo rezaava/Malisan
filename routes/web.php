@@ -17,6 +17,7 @@ use App\Http\Controllers\site\UserController;
 use App\Http\Controllers\site\DashboardController;
 use App\Http\Controllers\site\LayoutController;
 
+
 //use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,7 +37,7 @@ use App\Http\Controllers\site\LayoutController;
 //                     Route::post('/', [adminController::class, 'insertPost']);
 //                 });
 
-
+//چک
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'loginpost'])->name('loginpost');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -46,7 +47,7 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::get('/global', [AuthController::class, 'reg'])->name('global');
 Route::post('/survey-answer', [AuthController::class, 'Survey'])->name('survey.answer');
 
-
+///چک پایان
 
 
 // Route::group(['namespace' => 'Dashboard'], function () {
@@ -54,7 +55,7 @@ Route::post('/survey-answer', [AuthController::class, 'Survey'])->name('survey.a
 // });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/change', [AuthController::class,'change'])->name('change');
+    Route::get('/change', [AuthController::class, 'change'])->name('change');
     Route::group(['namespace' => 'Dashboard'], function () {
         Route::get('/active', [CourseController::class, 'active'])->name('rotbe');
         Route::get('/publics', [CourseController::class, 'publics'])->name('publics');
@@ -83,7 +84,7 @@ Route::middleware('auth')->group(function () {
 
                     Route::post('/amali/{id}', [CourseController::class, 'amali'])->name('course.amali');
                 });
-
+                ///چک
                 Route::get('/list', [CourseController::class, 'list'])->name('course.list');
                 Route::get('/arch', [CourseController::class, 'arch'])->name('course.arch');
                 Route::get('/arch-post/{id}', [CourseController::class, 'archPost'])->name('course.arch.post');

@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 
-<html class="loading" lang="En" data-textdirection="rtl">
+<html >
 
 <header>
+    
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="author" content="Reza avareh">
@@ -22,12 +23,12 @@
     <link rel="stylesheet" href="{{ asset('all-css/custom.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('all-css/materialize.min.css') }}">
     <link rel="stylesheet" href="{{ asset('all-css/app-assets/vendors.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('all-css/style.min.css') }}">
+    <!-- <link rel="stylesheet" type="text/css" href="{{ asset('all-css/style.min.css') }}"> -->
     <link rel="stylesheet" href="{{ asset('all-css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('all-css/my-style.css') }}">
     @yield('add-styles')
     <!-- Boxicons -->
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <!-- <link href="all-css/assets/fonts/Boxicons.min.css" rel="stylesheet"> -->
     <style>
         #main {
             padding-right: 50px;
@@ -49,7 +50,7 @@
             @include('melisan.layout.partials.aside')
 
             <!-- BEGIN: Page Main-->
-            <div id="main" style="margin-top:5%">
+            <div id="main" style="margin-top:5%;margin-right: 15%;">
                 @include('melisan.layout.partials.page-detial')
                 <div class="container-dushbord">
                     <br>
@@ -75,15 +76,15 @@
     <script src="{{ asset('app-assets/js/search.min.js') }}"></script>
     <script src="{{ asset('app-assets/js-rtl/custom/custom-script-rtl.min.js') }}"></script>
     <script src="{{ asset('app-assets/js/scripts/ui-alerts.min.js') }}"></script>
-    <script src="{{ asset('app-assets/js/axios.min.js') }}"></script>
-    <script>
+    <!-- <script src="{{ asset('app-assets/js/axios.min.js') }}"></script> -->
+    <!-- <script>
         const mobileBtn = document.getElementById('mobileMenuBtn');
         const mainMenu = document.getElementById('mainMenu');
 
         mobileBtn.addEventListener('click', () => {
             mainMenu.classList.toggle('show');
         });
-    </script>
+    </script> -->
     <script>
         // اضافه کردن اینتراکشن‌های ساده
         const buttons = document.querySelectorAll('.icon-btn, .profile-btn');

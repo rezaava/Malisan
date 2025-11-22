@@ -29,7 +29,7 @@
             
             @php
             $user=\Illuminate\Support\Facades\Auth::user();
-              $content=\App\Coworker::where('user_id',$user->id)->first();
+              $content=Coworker::where('user_id',$user->id)->first();
             @endphp
             @if($user->hasRole('teacher') || $content)
             

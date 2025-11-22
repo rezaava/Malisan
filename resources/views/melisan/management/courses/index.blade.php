@@ -1,4 +1,4 @@
-@extends('melisan.layout.management.layout.master')
+@extends('melisan.layout.master')
 
 @section('title', 'صفحه اصلی')
 @section('main-content')

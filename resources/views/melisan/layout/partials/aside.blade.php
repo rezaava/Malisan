@@ -1,4 +1,3 @@
-
 <!-- دکمه موبایل -->
 <button class="btnMenuIcon d-lg-none" id="mobileMenuBtn">
     <i class='bx bx-menu-alt-left fs-3'></i>
@@ -6,10 +5,10 @@
 
 <!-- منوی واحد -->
 <div class="menu-container" id="mainMenu">
-    <br><br>
+  
     <ul class="nav flex-column">
-<li></li>
-        <li class="nav-item {{ request()->routeIs('dashboard') ? 'nav_active' : '' }}" >
+        <li></li>
+        <li class="nav-item {{ request()->routeIs('dashboard') ? 'nav_active' : '' }}">
             <a class="nav-link" href="{{ route('dashboard') }}">
 
                 <i class='bx bx-desktop fs-4 text-primary'></i>میزکار </a>
@@ -126,7 +125,7 @@
             @endif
         @endif
 
-        <li class="nav-item mt-3">
+        <li class="nav-item ">
             <a class="nav-link" href="{{ route('logout') }}">
                 <i class='bx bx-log-out fs-4'></i>
                 خروج از حساب

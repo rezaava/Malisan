@@ -1,37 +1,83 @@
-/*================================================================================
-	Item Name: Materialize - Material Design Admin Template
-	Version: 5.0
-	Author: PIXINVENT
-	Author URL: https://themeforest.net/user/pixinvent/portfolio
-================================================================================
+      :root {
+          --gradient-nav: linear-gradient(-45deg, #8d24aab7, #ff6d40bd);
+          --gradient-primary: linear-gradient(-45deg, #8e24aa, #ff6e40);
+          --gradient-secondary: linear-gradient(-45deg, #7b1fa2, #ff5722);
+          --text-color: #ffffff;
+          --text-light: rgba(255, 255, 255, 0.8);
+          --shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+          --border: 1px solid rgba(255, 255, 255, 0.1);
+          --primary-color: #8e24aa;
+          --secondary-color: #7b1fa2;
+          --accent-color: #ab47bc;
+          --light-color: #f8f9fa;
+          --dark-color: #212529;
+          --success-color: #ce93d8;
+          --warning-color: #f72585;
+          --text-color: #333;
+          --border-radius: 12px;
+          --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+          --transition: all 0.3s ease;
+          --font-family: 'Dana3';
 
-NOTE:
-------
-PLACE HERE YOUR OWN CSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
-WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+          direction: rtl;
+          writing-mode: horizontal-tb;
+          text-orientation: mixed;
+      }
 
-@import 'iransans.css';
-@import 'material-icons.css';
-body {
-    font-family: 'IRANSans', sans-serif;
-}
+      /* start font */
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-family: 'IRANSans_Bold', sans-serif;
-}
 
-p {
-    font-family: 'IRANSans_Medium', sans-serif;
-}
-/* کلاس فونت ایران سنس */
-.iransans {
-    font-family: 'IRANSans_UltraLight', sans-serif;
-}
+      @font-face {
+          font-family: 'Dana1';
+          src: url(assets/fonts/Dana-Black.ttf);
+          src: url(assets/fonts/Dana-Black.ttf) format('ttf');
+             font-display: swap;
+      }
+
+      @font-face {
+          font-family: 'Dana2';
+          src: url(assets/fonts/Dana-Medium.ttf);
+          src: url(assets/fonts/Dana-Medium.ttf) format('ttf');
+             font-display: swap;
+      }
+
+      @font-face {
+          font-family: 'Dana3';
+          src: url(assets/fonts/Dana-Bold.ttf);
+          src: url(assets/fonts/Dana-Bold.ttf) format('ttf');
+             font-display: swap;
+      }
+
+      * {
+          font-family: 'Dana1';
+
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+          font-family: 'Dana1';
+
+      }
+
+      .font {
+          font-family: 'Dana1';
+      }
+
+      .font-bold {
+          font-family: 'Dana1';
+          position: relative;
+          z-index: 999;
+      }
+
+      p {
+          font-family: 'Dana1';
+      }
+
+      /* end font */
 /* اطلاعیه ها */
 span.badge.new:after {
     content: ' جدید';

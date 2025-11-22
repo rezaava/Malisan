@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\site;
 
+use App\Models\Course;
 use App\Models\Fcm;
 use App\Models\CourseUser;
 
@@ -188,7 +189,7 @@ class AuthController extends Controller
                     $random = $surveys->random();
                     if ($random->type != '1') {
 
-                        $random['options'] =  Option::where('survey_id', $random->id)->get();
+                        $random['options'] = Option::where('survey_id', $random->id)->get();
                     }
                     // return $random;
                     $user = $user2;
@@ -204,5 +205,48 @@ class AuthController extends Controller
                 }
             }
         }
+    }
+    public function survey()
+    {
+
+        $random['options'] = null;
+
+        $user = Auth::user();
+        if ($user->hasRole('student')) {
+            $courses = $user->courses()->pluck('course_id');
+
+            $teacherCourses = CourseUser::where('role_id', '3')
+                ->whereIn('course_id', $courses)->pluck('user_id');
+            foreach ($teacherCourses as $item) {
+                $item = -$item;
+            }
+            $answers = OptionUser::where('user_id', $user->id)->pluck('survey_id');
+            $surveys = Survey::where(function ($query) use ($courses, $teacherCourses) {
+                $query->whereIn('group', $courses)->orWhere('group', '0')->orWhereIn('user_id', $teacherCourses);
+            })->whereNotIn('id', $answers)->where('active', '1')->get();
+            if (count($surveys)) {
+                $random = $surveys->random();
+                if ($random->type != '1') {
+                    $options = Option::where('survey_id', $random->id)->get();
+                    $random['options'] = $options;
+                }
+                return redirect('/dashboard/courses/list');
+                // return response()->json([
+                //     'status' => 'ok',
+                //     'message' => 'نظر سنجی',
+                //     'empty' => '0',
+                //     'survey' => $random,
+                // ], 200,
+                //     array('Content-Type' => 'application/json; charset=utf-8'),
+                //     JSON_UNESCAPED_UNICODE);
+            }
+        }
+        // return response()->json([
+        //     'status' => 'ok',
+        //     'message' => 'نظرسنجی وجود ندارد',
+        //     'empty' => '1',
+        // ], 200,
+        //     array('Content-Type' => 'application/json; charset=utf-8'),
+        //     JSON_UNESCAPED_UNICODE);
     }
 }

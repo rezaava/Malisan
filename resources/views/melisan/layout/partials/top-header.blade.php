@@ -16,20 +16,20 @@
             <ul class="navbar-list ">
                 <li>
                     <!-- آیکون سوالات -->
-                    <a class="icon-btn" @if($user->hasRole('teacher')) href="{{asset('/files/help.pdf')}}"
+                    <a class="" @if($user->hasRole('teacher')) href="{{asset('/files/help.pdf')}}"
                     @elseif($user->hasRole('student')) href="{{asset('/files/help2.pdf')}}" @endif data-target="">
                         <span>❓</span>
                     </a>
                 </li>
-
-                <li> <!-- آیکون پیام‌ها --></li>
-                <a class="icon-btn" href="/dashboard/chat">
-                    <span>💬</span>
-                </a>
+                <!-- آیکون پیام‌ها -->
+                <li>
+                    <a class="" href="/dashboard/chat">
+                        <span>💬</span>
+                    </a>
                 </li>
                 <li>
                     <!-- پروفایل به صورت آیکون -->
-                    <a class="profile-btn" href="/dashboard/user/{{$user->id}}">
+                    <a class="" href="/dashboard/user/{{$user->id}}">
                         <span class="avatar-status avatar-online">
                             <img src="{{ asset('/files/user/' . $user->image) }}" alt="profile">
                         </span>

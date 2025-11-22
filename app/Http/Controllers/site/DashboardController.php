@@ -45,7 +45,8 @@ class DashboardController extends Controller
         //  return 'test';
             $user2 = User::where('national', $user->national)->where('role', 2)->first();
                     //  return $user2;
-            return view('melisan.dashbord.user.index', compact('user', 'user2', 'aneto', 'angizesh', 'content', 'mosabeghat'))
+            return view('melisan.dashbord.user.index',
+             compact('user', 'user2', 'aneto', 'angizesh', 'content', 'mosabeghat'))
                 ->with([
                     'pageTitle' => 'صفحه مدرس',
                     'pageName' => 'مدرس',
