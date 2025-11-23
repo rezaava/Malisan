@@ -80,8 +80,7 @@
             <!-- آزمون‌ها -->
                <div class="col-12 col-md-6 ">
                 <a href="/dashboard/konkor/list" class="btn-card-dashboard lessons-dashboard" 
-                style="
-                background: linear-gradient(135deg, #db5e15, #185a9d);" >
+               >
                     <div class="btn-content-dashboard">
                                   <i class="fas fa-clipboard-list fa-2x"></i>
                         <div class="btn-title-dashboard">آزمون ها</div>

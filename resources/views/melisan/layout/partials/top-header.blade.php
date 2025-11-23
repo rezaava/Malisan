@@ -17,17 +17,16 @@
                 <li>
                     <!-- آیکون سوالات -->
                     <a class="" @if($user->hasRole('teacher')) href="{{asset('/files/help.pdf')}}"
-                    @elseif($user->hasRole('student')) href="{{asset('/files/help2.pdf')}}" @endif data-target="">
-                        <span>❓</span>
+                    @elseif($user->hasRole('student')) href="{{asset('/files/help2.pdf')}}" @endif 
+                    data-target="" style="font-size: 20px;">❓
                     </a>
                 </li>
                 <!-- آیکون پیام‌ها -->
                 <li>
-                    <a class="" href="/dashboard/chat">
-                        <span>💬</span>
-                    </a>
+                    <a class="" href="/dashboard/chat" style="font-size: 20px;">💬</a>
                 </li>
                 <li>
+         
                     <!-- پروفایل به صورت آیکون -->
                     <a class="" href="/dashboard/user/{{$user->id}}">
                         <span class="avatar-status avatar-online">
