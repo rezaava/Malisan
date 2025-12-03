@@ -68,7 +68,6 @@
         @elseif(Route::current()->getName() == 'exercise.edit')
             <li class=" "><a href="/dashboard">
 
-
                 </a></li>
             <li class="  " aria-current="page"><a href="/dashboard/courses/sessions?course_id={{$course->id}}">
                     <span>درس {{$course->name}}</span></a></li>

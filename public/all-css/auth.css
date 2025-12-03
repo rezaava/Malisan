@@ -1,0 +1,189 @@
+   /*----------------------------------------
+    Login Page
+------------------------------------------*/
+   .login-card-login {
+       width: 35%;
+       padding: 40px;
+       border-radius: 25px;
+       background: rgba(255, 255, 255, 0.07);
+       backdrop-filter: blur(20px);
+       box-shadow: 0 0 25px rgba(0, 0, 0, 0.35);
+       animation: fadeInScale 0.5s ease;
+       margin: 6% auto;
+   }
+
+   @keyframes fadeInScale {
+       from {
+           opacity: 0;
+           transform: scale(0.85);
+       }
+
+       to {
+           opacity: 1;
+           transform: scale(1);
+       }
+   }
+
+   .neon-line-login {
+       width: 100%;
+       height: 4px;
+       background: linear-gradient(90deg, transparent, #00eaff, transparent);
+       margin-bottom: 25px;
+       animation: neonGlow 2s infinite linear;
+   }
+
+   @keyframes neonGlow {
+       0% {
+           opacity: 0.3;
+       }
+
+       50% {
+           opacity: 1;
+       }
+
+       100% {
+           opacity: 0.3;
+       }
+   }
+
+   .h3-login {
+       color: #fff;
+       text-align: center;
+       margin-bottom: 25px;
+   }
+
+   /* راست چین کردن حالت floating bootstrap */
+   .form-floating>label {
+       right: 0 !important;
+       left: auto !important;
+       padding-right: 1rem;
+       text-align: right;
+   }
+
+   .form-floating .form-control {
+       background: rgba(255, 255, 255, 0.15) !important;
+       border: none;
+       border-radius: 12px;
+       height: 55px;
+       color: #fff;
+       text-align: right;
+   }
+
+   .form-control::placeholder {
+       color: transparent;
+   }
+
+   .form-control:focus {
+       background: rgba(255, 255, 255, 0.25) !important;
+       box-shadow: 0 0 10px #00eaff;
+       color: #fff;
+   }
+
+   .btn-modern-login {
+       background: linear-gradient(135deg, #00d4ff, #0077ff);
+       border: none;
+       border-radius: 12px;
+       height: 48px;
+       color: white;
+       font-size: 1.1rem;
+       margin-top: 10px;
+       box-shadow: 0 0 12px rgba(0, 185, 255, 0.6);
+       transition: 0.3s;
+   }
+
+   .btn-modern-login:hover {
+       transform: translateY(-2px);
+       box-shadow: 0 0 22px rgba(0, 185, 255, 1);
+   }
+
+   .login-bg {
+       background-image: url('/files/flat-bg.jpg');
+       background-repeat: no-repeat;
+       background-size: cover;
+   }
+
+   @media (max-width: 576px) {
+       .login-card-login {
+           width: 85%;
+           padding: 35px;
+       }
+
+       .form-floating .form-control {
+           height: 52px;
+       }
+   }
+
+   .icon-input {
+       position: relative;
+   }
+
+   .icon-input i.material-icons {
+       position: absolute;
+       top: 50%;
+       left: 12px;
+       /* فاصله از سمت چپ برای راست‌چین کردن */
+       transform: translateY(-50%);
+       color: #00eaff;
+       font-size: 1.4rem;
+       pointer-events: none;
+       /* برای اینکه آیکن روی کلیک تاثیر نگذارد */
+   }
+
+   .icon-input .form-control {
+       padding-left: 45px;
+       /* جا برای آیکن */
+       border-radius: 12px;
+       background: rgba(255, 255, 255, 0.15);
+       color: #fff;
+   }
+
+   .icon-input .form-control:focus {
+       background: rgba(255, 255, 255, 0.25);
+       box-shadow: 0 0 10px #00eaff;
+       color: #fff;
+   }
+
+   .icon-input label {
+       right: 0 !important;
+       left: auto !important;
+       padding-right: 1rem;
+   }
+
+   a {
+       color: #00eaff;
+       text-decoration: none;
+   }
+
+   a:hover {
+       color: #00bcd4;
+   }
+     /* start font */
+
+
+      @font-face {
+          font-family: 'Dana1';
+          src: url(assets/fonts/Dana-Black.ttf);
+          src: url(assets/fonts/Dana-Black.ttf) format('ttf');
+          font-size: 40px;
+          font-display: swap;
+      }
+
+      @font-face {
+          font-family: 'Dana2';
+          src: url(assets/fonts/Dana-Medium.ttf);
+          src: url(assets/fonts/Dana-Medium.ttf) format('ttf');
+          font-display: swap;
+      }
+
+      @font-face {
+          font-family: 'Dana3';
+          src: url(assets/fonts/Dana-Bold.ttf);
+          src: url(assets/fonts/Dana-Bold.ttf) format('ttf');
+          font-display: swap;
+          font-size: 50px;
+      }
+
+      * {
+          font-family: 'Dana3';
+
+      }

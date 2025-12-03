@@ -1,73 +1,93 @@
-@extends('management.auth.layout.master')
-@section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css-rtl/pages/login.css') }}">
-@endsection
-@section('title', 'ورود به حساب کاربری')
-@section('main-content')
+<html class="loading" lang="fa" data-textdirection="rtl">
+<!-- BEGIN: Head-->
 
-    <body
-        class="vertical-layout vertical-menu-collapsible page-header-dark vertical-modern-menu preload-transitions 1-column login-bg   blank-page blank-page"
-        data-open="click" data-menu="vertical-modern-menu" data-col="1-column">
-        <div class="row">
-            <div class="col s12">
-                <div class="container">
-                    <div id="login-page" class="row">
-                        <div class="col s12 m6 l4 z-depth-4 card-panel border-radius-6 login-card bg-opacity-8">
-                            <form class="login-form" action="{{ route('login') }}" method="POST">
-                                @csrf
-                                <div class="row">
-                                    <div class="input-field col s12">
-                                        <h5 class="ml-4">ورود</h5>
-                                    </div>
-                                </div>
-                                <div class="row margin">
-                                    <div class="input-field col s12">
-                                        <i class="material-icons prefix pt-2">person_outline</i>
-                                        <input id="username" type="text" name="national">
-                                        <label for="username" class="center-align">نام کاربری</label>
-                                    </div>
-                                </div>
-                                <div class="row margin">
-                                    <div class="input-field col s12">
-                                        <i class="material-icons prefix pt-2">lock_outline</i>
-                                        <input id="password" type="password" name="password">
-                                        <label for="password">رمز عبور</label>
-                                    </div>
-                                </div>
-{{--                                <div class="row">--}}
-{{--                                    <div class="col s12 m12 l12 ml-2 mt-1">--}}
-{{--                                        <p>--}}
-{{--                                            <label>--}}
-{{--                                                <input type="checkbox" />--}}
-{{--                                                <span>مرا به خاطر بسپار</span>--}}
-{{--                                            </label>--}}
-{{--                                        </p>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-                                <div class="row">
-                                    <div class="input-field col s12">
-                                        <input type="submit"
-                                            class="btn waves-effect waves-light border-round gradient-45deg-purple-deep-orange col s12"
-                                            value="وارد شدن">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="input-field col s6 m6 l6">
-                                        <p class="margin medium-small"><a href="{{ route('register') }}">اکنون ثبت نام
-                                                کنید</a>
-                                        </p>
-                                    </div>
-{{--                                    <div class="input-field col s6 m6 l6">--}}
-{{--                                        <p class="margin right-align medium-small"><a href="user-forgot-password.html">رمز--}}
-{{--                                                عبور را فراموش کرده اید؟</a></p>--}}
-{{--                                    </div>--}}
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="content-overlay"></div>
-            </div>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+ 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="author" content="Reza Avareh">
+    <title>ملیسان | @yield('title')</title>
+    <link rel="apple-touch-icon" href="{{ asset('app-assets/images/favicon/apple-touch-icon-152x152.png') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('app-assets/images/favicon/favicon-32x32.png') }}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="all-css/app-assets/sweetalert.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('all-css/auth.css') }}">
+    {{-- here For Add Specify Page Styles --}}
+    @yield('styles')
+</head>
+<!-- END: Head-->
+
+<body class="login-bg">
+    <div class="container">
+        <div class="login-card-login ">
+            <div class="neon-line-login"></div>
+            <h3 class="h3-login">ورود به حساب</h3>
+            <form action="{{ route('login') }}" method="POST">
+                @csrf
+                <!-- Floating Label اصلی Bootstrap -->
+            <div class="form-floating mb-3 icon-input">
+    <input type="text" class="form-control" id="username" placeholder="نام کاربری" name="national">
+    <label for="username">نام کاربری</label>
+    <i class="material-icons">person_outline</i>
+</div>
+
+<div class="form-floating mb-3 icon-input">
+    <input type="password" class="form-control" id="password" placeholder="رمز عبور" name="password">
+    <label for="password">رمز عبور</label>
+    <i class="material-icons">lock_outline</i>
+</div>
+
+                {{-- <div class="row">--}}
+                    {{-- <div class="col s12 m12 l12 ml-2 mt-1">--}}
+                        {{-- <p>--}}
+                            {{-- <label>--}}
+                                {{-- <input type="checkbox" />--}}
+                                {{-- <span>مرا به خاطر بسپار</span>--}}
+                                {{-- </label>--}}
+                            {{-- </p>--}}
+                        {{-- </div>--}}
+                    {{-- </div>--}}
+
+                <button class="btn-modern-login w-100">ورود</button>
+
+                <p class="text-center mt-4" style="color:white;">
+                    حساب ندارید؟
+                    <a href="{{ route('register') }}">ثبت‌نام</a>
+                </p>
+            </form>
         </div>
-    </body>
-@endsection
+
+        {{-- <div class="input-field col s6 m6 l6">--}}
+            {{-- <p class="margin right-align medium-small"><a href="user-forgot-password.html">رمز--}}
+                    {{-- عبور را فراموش کرده اید؟</a></p>--}}
+            {{-- </div>--}}
+        <div class="content-overlay"></div>
+
+    </div>
+
+</body>
+{{-- import Notifications Program Status --}}
+@include('management.layout.notifications.notifications')
+{{-- import Error Program --}}
+@include('management.layout.notifications.error')
+{{-- Main Content Is Here --}}
+@yield('main-content')
+{{-- End Main Content --}}
+<!-- BEGIN VENDOR JS-->
+<script src="{{ asset('app-assets/js/vendors.min.js') }}"></script>
+<!-- BEGIN VENDOR JS-->
+<!-- BEGIN PAGE VENDOR JS-->
+<!-- END PAGE VENDOR JS-->
+<!-- BEGIN THEME  JS-->
+<script src="{{ asset('app-assets/js/plugins.min.js') }}"></script>
+<script src="{{ asset('app-assets/js/search.min.js') }}"></script>
+<script src="{{ asset('app-assets/js-rtl/custom/custom-script-rtl.min.js') }}"></script>
+<!-- END THEME  JS-->
+<!-- BEGIN PAGE LEVEL JS-->
+<!-- END PAGE LEVEL JS-->
+{{-- here For Ad Specify Pages Js --}}
+@yield('js')
+
+</html>

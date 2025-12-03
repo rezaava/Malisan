@@ -56,7 +56,7 @@
                     <br>
                     @yield('main-content')
                 </div>
-
+<br>
                 <!-- BEGIN: footer-->
                 <footer class="footer-dashbord">
                     <div class="container-dushbord ">

@@ -150,16 +150,15 @@
       }
 
       .menu-container .nav-link:hover {
-          background: rgb(235, 235, 235);
+          background: rgba(255, 60, 0, 0.15);
           color: #000000 !important;
-          transform: translateX(5px);
+          /* transform: translateX(5px); */
       }
 
       .nav_active {
-          background: var(--gradient-nav);
-          /* border-radius: 20px 0 0 20px ; */
-          color: #fff;
-          /* transform: translateX(5px); */
+          background:  #690d83;
+          font-size: large;
+          color: #ffffff;
       }
 
       .menu-container .footer {

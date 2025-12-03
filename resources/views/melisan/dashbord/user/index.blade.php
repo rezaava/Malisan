@@ -52,7 +52,7 @@
             <!-- درس‌ها -->
             <div class="col-12 col-md-6">
                 <a href="dashboard/courses/list" class="btn-card-dashboard lessons-dashboard" 
-                       style=" background: linear-gradient(135deg, #43cea2, #185a9d);" >
+                         style=" background: #690d83" >
                     <div class="btn-content-dashboard">
                                     <i class="fas fa-book fa-2x"></i>
                         <div class="btn-title-dashboard">درس‌ها</div>
@@ -66,7 +66,7 @@
           <!-- دوره‌ها -->
             <div class="col-12 col-md-6 ">
                 <a href="/publics" class="btn-card-dashboard lessons-dashboard" 
-                style="   background: linear-gradient(135deg, #6a11cb, #2575fc);" >
+                style=" background: #690d83">
                     <div class="btn-content-dashboard">
                               <i class="fas fa-graduation-cap fa-2x"></i>
                         <div class="btn-title-dashboard">دوره ها</div>
@@ -80,7 +80,7 @@
             <!-- آزمون‌ها -->
                <div class="col-12 col-md-6 ">
                 <a href="/dashboard/konkor/list" class="btn-card-dashboard lessons-dashboard" 
-               >
+                style=" background: #690d83" >
                     <div class="btn-content-dashboard">
                                   <i class="fas fa-clipboard-list fa-2x"></i>
                         <div class="btn-title-dashboard">آزمون ها</div>
@@ -94,7 +94,7 @@
         @if($user->hasRole('teacher'))
          <div class="col-12 col-md-6">
                 <a href="dashboard/courses/list" class="btn-card-dashboard lessons-dashboard" 
-                       style=" background: linear-gradient(135deg, #43cea2, #185a9d);" >
+                       style=" background: #690d83" >
                     <div class="btn-content-dashboard">
                                      <i class="fas fa-user-graduate fa-2x"></i>
                         <div class="btn-title-dashboard">دانشجوها</div>

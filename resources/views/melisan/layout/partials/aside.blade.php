@@ -10,7 +10,6 @@
         <li></li>
         <li class="nav-item {{ request()->routeIs('dashboard') ? 'nav_active' : '' }}">
             <a class="nav-link" href="{{ route('dashboard') }}">
-
                 <i class='bx bx-desktop fs-4 text-primary'></i>میزکار </a>
         </li>
         @if($user->hasRole('student'))
