@@ -4,7 +4,7 @@
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
- 
+
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta name="author" content="Reza Avareh">
@@ -27,17 +27,17 @@
             <form action="{{ route('login') }}" method="POST">
                 @csrf
                 <!-- Floating Label اصلی Bootstrap -->
-            <div class="form-floating mb-3 icon-input">
-    <input type="text" class="form-control" id="username" placeholder="نام کاربری" name="national">
-    <label for="username">نام کاربری</label>
-    <i class="material-icons">person_outline</i>
-</div>
+                <div class="form-floating mb-3 icon-input">
+                    <input type="text" class="form-control" id="username" placeholder="نام کاربری" name="national">
+                    <label for="username">نام کاربری</label>
+                    <i class="material-icons">person_outline</i>
+                </div>
 
-<div class="form-floating mb-3 icon-input">
-    <input type="password" class="form-control" id="password" placeholder="رمز عبور" name="password">
-    <label for="password">رمز عبور</label>
-    <i class="material-icons">lock_outline</i>
-</div>
+                <div class="form-floating mb-3 icon-input">
+                    <input type="password" class="form-control" id="password" placeholder="رمز عبور" name="password">
+                    <label for="password">رمز عبور</label>
+                    <i class="material-icons">lock_outline</i>
+                </div>
 
                 {{-- <div class="row">--}}
                     {{-- <div class="col s12 m12 l12 ml-2 mt-1">--}}

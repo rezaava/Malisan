@@ -11,11 +11,13 @@
 // use App\Http\Controllers\Dashboard\SurveyController;
 // use App\Http\Controllers\FooController;
 //////////////////////
+
 use App\Http\Controllers\site\AuthController;
 use App\Http\Controllers\site\CourseController;
 use App\Http\Controllers\site\UserController;
 use App\Http\Controllers\site\DashboardController;
 use App\Http\Controllers\site\LayoutController;
+use App\Http\Controllers\site\SessionController;
 
 
 //use Illuminate\Support\Facades\Route;

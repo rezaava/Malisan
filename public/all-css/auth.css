@@ -157,33 +157,211 @@
    a:hover {
        color: #00bcd4;
    }
-     /* start font */
+
+   /* start font */
 
 
-      @font-face {
-          font-family: 'Dana1';
-          src: url(assets/fonts/Dana-Black.ttf);
-          src: url(assets/fonts/Dana-Black.ttf) format('ttf');
-          font-size: 40px;
-          font-display: swap;
-      }
+   @font-face {
+       font-family: 'Dana1';
+       src: url(assets/fonts/Dana-Black.ttf);
+       src: url(assets/fonts/Dana-Black.ttf) format('ttf');
+       font-size: 40px;
+       font-display: swap;
+   }
 
-      @font-face {
-          font-family: 'Dana2';
-          src: url(assets/fonts/Dana-Medium.ttf);
-          src: url(assets/fonts/Dana-Medium.ttf) format('ttf');
-          font-display: swap;
-      }
+   @font-face {
+       font-family: 'Dana2';
+       src: url(assets/fonts/Dana-Medium.ttf);
+       src: url(assets/fonts/Dana-Medium.ttf) format('ttf');
+       font-display: swap;
+   }
 
-      @font-face {
-          font-family: 'Dana3';
-          src: url(assets/fonts/Dana-Bold.ttf);
-          src: url(assets/fonts/Dana-Bold.ttf) format('ttf');
-          font-display: swap;
-          font-size: 50px;
-      }
+   @font-face {
+       font-family: 'Dana3';
+       src: url(assets/fonts/Dana-Bold.ttf);
+       src: url(assets/fonts/Dana-Bold.ttf) format('ttf');
+       font-display: swap;
+       font-size: 50px;
+   }
 
-      * {
-          font-family: 'Dana3';
+   * {
+       font-family: 'Dana3';
 
-      }
+   }
+
+   /*----------------------------------------
+   reqister Page
+------------------------------------------*/
+
+   .register-card-req {
+       width: 35%;
+       padding: 40px;
+       border-radius: 25px;
+       background: rgba(255, 255, 255, 0.07);
+       backdrop-filter: blur(20px);
+       box-shadow: 0 0 25px rgba(0, 0, 0, 0.35);
+       animation: fadeInScale 0.5s ease;
+       margin: 2% auto;
+   }
+
+   @keyframes fadeInScale {
+       from {
+           opacity: 0;
+           transform: scale(0.85);
+       }
+
+       to {
+           opacity: 1;
+           transform: scale(1);
+       }
+   }
+
+   .neon-line-req {
+       width: 100%;
+       height: 2px;
+       background: linear-gradient(90deg, transparent, #00eaff, transparent);
+       margin-bottom: 25px;
+       animation: neonGlow 2s infinite linear;
+   }
+
+   @keyframes neonGlow {
+       0% {
+           opacity: 0.3;
+       }
+
+       50% {
+           opacity: 1;
+       }
+
+       100% {
+           opacity: 0.3;
+       }
+   }
+
+   .h3-title-req {
+       color: #fff;
+       text-align: center;
+       margin-bottom: 25px;
+   }
+
+   /* راست چین کردن floating */
+   .form-floating>label {
+       right: 0 !important;
+       left: auto !important;
+       padding-right: 1rem;
+       text-align: right;
+   }
+
+   .form-floating .form-control {
+       background: rgba(255, 255, 255, 0.15) !important;
+       border: none;
+       border-radius: 12px;
+       height: 55px;
+       color: #fff;
+       text-align: right;
+   }
+
+   .form-control::placeholder {
+       color: transparent;
+   }
+
+   .form-control:focus {
+       background: rgba(255, 255, 255, 0.25) !important;
+       box-shadow: 0 0 10px #00eaff;
+       color: #fff;
+   }
+
+   .btn-modern-req {
+       background: linear-gradient(135deg, #00d4ff, #0077ff);
+       border: none;
+       border-radius: 12px;
+       height: 48px;
+       color: white;
+       font-size: 1.1rem;
+       margin-top: 10px;
+       box-shadow: 0 0 12px rgba(0, 185, 255, 0.6);
+       transition: 0.3s;
+   }
+
+   .btn-modern-req:hover {
+       transform: translateY(-2px);
+       box-shadow: 0 0 22px rgba(0, 185, 255, 1);
+   }
+
+  /* === ریسپانسیو برای موبایل‌های کوچک (تا 400px) === */
+@media (max-width: 400px) {
+    .register-card-req {
+        width: 100%;
+        padding: 25px !important;
+        margin: 0 10px;
+    }
+
+    .h3-title-req {
+        font-size: 1.3rem;
+    }
+
+    .form-floating .form-control {
+        height: 48px;
+        font-size: 0.9rem;
+    }
+
+    .icon-input i {
+        font-size: 20px;
+        right: 10px;
+    }
+
+    .btn-modern-req {
+        height: 45px;
+        font-size: 1rem;
+    }
+
+    body.login-bg {
+        padding-top: 20px;
+        align-items: flex-start !important;
+    }
+}
+
+/* === ریسپانسیو برای موبایل‌های متوسط (تا 576px) === */
+@media (max-width: 576px) {
+    .register-card-req {
+        width: 100%;
+        padding: 30px;
+        margin: 0 15px;
+    }
+
+    .container {
+        padding: 0;
+    }
+}
+
+/* === ریسپانسیو برای تبلت (تا 768px) === */
+@media (max-width: 768px) {
+    .register-card-req {
+        width: 90%;
+    }
+
+    .form-floating .form-control {
+        height: 50px;
+    }
+
+    .icon-input i {
+        font-size: 22px;
+    }
+}
+
+/* === ریسپانسیو برای لپ‌تاپ کوچک (تا 992px) === */
+@media (max-width: 992px) {
+    .register-card-req {
+        width: 93%;
+    }
+}
+
+/* === کل صفحه در حالت عمودی وسط نباشد (برای گوشی‌ها بهتره) === */
+@media (max-width: 576px) {
+    body.login-bg {
+        height: auto;
+        min-height: 100vh;
+        display: block !important;
+        padding-top: 40px;
+    }
+}

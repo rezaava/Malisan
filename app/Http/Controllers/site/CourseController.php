@@ -37,7 +37,6 @@ class CourseController extends Controller
         $user = Auth::user();
         // $courses = $user->courses()->get();
         if ($user->hasRole('teacher')) {
-
             $courses = $user->courses()->get();
             foreach ($courses as $course) {
                 $teacher = $course->users()->where('role_id', '2')->pluck('user_id');
@@ -50,11 +49,8 @@ class CourseController extends Controller
                 $students = $course->users()->where('role_id', '3')->count();
                 $course['students'] = $students;
             }
-
         }
         $mosabeghat = Touruser::where('user_id', $user->id)->count();
-
-
         if ($user->hasRole('teacher')) {
             $user2 = User::where('national', $user->national)->where('role', 3)->first();
         } elseif ($user->hasRole('student')) {

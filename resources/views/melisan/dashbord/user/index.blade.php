@@ -41,75 +41,71 @@
             </form>
         </div>
     @else
-     <div class="card">
+        <div class="card">
             <div class="card-content">
                 <p class="caption mb-0">
                     {!!$angizesh->text!!}
             </div>
         </div>
-          <div class="main-card-dashboard">
-        <div class="row g-4">
-            <!-- درس‌ها -->
-            <div class="col-12 col-md-6">
-                <a href="dashboard/courses/list" class="btn-card-dashboard lessons-dashboard" 
-                         style=" background: #690d83" >
-                    <div class="btn-content-dashboard">
-                                    <i class="fas fa-book fa-2x"></i>
-                        <div class="btn-title-dashboard">درس‌ها</div>
+        <div class="main-card-dashboard mt-2">
+            <div class="row g-4">
+                <!-- درس‌ها -->
+                <div class="col-12 col-md-6">
+                    <a href="dashboard/courses/list" class="btn-card-dashboard lessons-dashboard">
+                        <div class="btn-content-dashboard">
+                            <i class="fas fa-book fa-2x"></i>
+                            <div class="btn-title-dashboard">درس‌ها</div>
+                        </div>
+                        <div class="icon-container-dashboard">
+                            <div class="btn-count-dashboard">3</div>
+                            <div class="btn-info-dashboard"> دروس فعال</div>
+                        </div>
+                    </a>
+                </div>
+                <!-- دوره‌ها -->
+                <div class="col-12 col-md-6 ">
+                    <a href="/publics" class="btn-card-dashboard lessons-dashboard" >
+                        <div class="btn-content-dashboard">
+                            <i class="fas fa-graduation-cap fa-2x"></i>
+                            <div class="btn-title-dashboard">دوره ها</div>
+                        </div>
+                        <div class="icon-container-dashboard">
+                            <div class="btn-count-dashboard">5</div>
+                            <div class="btn-info-dashboard"> دوره فعال</div>
+                        </div>
+                    </a>
+                </div>
+                <!-- آزمون‌ها -->
+                <div class="col-12 col-md-6 ">
+                    <a href="/dashboard/konkor/list" class="btn-card-dashboard lessons-dashboard" >
+                        <div class="btn-content-dashboard">
+                            <i class="fas fa-clipboard-list fa-2x"></i>
+                            <div class="btn-title-dashboard">آزمون ها</div>
+                        </div>
+                        <div class="icon-container-dashboard">
+                            <div class="btn-count-dashboard">5</div>
+                            <div class="btn-info-dashboard"> آزمون های درحال برگزاری</div>
+                        </div>
+                    </a>
+                </div>
+                @if($user->hasRole('teacher'))
+                    <div class="col-12 col-md-6">
+                        <a href="dashboard/courses/list" class="btn-card-dashboard lessons-dashboard">
+                            <div class="btn-content-dashboard">
+                                <i class="fas fa-user-graduate fa-2x"></i>
+                                <div class="btn-title-dashboard">دانشجوها</div>
+                            </div>
+                            <div class="icon-container-dashboard">
+                                <div class="btn-count-dashboard">3</div>
+                                <div class="btn-info-dashboard"> دانشجوی فعال</div>
+                            </div>
+                        </a>
                     </div>
-                    <div class="icon-container-dashboard">
-                        <div class="btn-count-dashboard">3</div>
-                        <div class="btn-info-dashboard"> دروس فعال</div>
-                    </div>
-                </a>
+                @endif
             </div>
-          <!-- دوره‌ها -->
-            <div class="col-12 col-md-6 ">
-                <a href="/publics" class="btn-card-dashboard lessons-dashboard" 
-                style=" background: #690d83">
-                    <div class="btn-content-dashboard">
-                              <i class="fas fa-graduation-cap fa-2x"></i>
-                        <div class="btn-title-dashboard">دوره ها</div>
-                    </div>
-                    <div class="icon-container-dashboard">
-                        <div class="btn-count-dashboard">5</div>
-                        <div class="btn-info-dashboard"> دوره فعال</div>
-                    </div>
-                </a>
-            </div>
-            <!-- آزمون‌ها -->
-               <div class="col-12 col-md-6 ">
-                <a href="/dashboard/konkor/list" class="btn-card-dashboard lessons-dashboard" 
-                style=" background: #690d83" >
-                    <div class="btn-content-dashboard">
-                                  <i class="fas fa-clipboard-list fa-2x"></i>
-                        <div class="btn-title-dashboard">آزمون ها</div>
-                    </div>
-                    <div class="icon-container-dashboard">
-                        <div class="btn-count-dashboard">5</div>
-                        <div class="btn-info-dashboard"> آزمون های درحال برگزاری</div>
-                    </div>
-                </a>
-            </div>
-        @if($user->hasRole('teacher'))
-         <div class="col-12 col-md-6">
-                <a href="dashboard/courses/list" class="btn-card-dashboard lessons-dashboard" 
-                       style=" background: #690d83" >
-                    <div class="btn-content-dashboard">
-                                     <i class="fas fa-user-graduate fa-2x"></i>
-                        <div class="btn-title-dashboard">دانشجوها</div>
-                    </div>
-                    <div class="icon-container-dashboard">
-                        <div class="btn-count-dashboard">3</div>
-                        <div class="btn-info-dashboard"> دانشجوی فعال</div>
-                    </div>
-                </a>
-            </div>
-        @endif
         </div>
-    </div>
-   
-    
+
+
     @endif
 
 @endsection

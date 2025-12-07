@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 
-<html >
+<html>
 
 <header>
-    
+
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="author" content="Reza avareh">
@@ -25,17 +25,34 @@
     <link rel="stylesheet" href="{{ asset('all-css/app-assets/vendors.min.css') }}">
     <!-- <link rel="stylesheet" type="text/css" href="{{ asset('all-css/style.min.css') }}"> -->
     <link rel="stylesheet" href="{{ asset('all-css/style.css') }}">
+      <link rel="stylesheet" href="{{ asset('all-css/style2.css') }}">
     <link rel="stylesheet" href="{{ asset('all-css/my-style.css') }}">
     @yield('add-styles')
     <!-- Boxicons -->
     <!-- <link href="all-css/assets/fonts/Boxicons.min.css" rel="stylesheet"> -->
     <style>
-        #main {
+        .main-master {
             padding-right: 50px;
+            margin-top: 5%;
+            margin-right: 15%;
         }
 
         footer {
             padding-right: 40%;
+        }
+
+        @media(max-width: 768px) {
+            .main-master {
+                margin-top: 15%;
+                margin-right: 5%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-master {
+                margin-top: 15%;
+                margin-right: 5%;
+            }
         }
     </style>
     </head>
@@ -50,13 +67,13 @@
             @include('melisan.layout.partials.aside')
 
             <!-- BEGIN: Page Main-->
-            <div id="main" style="margin-top:5%;margin-right: 15%;">
+            <div id="main" style="" class="main-master">
                 @include('melisan.layout.partials.page-detial')
                 <div class="container-dushbord">
                     <br>
                     @yield('main-content')
                 </div>
-<br>
+                <br>
                 <!-- BEGIN: footer-->
                 <footer class="footer-dashbord">
                     <div class="container-dushbord ">

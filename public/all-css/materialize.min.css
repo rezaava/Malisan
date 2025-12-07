@@ -2431,20 +2431,6 @@ ul:not(.browser-default)>li {
     box-shadow: none !important
 }
 
-.btn,
-.btn-floating,
-.btn-large,
-.btn-small,
-.card,
-.card-panel,
-.collapsible,
-.dropdown-content,
-.sidenav,
-.toast,
-.z-depth-1,
-nav {
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .12), 0 1px 5px 0 rgba(0, 0, 0, .2)
-}
 
 .btn-floating:hover,
 .btn-large:hover,
@@ -2556,10 +2542,6 @@ video.responsive-video {
     color: #999
 }
 
-.card .card-title.activator,
-nav ul a {
-    cursor: pointer
-}
 
 .pagination li i {
     font-size: 2rem
@@ -4260,12 +4242,7 @@ nav .input-field label.active i {
     position: fixed
 }
 
-.card,
-.card.large,
-.card.medium,
-.card.small {
-    position: relative
-}
+
 
 @media only screen and (min-width:601px) {
     nav.nav-extended .nav-wrapper {
@@ -4313,7 +4290,7 @@ html {
 
 
 
-.card,
+
 .card-panel {
     margin: .5rem 0 1rem;
     border-radius: 2px;
@@ -4500,12 +4477,7 @@ small {
     transition: box-shadow .25s
 }
 
-.card {
-    -webkit-transition: box-shadow .25s;
-    transition: box-shadow .25s
-}
-
-.card .card-title {
+.card-title {
     font-size: 24px;
     font-weight: 300
 }
@@ -4616,7 +4588,7 @@ small {
     padding-bottom: 64px
 }
 
-.card .card-image {
+.card-image {
     position: relative
 }
 
@@ -4645,9 +4617,7 @@ small {
     color: #fff
 }
 
-.card .card-content {
-    padding: 24px
-}
+
 
 .card .card-content p {
     margin: 0
