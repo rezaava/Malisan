@@ -46,10 +46,11 @@
                 <div class="row">
                     @foreach ($courses as $course)
                         <div class=" col-md-3 mt-3">
-                            <div class="card border-radius-7 "  style='' @if($course->active == 0) style="background-color: #d3d3d3" @endif>
+                            <div class="card border-radius-7 " style='    max-height: 97vh;
+                                height: 57vh;' @if($course->active == 0) style="background-color: #d3d3d3" @endif>
                                 <!-- کارت درس 3 -->
                                 <!-- <div class="col-md-3">
-                                                            <div class="card h-100"> -->
+                                                                                        <div class="card h-100"> -->
                                 <a href="/dashboard/courses/sessions?course_id={{ $course->id }}">
 
                                     <img src="{{ asset('/files/icons/' . $course->header . '.jpg') }}" class="card-img-top"
@@ -138,25 +139,30 @@
                                         </div>
                                     @endif
                                     <div class="card-body d-flex flex-column text-end">
-                                        <h5 class=""> {{$course->name}}</h5>
+                                        <span class="" style="    font-size: medium;"> {{$course->name}}</span>
+                                        <br>
+                                        <span class="ml-1 vertical-align-top" style="    color: black;
+                                font-size: 12px;">کد درس :{{ $course->code }}</span>
+                                        <!-- <p class="card-text "> -->
+                                        <!-- <a href="/dashboard/courses/sessions?course_id={{ $course->id }}"><i
+                                                                                class="material-icons">settings_ethernet</i></a> -->
 
-                                        <p class="card-text flex-grow-1">
-                                            <a href="/dashboard/courses/sessions?course_id={{ $course->id }}"><i
-                                                    class="material-icons">settings_ethernet</i></a>
-                                            <span class="ml-1 vertical-align-top">{{ $course->code }}</span>
-                                            <input type="text"
-                                                value="دانشجوی عزیز، برای دسترسی به درس {{ $course->name }} ابتدا
-                                                                از طریق سایت WWW.MALISAN.IR در سامانه آموزشی ملیسان با هویت واقعی ثبت نام کنید،
-                                                                سپس با استفاده از شناسه {{ $course->code }} در درس ذکر شده عضو شوید."
-                                                id="myInput{{$course->id}}" style="height: 0px;background: transparent;">
-                                        </p>
-
+                                        <!-- <input type="text"
+                                                                            value="دانشجوی عزیز، برای دسترسی به درس {{ $course->name }} ابتدا
+                                                                                            از طریق سایت WWW.MALISAN.IR در سامانه آموزشی ملیسان با هویت واقعی ثبت نام کنید،
+                                                                                            سپس با استفاده از شناسه {{ $course->code }} در درس ذکر شده عضو شوید."
+                                                                            id="myInput{{$course->id}}" style="height: 0px;background: transparent;"> -->
+                                        <!-- </p> -->
+                             
+                                    </div>
+                                    <div class="card-footer">
+                                            
                                         <a href="/dashboard/courses/sessions?course_id={{ $course->id }}"
                                             class="btn btn-view-list mt-2">مشاهده درس</a>
                                     </div>
                                 </a>
                                 <!-- </div>
-                                        </div> -->
+                                                                    </div> -->
 
 
 

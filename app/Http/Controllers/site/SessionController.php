@@ -12,84 +12,89 @@ use App\Models\ExerciseAnswer;
 use App\Models\Role;
 use App\Models\Session;
 use App\Models\Setting;
+use App\Models\Touruser;
 use App\Models\User;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Auth;
 use Validator;
 
 class SessionController extends Controller
 {
     //
-    function list(Request $request) {
+    function list(Request $request)
+    {
+        $user = Auth::user();
+      $mosabeghat = Touruser::where('user_id', $user->id)->count();
         $isJudment = true;
         $seesions = Session::where('course_id', $request->course_id)->pluck('id');
+/////چک
         $questionCount = count(Question::whereNull('status')->whereIn('session_id', $seesions)->get());
         $discussionCount = count(Discussion::whereNull('status')->whereIn('session_id', $seesions)->get());
 
-        if($discussionCount == 0 && $questionCount == 0){
+        if ($discussionCount == 0 && $questionCount == 0) {
             $isJudment = false;
         }
 
         $course = Course::findOrFail($request->course_id);
         $user = Auth::user();
-        $paid=0;
-        if($course->price==0)
-        $paid=1;
-                         $cu = CourseUser::where('course_id', $course->id)->where('user_id', $user->id)->first();
-if($cu){
-    if($course->price>0 && $cu->paid==1)
-        $paid=1;
-    $member=1;
-}else{
-    $member=0;
-}
+        $paid = 0;
+        if ($course->price == 0)
+            $paid = 1;
+        $cu = CourseUser::where('course_id', $course->id)->where('user_id', $user->id)->first();
+        if ($cu) {
+            if ($course->price > 0 && $cu->paid == 1)
+                $paid = 1;
+            $member = 1;
+        } else {
+            $member = 0;
+        }
         $setting = Setting::where('course_id', $course->id)->first();
         if ($user->hasRole('student')) {
+                 $user2 = User::where('national', $user->national)->where('role', 2)->first();
             $sessions = $course->sessions()->where('active', '1')->orderBy('number', 'desc')->get();
-            $count=$course->sessions()->where('active', '1')->orderBy('number', 'desc')->count();
-                         $cu = CourseUser::where('course_id', $course->id)->where('user_id', $user->id)->first();
-if($cu){
-    $member=1;
-            if($course->private==1 ) {
-                $now = Carbon::now();
-                $cu = CourseUser::where('course_id', $course->id)->where('user_id', $user->id)->first();
-                $time = $cu->created_at;
-                $time = Carbon::parse($time);
-                $diff = $time->diffInDays($now);
+            $count = $course->sessions()->where('active', '1')->orderBy('number', 'desc')->count();
+            $cu = CourseUser::where('course_id', $course->id)->where('user_id', $user->id)->first();
+            if ($cu) {
+                $member = 1;
+                if ($course->private == 1) {
+                    $now = Carbon::now();
+                    $cu = CourseUser::where('course_id', $course->id)->where('user_id', $user->id)->first();
+                    $time = $cu->created_at;
+                    $time = Carbon::parse($time);
+                    $diff = $time->diffInDays($now);
 
-                $diff = $count - floor($diff / $course->period) - 1;
+                    $diff = $count - floor($diff / $course->period) - 1;
 
-                foreach ($sessions as $key => $session) {
-                    if ($key < $diff)
-                        unset($sessions[$key]);
-                    
+                    foreach ($sessions as $key => $session) {
+                        if ($key < $diff)
+                            unset($sessions[$key]);
 
+
+                    }
                 }
+            } else {
+                $member = 0;
             }
-}else{
-    $member=0;
-}
         } else {
             $sessions = $course->sessions()->orderBy('number', 'desc')->get();
         }
-        
-                if ($user->hasRole('student')) {
 
-                foreach($sessions as  $key=>$session){
-                    if($member==0)
-                 {
-                     if ($session->number>1 )
-                            unset($sessions[$key]);
-                }elseif($paid==0)
-                     if ($session->number>4 )
-                            unset($sessions[$key]);
+        if ($user->hasRole('student')) {
 
-                    
-                }
-}
-        
+            foreach ($sessions as $key => $session) {
+                if ($member == 0) {
+                    if ($session->number > 1)
+                        unset($sessions[$key]);
+                } elseif ($paid == 0)
+                    if ($session->number > 4)
+                        unset($sessions[$key]);
+
+
+            }
+        }
+
 
 
         //tedad soalat khod azmaii
@@ -111,7 +116,7 @@ if($cu){
             $khodazmaii = 1;
         }
 
-//
+        //
         foreach ($sessions as $key => $session) {
 
             $ex = Exercise::where('session_id', $session->id)->get();
@@ -119,7 +124,7 @@ if($cu){
             $session['taklif_last'] = 1;
             $session['gozaresh_last'] = 1;
             $session['soal_last'] = 1;
-            
+
             if ($key != 0) {
                 if ($setting->taklif_last == 1) {
                     $session['taklif_last'] = 0;
@@ -129,18 +134,18 @@ if($cu){
                     $session['gozaresh_last'] = 0;
                 }
 
-if ($user->hasRole('student')){
-                if ($setting->soal_last == 1) {
-                    $session['soal_last'] = 0;
+                if ($user->hasRole('student')) {
+                    if ($setting->soal_last == 1) {
+                        $session['soal_last'] = 0;
+                    }
                 }
-}
-                
+
 
             }
 
         }
 
-//        if (sizeof($sessions)>0)
+        //        if (sizeof($sessions)>0)
         //            $discussion = $meeting->descussions()->where('user_id', Auth::user()->id)->first();
         //        else
         //            $discussion = null;
@@ -165,7 +170,7 @@ if ($user->hasRole('student')){
         if (Auth::user()->hasRole('student')) {
             $student = 1;
         }
-        return view('management.sessions.index', compact('setting', 'khodazmaii', 'sessions', 'course', 'student', 'isJudment','member','paid'))
+        return view('melisan.sessions.index', compact('setting','user2','mosabeghat', 'khodazmaii', 'sessions', 'course', 'student', 'isJudment', 'member', 'paid', 'user'))
             ->with([
                 'pageTitle' => 'صفحه مدیریت درس',
                 'pageName' => 'درس',
@@ -207,7 +212,7 @@ if ($user->hasRole('student')){
             $meeting->text = $request->text;
             $link = str_replace('http://', '', $request->majazi);
             $link = str_replace('https://', '', $link);
-//            return $link;
+            //            return $link;
             $meeting->majazi = $link;
 
             $l_link = str_replace('http://', '', $request->link);
@@ -229,12 +234,12 @@ if ($user->hasRole('student')){
                 $file->move($destination_path, $file_name);
                 $meeting->file = '/' . $file_name;
             }
-            $user=Auth::user();
+            $user = Auth::user();
 
             try {
                 $meeting->save();
                 DB::commit();
-                                $result=$this->anetoTrans($user,25000,5,'ایجاد جلسه '.$course->name);
+                $result = $this->anetoTrans($user, 25000, 5, 'ایجاد جلسه ' . $course->name);
 
                 return redirect('/dashboard/courses/sessions?course_id=' . $course->id)->with('success', 'محتوای درس جدید با موفقیت بارگذاری شد');
             } catch (\Exception $exception) {
@@ -253,7 +258,7 @@ if ($user->hasRole('student')){
             $course = Course::find($meeting->course_id);
             return view('management.sessions.edit', compact('meeting', 'course'));
         } else {
-             
+
             $data = $request->all();
             $rule = [
                 'number' => 'required',
@@ -270,12 +275,12 @@ if ($user->hasRole('student')){
             DB::beginTransaction();
 
             $meeting = Session::findOrFail($id);
-            if(strlen($request->text)>0)
-            $meeting->text = $request->text;
+            if (strlen($request->text) > 0)
+                $meeting->text = $request->text;
             $meeting->number = $request->number;
             $link = str_replace('http://', '', $request->majazi);
             $link = str_replace('https://', '', $link);
-//            return $link;
+            //            return $link;
             $meeting->aparat = $request->aparat;
 
             $meeting->majazi = $link;
@@ -285,7 +290,7 @@ if ($user->hasRole('student')){
             $meeting->link = $l_link;
 
             $meeting->name = $request->name;
-//            $meeting->course_id = $meeting->course_id;
+            //            $meeting->course_id = $meeting->course_id;
             if ($request->active) {
                 $meeting->active = '1';
             } else {
@@ -341,28 +346,28 @@ if ($user->hasRole('student')){
 
         return back()->with('success', 'با موفقیت انجام شد');
     }
-       public function deleteItem(Request $request)
+    public function deleteItem(Request $request)
     {
 
         $session = Session::findOrFail($request->session_id);
 
-        $session->file=null;
+        $session->file = null;
         $session->save();
 
         return back()->with('success', 'با موفقیت انجام شد');
     }
-    public function profEx(Request $request,$id)
+    public function profEx(Request $request, $id)
     {
-      $session=Session::find($id);
-        $tamrinha=Exercise::where('session_id',$id)->get();
+        $session = Session::find($id);
+        $tamrinha = Exercise::where('session_id', $id)->get();
         foreach ($tamrinha as $item) {
-            $answers=ExerciseAnswer::where('exercise_id',$item->id)->get();
+            $answers = ExerciseAnswer::where('exercise_id', $item->id)->get();
             foreach ($answers as $answer) {
-                $answer['user']=User::find($answer->user_id);
+                $answer['user'] = User::find($answer->user_id);
             }
-            $item['answers']=$answers;
+            $item['answers'] = $answers;
         }
-        return view('management.exercise.list',compact('tamrinha'));
+        return view('management.exercise.list', compact('tamrinha'));
     }
 
 }

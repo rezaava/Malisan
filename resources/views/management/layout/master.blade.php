@@ -89,4 +89,5 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="{{ asset('app-assets/js/axios.min.js') }}"></script>
 @yield('js')
 
+
 </html>
