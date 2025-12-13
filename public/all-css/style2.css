@@ -120,3 +120,66 @@ a {
     color: #8e24aa;
     text-decoration: none;
 }
+
+/* استایل منوی 3 نقطه  */
+       .course-card {
+            border: none;
+            border-radius: 22px;
+            overflow: hidden;
+            background: #fff;
+            transition: all .4s ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(79, 70, 229, .18);
+        }
+
+        .course-image-wrapper {
+            position: relative;
+        }
+
+        .course-image {
+            height: 190px;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        .image-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top,
+                    rgba(79, 70, 229, .45),
+                    rgba(0, 0, 0, 0));
+        }
+
+        .menu-btn {
+            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, .75);
+            border: none;
+            opacity: 0;
+            transition: .3s;
+        }
+
+        .course-card:hover .menu-btn {
+            opacity: 1;
+        }
+
+        .course-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .view-btn {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            border: none;
+            border-radius: 14px;
+            box-shadow: 0 10px 25px rgba(79, 70, 229, .35);
+            transition: .3s;
+        }
+
+        .view-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 35px rgba(79, 70, 229, .45);
+        }

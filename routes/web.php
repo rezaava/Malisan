@@ -20,7 +20,7 @@ use App\Http\Controllers\site\LayoutController;
 use App\Http\Controllers\site\SessionController;
 
 
-//use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
