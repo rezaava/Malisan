@@ -20,8 +20,7 @@
                 @CSRF
                 <input name="code" value="{{$course->code}} " style="display:none">
 
-                <button type="submit" class="chip gradient-45deg-purple-deep-orange gradient-shadow white-text"
-                >
+                <button type="submit" class="chip gradient-45deg-purple-deep-orange gradient-shadow white-text"  >
                     <div class="col s12 m4" style=" ">
                         <div class="chip gradient-45deg-purple-deep-orange gradient-shadow white-text"
                              style="width:75vw">
@@ -34,7 +33,7 @@
             </form>
         </div>
     @endif
-    @if($member==1)
+    <!-- @if($member==1)
         @if($course->private==1)
             @if($paid==0)
 
@@ -53,7 +52,7 @@
                 </div>
             @endif
         @endif
-    @endif
+    @endif -->
 
     @if($member==1)
 
@@ -115,13 +114,16 @@
                     @include('management.layout.components.btn-back.btn-back')
                     
                 @endif
-                <div class="col s12" style="width: fit-content; padding: 0 5px">
+                <!-- علامت تنظیمات  -->
+                <div class="col-md-12" style="width: fit-content; padding: 0 5px">
                         <a onclick="showDetail()"
                            class="mb-6 btn-floating waves-effect waves-light gradient-45deg-amber-amber gradient-shadow tooltipped"
                            data-position="bottom" data-tooltip="نمایش جزئیات">
                             <i class="material-icons dp48">settings</i>
                         </a>
                     </div>
+                                    <!-- پایان علامت تنظیمات  -->
+
             </div>
         </div>
 
@@ -154,7 +156,7 @@
             @if ($course->davari == 1 && $isJudment)
                 @if ($user->hasRole('student'))
                     <a href="/dashboard/referee/foo/?course_id={{ $course->id }}">
-                        <div class="col s6 m4  ">
+                        <div class="col-md-6 m4  ">
 
                             <div class="chip gradient-45deg-purple-deep-orange gradient-shadow white-text"
                                  style="width:200px">
@@ -167,7 +169,7 @@
             @endif
             @if ($user->hasRole('teacher'))
                 <a href="/dashboard/allprogress?course_id={{ $course->id }}">
-                    <div class="col s6 m4">
+                    <div class="col-md-6 m4">
 
                         <div class="chip gradient-45deg-purple-deep-orange gradient-shadow white-text"
                              style="width:200px">

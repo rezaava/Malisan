@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\site;
 
+use App\Models\Coworker;
 use App\Models\Touradmin;
 use App\Models\Touruser;
 use App\Models\User;
@@ -35,14 +36,17 @@ class CourseController extends Controller
     public function list()
     {
         $user = Auth::user();
+        $content = Coworker::where('user_id', $user->id)->first();
         // $courses = $user->courses()->get();
         if ($user->hasRole('teacher')) {
+            $user2 = User::where('national', $user->national)->where('role', 3)->first();
             $courses = $user->courses()->get();
             foreach ($courses as $course) {
                 $teacher = $course->users()->where('role_id', '2')->pluck('user_id');
                 $course['teacher'] = User::findOrFail($teacher)->first();
             }
         } elseif ($user->hasRole('student')) {
+            $user2 = User::where('national', $user->national)->where('role', 2)->first();
             // active درس های فعال
             $courses = $user->courses()->where('active', '1')->get();
             foreach ($courses as $course) {
@@ -51,20 +55,11 @@ class CourseController extends Controller
             }
         }
         $mosabeghat = Touruser::where('user_id', $user->id)->count();
-        if ($user->hasRole('teacher')) {
-            $user2 = User::where('national', $user->national)->where('role', 3)->first();
-        } elseif ($user->hasRole('student')) {
-            //  return 'test';
-            $user2 = User::where('national', $user->national)->where('role', 2)->first();
-        } elseif ($user->hasRole('touradmin')) {
-            $mosabeghat = Touradmin::where('user_id', $user->id)->count();
-        }
-
 
         return view(
             'melisan.management.courses.index'
             ,
-            compact('courses', 'user', 'mosabeghat','user2')
+            compact('courses', 'user', 'mosabeghat', 'user2', 'content')
         );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

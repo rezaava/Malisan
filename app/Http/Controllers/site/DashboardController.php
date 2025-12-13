@@ -25,9 +25,10 @@ class DashboardController extends Controller
 {
     public function dashboards(Request $request)
     {
-
+    //  return 'aaaaaaaaaa';
         $user = Auth::user();
         $content = Coworker::where('user_id', $user->id)->first();
+         
         $aneto = null;
         $angizesh = Angizesh::whereIn('level', [7, 8])->inRandomOrder()->first();
         $mosabeghat = Touruser::where('user_id', $user->id)->count();
@@ -44,7 +45,7 @@ class DashboardController extends Controller
         } elseif ($user->hasRole('student')) {
         //  return 'test';
             $user2 = User::where('national', $user->national)->where('role', 2)->first();
-                    //  return $user2;
+           
             return view('melisan.dashbord.user.index',
              compact('user', 'user2', 'aneto', 'angizesh', 'content', 'mosabeghat'))
                 ->with([
