@@ -16,10 +16,10 @@ use App\Models\Coworker;
 use App\Models\Touruser;
 use App\Models\User;
 use Illuminate\Support\Carbon;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use Auth;
-use Validator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class SessionController extends Controller
 {
@@ -28,24 +28,14 @@ class SessionController extends Controller
     {
    
         $user = Auth::user();
-<<<<<<< HEAD
-=======
-          $content = Coworker::where('user_id', $user->id)->first();
-  
->>>>>>> f7061b13a16ff61eb4bfbf7692ba6c89112d2a40
         $mosabeghat = Touruser::where('user_id', $user->id)->count();
         $isJudment = true;
         $seesions = Session::where('course_id', $request->course_id)->pluck('id');
         $questionCount = Question::whereNull('status')->whereIn('session_id', $seesions)->count();
-<<<<<<< HEAD
-=======
-        // return $questionCount;
->>>>>>> f7061b13a16ff61eb4bfbf7692ba6c89112d2a40
         $discussionCount = Discussion::whereNull('status')->whereIn('session_id', $seesions)->count();
         if ($discussionCount == 0 && $questionCount == 0) {
             $isJudment = false;
         }
-<<<<<<< HEAD
              $course = Course::where('id',$request->course_id);
              $Course_user = CourseUser::where('course_id', $course->id)->where('user_id', $user->id)->first();
      
@@ -79,35 +69,6 @@ class SessionController extends Controller
                     $time = Carbon::parse($time);
                     $diff = $time->diffInDays($now_time);
 
-=======
-        // return $isJudment;
-        $course = Course::where('id', $request->course_id)->first();
-        $Course_user = CourseUser::where('course_id', $course->id)->where('user_id', $user->id)->first();
-
-        // $paid = 0;
-        // if ($course->price == 0)
-        //     $paid = 1;
-
-        // if ($Course_user) {
-        //     if ($course->price > 0 && $Course_user->paid == 1)
-        //         $paid = 1;
-        //     $member = 1;
-        // } else {
-        //     $member = 0;
-        // }
-        $setting = Setting::where('course_id', $course->id)->first();
-        if ($user->hasRole('student')) {
-            $user2 = User::where('national', $user->national)->where('role', 2)->first();
-            $sessions = $course->sessions()->where('active', '1')->orderBy('number', 'desc')->get();
-            $count = $course->sessions()->where('active', '1')->orderBy('number', 'desc')->count();
-            if ($Course_user) {
-                $member = 1;
-                if ($course->private == 1) {
-                    $now_time = Carbon::now();                    // زمان حال
-                    $time = $Course_user->created_at;            // زمان ثبت‌نام در دوره
-                    $time = Carbon::parse($time);                // تبدیل به Carbon
-                    $diff = $time->diffInDays($now_time);        // تعداد روزهای گذشته از ثبت‌نام
->>>>>>> f7061b13a16ff61eb4bfbf7692ba6c89112d2a40
                     $diff = $count - floor($diff / $course->period) - 1;
                     //                   $diff قبلی: تعداد روزهای گذشته از ثبت‌نام
                     // $course->period: دوره زمانی (مثلاً تعداد روزهای هر ترم/جلسه)
@@ -215,12 +176,7 @@ class SessionController extends Controller
         if (Auth::user()->hasRole('student')) {
             $student = 1;
         }
-<<<<<<< HEAD
         return view('melisan.sessions.index', compact('setting', 'user2', 'mosabeghat', 'khodazmaii', 'sessions', 'course', 'student', 'isJudment', 'member', 'paid', 'user'))
-=======
-        // return $isJudment;
-        return view('melisan.sessions.index', compact('content','setting', 'user2', 'mosabeghat', 'khodazmaii', 'sessions', 'course', 'student', 'isJudment', 'member', 'user'))
->>>>>>> f7061b13a16ff61eb4bfbf7692ba6c89112d2a40
             ->with([
                 'pageTitle' => 'صفحه مدیریت درس',
                 'pageName' => 'درس',
