@@ -45791,7 +45791,7 @@
           padding-bottom: 5%;
       }
 
-      .btn {
+      .btn-new{
           background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
           border-radius: 50px;
           padding: 0 35px;
@@ -45810,7 +45810,7 @@
 
       }
 
-      .btn:hover {
+      .btn-new:hover {
           background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
           box-shadow: 0 6px 20px rgba(142, 36, 170, 0.6);
           transform: translateY(-2px);
@@ -45822,7 +45822,7 @@
           transition: var(--transition);
       }
 
-      .btn:hover .custom-send-material-icon {
+      .btn-new:hover .custom-send-material-icon {
           transform: translateX(5px);
       }
 
@@ -45909,7 +45909,7 @@
               font-size: medium;
           }
 
-          .btn {
+          .btn-new {
               width: 100%;
               padding: 0 20px;
           }
