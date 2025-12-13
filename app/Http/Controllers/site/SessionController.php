@@ -14,7 +14,7 @@ use App\Models\Session;
 use App\Models\Setting;
 use App\Models\Touruser;
 use App\Models\User;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use DB;
 use Illuminate\Http\Request;
 use Auth;
@@ -26,52 +26,52 @@ class SessionController extends Controller
     function list(Request $request)
     {
         $user = Auth::user();
-      $mosabeghat = Touruser::where('user_id', $user->id)->count();
+        $mosabeghat = Touruser::where('user_id', $user->id)->count();
         $isJudment = true;
         $seesions = Session::where('course_id', $request->course_id)->pluck('id');
-/////چک
-        $questionCount = count(Question::whereNull('status')->whereIn('session_id', $seesions)->get());
-        $discussionCount = count(Discussion::whereNull('status')->whereIn('session_id', $seesions)->get());
-
+        $questionCount = Question::whereNull('status')->whereIn('session_id', $seesions)->count();
+        $discussionCount = Discussion::whereNull('status')->whereIn('session_id', $seesions)->count();
         if ($discussionCount == 0 && $questionCount == 0) {
             $isJudment = false;
         }
+             $course = Course::where('id',$request->course_id);
+             $Course_user = CourseUser::where('course_id', $course->id)->where('user_id', $user->id)->first();
+     
+        // $paid = 0;
+        // if ($course->price == 0)
+        //     $paid = 1;
+    
+        // if ($Course_user) {
+        //     if ($course->price > 0 && $Course_user->paid == 1)
+        //         $paid = 1;
+        //     $member = 1;
+        // } else {
+        //     $member = 0;
+        // }
 
-        $course = Course::findOrFail($request->course_id);
-        $user = Auth::user();
-        $paid = 0;
-        if ($course->price == 0)
-            $paid = 1;
-        $cu = CourseUser::where('course_id', $course->id)->where('user_id', $user->id)->first();
-        if ($cu) {
-            if ($course->price > 0 && $cu->paid == 1)
-                $paid = 1;
-            $member = 1;
-        } else {
-            $member = 0;
-        }
+           /////چک
+
         $setting = Setting::where('course_id', $course->id)->first();
         if ($user->hasRole('student')) {
-                 $user2 = User::where('national', $user->national)->where('role', 2)->first();
+            $user2 = User::where('national', $user->national)->where('role', 2)->first();
+
             $sessions = $course->sessions()->where('active', '1')->orderBy('number', 'desc')->get();
             $count = $course->sessions()->where('active', '1')->orderBy('number', 'desc')->count();
-            $cu = CourseUser::where('course_id', $course->id)->where('user_id', $user->id)->first();
-            if ($cu) {
+          
+            if ($Course_user) {
                 $member = 1;
                 if ($course->private == 1) {
-                    $now = Carbon::now();
-                    $cu = CourseUser::where('course_id', $course->id)->where('user_id', $user->id)->first();
-                    $time = $cu->created_at;
+                    $now_time = Carbon::now();
+             
+                    $time = $Course_user->created_at;
                     $time = Carbon::parse($time);
-                    $diff = $time->diffInDays($now);
+                    $diff = $time->diffInDays($now_time);
 
                     $diff = $count - floor($diff / $course->period) - 1;
 
                     foreach ($sessions as $key => $session) {
                         if ($key < $diff)
                             unset($sessions[$key]);
-
-
                     }
                 }
             } else {
@@ -170,7 +170,7 @@ class SessionController extends Controller
         if (Auth::user()->hasRole('student')) {
             $student = 1;
         }
-        return view('melisan.sessions.index', compact('setting','user2','mosabeghat', 'khodazmaii', 'sessions', 'course', 'student', 'isJudment', 'member', 'paid', 'user'))
+        return view('melisan.sessions.index', compact('setting', 'user2', 'mosabeghat', 'khodazmaii', 'sessions', 'course', 'student', 'isJudment', 'member', 'paid', 'user'))
             ->with([
                 'pageTitle' => 'صفحه مدیریت درس',
                 'pageName' => 'درس',

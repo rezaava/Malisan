@@ -18,9 +18,10 @@ use App\Http\Controllers\site\UserController;
 use App\Http\Controllers\site\DashboardController;
 use App\Http\Controllers\site\LayoutController;
 use App\Http\Controllers\site\SessionController;
+use App\Http\Controllers\site\KonkorController;
 
 
-//use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -245,7 +246,7 @@ Route::middleware('auth')->group(function () {
             });
 
             Route::get('/barom', 'DashboardController@barom')->name('baroms');
-
+           
             Route::get('/faq', 'DashboardController@faq');
             Route::get('/konkor', 'KonkorController@konkor');
             Route::post('/konkor', 'KonkorController@konkorAdd');
@@ -262,11 +263,13 @@ Route::middleware('auth')->group(function () {
             Route::get('/konkor/decline', 'KonkorController@decline');
             Route::get('/konkor/active', 'KonkorController@active');
 
-            Route::get('/konkor/list', 'KonkorController@konkors')->name('konkors');
+            Route::get('/konkor/list',[App\Http\Controllers\site\KonkorController::class ,'konkors'])->name('konkors');
+            Route::get('/konkor/enter',[App\Http\Controllers\site\KonkorController::class , 'enter'])->name('enter');
+
             Route::get('/konkor/question/delete/{id}', 'KonkorController@questionDelete');
             Route::get('/konkor/question/edit/{id}', 'KonkorController@questionEditGet');
             Route::post('/konkor/question/edit/{id}', 'KonkorController@questionEditPost');
-            Route::get('/konkor/enter', 'KonkorController@enter')->name('enter');
+            
             Route::get('/konkor/box5', 'KonkorController@box5')->name('box5');
             Route::post('/konkor/answer/{id}', 'KonkorController@answer')->name('konkor.answer');
             Route::post('/konkor/upload/{id}', 'KonkorController@upload')->name('konkor.upload');

@@ -23,13 +23,25 @@
     <link rel="stylesheet" href="{{ asset('all-css/custom.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('all-css/materialize.min.css') }}">
     <link rel="stylesheet" href="{{ asset('all-css/app-assets/vendors.min.css') }}">
-    <!-- <link rel="stylesheet" type="text/css" href="{{ asset('all-css/style.min.css') }}"> -->
     <link rel="stylesheet" href="{{ asset('all-css/style.css') }}">
-      <link rel="stylesheet" href="{{ asset('all-css/style2.css') }}">
+    <link rel="stylesheet" href="{{ asset('all-css/style2.css') }}">
+    <link rel="stylesheet" href="{{ asset('all-css/style3.css') }}">
     <link rel="stylesheet" href="{{ asset('all-css/my-style.css') }}">
+
     @yield('add-styles')
     <!-- Boxicons -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('all-css/style.min.css') }}">
+
     <!-- <link href="all-css/assets/fonts/Boxicons.min.css" rel="stylesheet"> -->
+<link rel="stylesheet" href="{{ asset('app-assets/css-rtl/custom/style.css') }}">
+    
+
+
+    <!-- <link rel="stylesheet" type="text/css"
+        href="{{ asset('app-assets/css-rtl/themes/vertical-menu-nav-dark-template/materialize.min.css') }}">
+    <link rel="stylesheet" type="text/css"
+        href="{{ asset('app-assets/css-rtl/themes/vertical-menu-nav-dark-template/style.min.css') }}"> -->
+   
     <style>
         .main-master {
             padding-right: 50px;

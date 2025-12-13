@@ -1,0 +1,90 @@
+/* konkors */
+/* .row .col.m4{
+    right: auto;
+    left: auto;
+    margin-right: auto
+}
+.row .col.m4 {
+    width: 33.33333%
+}
+.row .col.s12{
+    right: auto;
+    left: auto;
+    width: 100%;
+    margin-right: auto;
+} */
+.blue-grey.darken-4 {
+    background-color: #263238 !important;
+    height: 100%;
+}
+.bg-image-1 {
+    background-image: url('/files/macbook.png') ;
+}
+.white-text {
+    color: #fff !important;
+}
+.card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.card-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.border-non {
+    margin-top: auto !important;
+}
+
+/* .card .card-content .card-title {
+    line-height: 32px;
+    display: block;
+    margin-bottom: 8px
+} */
+
+.card .card-content .card-title i {
+    line-height: 32px
+}
+.card-title {
+    font-size: 24px;
+    font-weight: 300;
+}
+.material-icons {
+    text-rendering: optimizeLegibility;
+    -webkit-font-feature-settings: 'liga';
+    font-feature-settings: 'liga'
+}
+.waves-effect img {
+    position: relative;
+    z-index: -1
+}
+.btn-konkor {
+    background-color: #690d83b7 !important;
+    line-height: 36px;
+    display: inline-block;
+    height: 36px;
+    padding: 0 2rem;
+    vertical-align: middle;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 22px;
+    color: #fff;
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+    overflow: hidden;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-transition: .3s ease-out;
+    transition: .3s ease-out;
+    vertical-align: middle;
+}
+.icon-background {
+    width: 50px;
+    height: 50px;
+    margin: 8px;
+    padding-top: 11px
+}
