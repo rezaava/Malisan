@@ -12,6 +12,9 @@
     /*  }*/
     /*}*/
     body{
+        background-image: url('/files/flat-bg.jpg');
+       background-repeat: no-repeat;
+       background-size: cover;
         padding-bottom: 10%;
     }
 </style>
