@@ -356,6 +356,7 @@ class CourseController extends Controller
 
     public function join(Request $request)
     {
+    
         $data = $request->all();
         $rule = [
             'code' => 'required',

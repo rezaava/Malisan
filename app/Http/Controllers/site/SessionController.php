@@ -16,33 +16,39 @@ use App\Models\Coworker;
 use App\Models\Touruser;
 use App\Models\User;
 use Illuminate\Support\Carbon;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use Auth;
-use Validator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class SessionController extends Controller
 {
     //
     function list(Request $request)
     {
-   
+
         $user = Auth::user();
+        $member = 0;
         $mosabeghat = Touruser::where('user_id', $user->id)->count();
+        $content = Coworker::where('user_id', $user->id)->first();
         $isJudment = true;
         $seesions = Session::where('course_id', $request->course_id)->pluck('id');
         $questionCount = Question::whereNull('status')->whereIn('session_id', $seesions)->count();
+
         $discussionCount = Discussion::whereNull('status')->whereIn('session_id', $seesions)->count();
+
         if ($discussionCount == 0 && $questionCount == 0) {
             $isJudment = false;
         }
-             $course = Course::where('id',$request->course_id);
-             $Course_user = CourseUser::where('course_id', $course->id)->where('user_id', $user->id)->first();
-     
+
+        $course = Course::where('id', $request->course_id)->first();
+
+        $Course_user = CourseUser::where('course_id', $course->id)->where('user_id', $user->id)->first();
+
         // $paid = 0;
         // if ($course->price == 0)
         //     $paid = 1;
-    
+
         // if ($Course_user) {
         //     if ($course->price > 0 && $Course_user->paid == 1)
         //         $paid = 1;
@@ -51,7 +57,7 @@ class SessionController extends Controller
         //     $member = 0;
         // }
 
-           /////چک
+        /////چک
 
         $setting = Setting::where('course_id', $course->id)->first();
         if ($user->hasRole('student')) {
@@ -59,12 +65,12 @@ class SessionController extends Controller
 
             $sessions = $course->sessions()->where('active', '1')->orderBy('number', 'desc')->get();
             $count = $course->sessions()->where('active', '1')->orderBy('number', 'desc')->count();
-          
+
             if ($Course_user) {
                 $member = 1;
                 if ($course->private == 1) {
                     $now_time = Carbon::now();
-             
+
                     $time = $Course_user->created_at;
                     $time = Carbon::parse($time);
                     $diff = $time->diffInDays($now_time);
@@ -91,16 +97,16 @@ class SessionController extends Controller
                     if ($session->number > 1)
                         unset($sessions[$key]);
                 } elseif ($member == 1)
-                ///  } elseif ($piad == 1)
+                    ///  } elseif ($piad == 1)
                     if ($session->number > 4)
                         unset($sessions[$key]);
             }
 
         } else {
-                  $user2 = User::where('national', $user->national)->where('role', 3)->first();
+            $user2 = User::where('national', $user->national)->where('role', 3)->first();
             $sessions = $course->sessions()->orderBy('number', 'desc')->get();
         }
-                    /////چک
+        /////چک
 
 
         //tedad soalat khod azmaii
@@ -176,13 +182,13 @@ class SessionController extends Controller
         if (Auth::user()->hasRole('student')) {
             $student = 1;
         }
-        return view('melisan.sessions.index', compact('setting', 'user2', 'mosabeghat', 'khodazmaii', 'sessions', 'course', 'student', 'isJudment', 'member', 'paid', 'user'))
+        return view('melisan.sessions.index', compact('setting', 'content', 'user2', 'mosabeghat', 'khodazmaii', 'sessions', 'course', 'student', 'isJudment', 'member', 'user'))
             ->with([
                 'pageTitle' => 'صفحه مدیریت درس',
                 'pageName' => 'درس',
                 'pageDescription' => Auth::user()->hasRole('student') ? "دوست من ! اینجا صفحه مدیریت کلاس درسته" : "مدرس گرامی ! داشبورد مدیریت درس در اختیار شماست",
             ]);
-            
+
     }
 
     public function create(Request $request)
