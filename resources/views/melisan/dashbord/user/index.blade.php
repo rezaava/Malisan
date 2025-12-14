@@ -41,7 +41,7 @@
             </form>
         </div>
     @else
-        <div class="card">
+        <div class="bg-card">
             <div class="card-content">
                 <p class="caption mb-0">
                     {!!$angizesh->text!!}

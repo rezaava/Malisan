@@ -1,6 +1,7 @@
 <nav class="navbar " id="menu">
     <div class="nav-container">
         <!-- سمت راست - لوگو و نام سایت -->
+         
         <div class="logo-section">
             <a href="#" class="logo">
                 <img src="{{ asset('files/main.png') }}" alt="" class="logo-icon">
