@@ -70,6 +70,8 @@
     </head>
 
     <body class="" data-open="click" data-menu="vertical-modern-menu" data-col="2-columns">
+    <div class="global-bg"></div>
+
         <div class="container_fluid">
 
             <!-- BEGIN: Header-->

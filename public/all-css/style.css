@@ -57,11 +57,26 @@
 
       }
 
-      body {
+      /* body {
           background-image: url('/files/flat-bg.jpg');
           background-repeat: no-repeat;
           background-size: cover;
-      }
+          
+        
+      } */
+      .global-bg {
+        position: fixed;
+        inset: 0;
+        background: url('/files/flat-bg.jpg') center / cover no-repeat;
+        z-index: 0;
+    }
+    
+    .container_fluid,
+    .main-master {
+        position: relative;
+        z-index: 1000;
+    }
+    
 
       h1,
       h2,

@@ -3,14 +3,6 @@
 
     <style>
 
-
-        {{--        box--}}
-
-
-
-
-
-        {{--end box--}}
 /**{*/
         /*font-size:1vw !important;*/
         /*}*/
@@ -86,11 +78,11 @@
     <div id="card-panel-type1" class="section">
         <div class="row">
             <div class=" s12 m6 l4 card-width">
-                <div class=" center-align ">
-                    <div class=" black-text">
+                <div class="text-center">
+                    <div class="black-text">
 
                         <div class="row ">
-                            <a href="#" class="col s4">
+                            <a href="#" class="col-md-4">
                                 @if(Session::get('plus')>0)
                                     <h5 class="icon-background circle gradient-45deg-green-teal white-text z-depth-3 mx-auto">
                                         <i class="material-icons">check</i>
@@ -115,7 +107,7 @@
                                     </b></p>
                                 <p class="black-text">وضعیت اخرین پاسخ</p>
                             </a>
-                            <a href="#" class="col s4">
+                            <a href="#" class="col-md-4">
                                 <h5 class="icon-background circle gradient-45deg-light-blue-cyan white-text z-depth-3 mx-auto">
                                     <i class="material-icons">
                                         account_balance_wallet
@@ -125,7 +117,7 @@
                                 <p class="black-text"><b>{{$alls_price}} ریال</b></p>
                                 <p class="black-text">درآمد کل</p>
                             </a>
-                            <a href="#" class="col s4">
+                            <a href="#" class="col-md-4">
                                 <h5 class="icon-background circle gradient-45deg-indigo-blue white-text z-depth-3 mx-auto">
                                     <i class="material-icons">card_giftcard</i>
 
@@ -207,8 +199,6 @@
 
             @csrf
             <h5 style="text-align:center;margin-right: 40px;margin-left:15px;
-
-
                         @if(strlen($question->question) != mb_strlen($question->question, 'utf-8'))
 
                         direction: rtl !important;
@@ -218,9 +208,10 @@
 
                 ">{{$question->question}}</h5>
             <input name="answer_id" value="" hidden>
+            <div class="row">
             @foreach($rand as $rr)
                 @if($rr==1)
-                    <div class="col s12 m6">
+                    <div class="col-md-6">
                         <label>
                             <input type="radio" id="answer1" name="answer" value="1">
                             <span
@@ -230,7 +221,7 @@
                         </label>
                     </div>
                 @elseif($rr==2)
-                    <div class="col s12 m6">
+                    <div class="col-md-6">
                         <label>
                             <input type="radio" id="answer2" name="answer" value="2">
                             <span
@@ -240,7 +231,7 @@
                         </label>
                     </div>
                 @elseif($rr==3)
-                    <div class="col s12 m6">
+                    <div class="col-md-6">
                         <label>
                             <input type="radio" id="answer3" name="answer" value="3">
                             <span
@@ -250,7 +241,7 @@
                         </label>
                     </div>
                 @elseif($rr==4)
-                    <div class="col s12 m6">
+                    <div class="col-md-6">
                         <label>
                             <input type="radio" id="answer4" name="answer" value="4">
                             <span
@@ -261,6 +252,7 @@
                     </div>
                 @endif
             @endforeach
+            </div>
                             <input name="sended" style="display:none" id="sended" type="text"  >
 
             {{--                <div class="row">--}}
