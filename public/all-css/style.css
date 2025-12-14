@@ -1,6 +1,6 @@
       :root {
           --gradient-nav: linear-gradient(-45deg, #690d83b7, #ff3c00d0);
-          --gradient-primary: linear-gradient(-45deg, #8e24aa, #3047afde);
+          --gradient-primary: linear-gradient(-45deg, #8e24aa, #ff3c00d0);
           --gradient-secondary: linear-gradient(-45deg, #7b1fa2, #ff5722);
 
           --text-color: #ffffff;
@@ -53,7 +53,14 @@
 
       * {
           font-family: 'Dana3';
+          scroll-behavior: smooth;
 
+      }
+
+      body {
+          background-image: url('/files/flat-bg.jpg');
+          background-repeat: no-repeat;
+          background-size: cover;
       }
 
       h1,
@@ -81,9 +88,7 @@
       }
 
       /* end font */
-      body {
-          background-color: #f2f4f8;
-      }
+
 
       /* :startMenu */
 
@@ -156,7 +161,7 @@
       }
 
       .nav_active {
-          background: var(  --secondary-color);
+          background: var(--secondary-color);
           font-size: large;
           color: #ffffff;
       }
@@ -45432,14 +45437,13 @@
           width: 60%;
           margin: 5% 25% 2% 25%;
           /* مرکز صفحه */
-          background: #ffffff;
           padding: 20px 30px;
-          border: 1px solid #e5e7eb;
+
           display: flex;
           justify-content: space-between;
           align-items: center;
-          /* background: linear-gradient(135deg, #ffffff, #f3f4f6); */
-          /* border-radius: 22px; */
+          background: rgba(255, 255, 255, 0.07);
+          backdrop-filter: blur(20px);
           box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
       }
 
@@ -45510,68 +45514,71 @@
           /* background: var(--gradient-nav); */
           background-color: #7b1fa2;
       }
-@media (max-width: 992px) {
-    .top-header-dashboard {
-        width: 80%;
-        padding: 18px 24px;
-    }
 
-    .welcome-text-dashboard {
-        font-size: 20px;
-    }
+      @media (max-width: 992px) {
+          .top-header-dashboard {
+              width: 80%;
+              padding: 18px 24px;
+          }
 
-    .breadcrumb-list-dashboard {
-        font-size: 13px;
-    }
-}
+          .welcome-text-dashboard {
+              font-size: 20px;
+          }
 
-/* === ریسپانسیو برای موبایل متوسط === */
-@media (max-width: 768px) {
-    .top-header-dashboard {
-        width: 90%;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-        padding: 18px 20px;
-    }
+          .breadcrumb-list-dashboard {
+              font-size: 13px;
+          }
+      }
 
-    .welcome-text-dashboard {
-        font-size: 18px;
-    }
+      /* === ریسپانسیو برای موبایل متوسط === */
+      @media (max-width: 768px) {
+          .top-header-dashboard {
+              width: 90%;
+              flex-direction: column;
+              align-items: flex-start;
+              gap: 10px;
+              padding: 18px 20px;
+          }
 
-    .breadcrumb-list-dashboard {
-        font-size: 12px;
-    }
+          .welcome-text-dashboard {
+              font-size: 18px;
+          }
 
-    .breadcrumb-list-dashboard li::after {
-        margin: 0 4px;
-    }
-}
+          .breadcrumb-list-dashboard {
+              font-size: 12px;
+          }
 
-/* === ریسپانسیو برای موبایل کوچک === */
-@media (max-width: 480px) {
-    .top-header-dashboard {
-        width: 95%;
-        padding: 15px 18px;
-        margin: 9% auto 2% auto;
-    }
+          .breadcrumb-list-dashboard li::after {
+              margin: 0 4px;
+          }
+      }
 
-    .welcome-text-dashboard {
-        font-size: 16px;
-        font-weight: 700;
-    }
+      /* === ریسپانسیو برای موبایل کوچک === */
+      @media (max-width: 480px) {
+          .top-header-dashboard {
+              width: 95%;
+              padding: 15px 18px;
+              margin: 9% auto 2% auto;
+          }
 
-    .breadcrumb-list-dashboard {
-        font-size: 11px;
-        flex-wrap: wrap;  /* جلوگیری از شکست زشت */
-        gap: 5px;
-    }
+          .welcome-text-dashboard {
+              font-size: 16px;
+              font-weight: 700;
+          }
 
-    .breadcrumb-list-dashboard li::after {
-        margin: 0 3px;
-        font-size: 10px;
-    }
-}
+          .breadcrumb-list-dashboard {
+              font-size: 11px;
+              flex-wrap: wrap;
+              /* جلوگیری از شکست زشت */
+              gap: 5px;
+          }
+
+          .breadcrumb-list-dashboard li::after {
+              margin: 0 3px;
+              font-size: 10px;
+          }
+      }
+
       /* start footer  */
       .footer-dashbord {
           display: flex;
@@ -45627,15 +45634,17 @@
       @media(max-width: 768px) {
           .container-dushbord {
               width: 100%;
-              margin:1%;
+              margin: 1%;
           }
       }
-   @media(max-width: 480px) {
+
+      @media(max-width: 480px) {
           .container-dushbord {
               width: 100%;
-              margin:1%;
+              margin: 1%;
           }
       }
+
       /* قسمت نظرسنجی 
        */
 
@@ -45791,7 +45800,7 @@
           padding-bottom: 5%;
       }
 
-      .btn {
+      .btn-new {
           background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
           border-radius: 50px;
           padding: 0 35px;
@@ -45810,7 +45819,7 @@
 
       }
 
-      .btn:hover {
+      .btn-new:hover {
           background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
           box-shadow: 0 6px 20px rgba(142, 36, 170, 0.6);
           transform: translateY(-2px);
@@ -45822,7 +45831,7 @@
           transition: var(--transition);
       }
 
-      .btn:hover .custom-send-material-icon {
+      .btn-new:hover .custom-send-material-icon {
           transform: translateX(5px);
       }
 
@@ -45909,7 +45918,7 @@
               font-size: medium;
           }
 
-          .btn {
+          .btn-new {
               width: 100%;
               padding: 0 20px;
           }

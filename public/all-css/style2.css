@@ -1,5 +1,6 @@
 .add-btn-list {
-    display: inline-flex; /* مهم برای <a> */
+    display: inline-flex;
+    /* مهم برای <a> */
     align-items: center;
     justify-content: center;
     width: 60px;
@@ -11,12 +12,13 @@
     font-weight: bold;
     cursor: pointer;
     overflow: hidden;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     transition: width 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55),
-                border-radius 0.5s,
-                box-shadow 0.3s,
-                background 0.5s ease;
-    text-decoration: none; /* حذف زیرخط لینک */
+        border-radius 0.5s,
+        box-shadow 0.3s,
+        background 0.5s ease;
+    text-decoration: none;
+    /* حذف زیرخط لینک */
     position: relative;
 }
 
@@ -30,8 +32,15 @@
 }
 
 @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
 }
 
 /* متن */
@@ -51,7 +60,7 @@
 .add-btn-list:hover {
     width: 200px;
     border-radius: 35px;
-    box-shadow: 0 12px 28px rgba(0,0,0,0.3);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
     justify-content: flex-start;
     padding-left: 20px;
     background: linear-gradient(135deg, #2575fc, #6a11cb);
@@ -61,12 +70,12 @@
     opacity: 1;
     max-width: 180px;
     transform: translateX(0);
-    text-shadow: 0 0 8px rgba(255,255,255,0.8);
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
 }
 
 .add-btn-list:hover .icon-list {
     transform: scale(1.3);
-    text-shadow: 0 0 8px rgba(255,255,255,0.9);
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.9);
 }
 
 /* کلیک */
@@ -79,10 +88,11 @@
     outline: 3px solid #2575fc;
     outline-offset: 4px;
 }
+
 /* افکت هاور روی کارت */
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    /* transform: translateY(-5px); */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
 }
 
@@ -97,7 +107,7 @@
 
 /* دکمه */
 .btn-view-list {
- background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: #fff;
     border-radius: 50px;
     transition: all 0.3s ease;
@@ -107,79 +117,88 @@
     background: linear-gradient(135deg, var(--primary-color), #6a11cb);
     transform: scale(1.03);
 }
-.bg-list{
+
+.bg-list {
     background-color: white;
     border: 2px solid rgb(78, 78, 78);
-    border-radius:  2px;
- 
+    border-radius: 2px;
+
 }
+
 a {
     -webkit-tap-highlight-color: transparent;
-      background-color: transparent;
+    background-color: transparent;
     -webkit-text-decoration-skip: objects;
     color: #8e24aa;
     text-decoration: none;
 }
 
 /* استایل منوی 3 نقطه  */
-       .course-card {
-            border: none;
-            border-radius: 22px;
-            overflow: hidden;
-            background: #fff;
-            transition: all .4s ease;
-        }
 
-        .course-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 30px 60px rgba(79, 70, 229, .18);
-        }
+.course-card-3nogte {
+    border: none;
+    border-radius: 22px;
+    background: #fff;
+    transition: all .4s ease;
+}
 
-        .course-image-wrapper {
-            position: relative;
-        }
+.course-card-3nogte:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 30px 60px rgba(79, 70, 229, .18);
+}
 
-        .course-image {
-            height: 190px;
-            object-fit: cover;
-            width: 100%;
-        }
+.course-image-wrapper-3nogte {
+    position: relative;
+    overflow: hidden;
+    /* فقط تصویر محدود شود */
+    border-top-left-radius: 22px;
+    border-top-right-radius: 22px;
+}
 
-        .image-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top,
-                    rgba(79, 70, 229, .45),
-                    rgba(0, 0, 0, 0));
-        }
+.course-image-3nogte {
+    height: 190px;
+    object-fit: cover;
+    width: 100%;
+}
 
-        .menu-btn {
-            backdrop-filter: blur(8px);
-            background: rgba(255, 255, 255, .75);
-            border: none;
-            opacity: 0;
-            transition: .3s;
-        }
+.image-overlay-3nogte {
+    position: absolute;
 
-        .course-card:hover .menu-btn {
-            opacity: 1;
-        }
+    background: linear-gradient(to top, rgba(79, 70, 229, .45), rgba(0, 0, 0, 0));
+}
 
-        .course-title {
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: #111827;
-        }
+.menu-btn-3nogte {
+    backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, .75);
+    border: none;
+    opacity: 0;
+    transition: .3s;
+}
 
-        .view-btn {
-            background: linear-gradient(135deg, #6366f1, #4f46e5);
-            border: none;
-            border-radius: 14px;
-            box-shadow: 0 10px 25px rgba(79, 70, 229, .35);
-            transition: .3s;
-        }
+.course-card-3nogte:hover .menu-btn-3nogte {
+    opacity: 1;
+}
 
-        .view-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 14px 35px rgba(79, 70, 229, .45);
-        }
+.course-title-3nogte {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.view-btn-3nogte {
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    border: none;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(79, 70, 229, .35);
+    transition: .3s;
+}
+
+.view-btn-3nogte:hover {
+    transform: translateY(2px);
+    box-shadow: 0 14px 35px rgba(79, 70, 229, .45);
+}
+
+.dropdown-menu {
+    inset: auto auto 0px 0px;
+
+text-align: right;}

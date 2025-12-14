@@ -1,58 +1,28 @@
 @extends('melisan.layout.master')
 @section('add-styles')
 
-    <style>
-        /**{*/
-        /*font-size:1vw !important;*/
-        /*}*/
-        *{
-            scroll-behavior: smooth;
-        }
-    </style>
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css-rtl/pages/page-account-settings.min.css') }}">
 @endsection
+
 @section('title', 'مدیریت درس')
 @section('main-content')
-    @if($member==0)
+@if($user->hasRole('student'))
         <div class="row">
-
             <form action="/dashboard/courses/join" method="post">
-                @CSRF
+                @csrf
                 <input name="code" value="{{$course->code}} " style="display:none">
-
                 <button type="submit" class="chip gradient-45deg-purple-deep-orange gradient-shadow white-text"  >
                     <div class="col s12 m4" style=" ">
                         <div class="chip gradient-45deg-purple-deep-orange gradient-shadow white-text"
-                             style="width:75vw">
+                             style="width:55vw">
                             <img src="../../../app-assets/images/icon/true.png" alt="Materialize">
                             عضویت
                         </div>
                     </div>
                 </button>
-
             </form>
         </div>
     @endif
-    <!-- @if($member==1)
-        @if($course->private==1)
-            @if($paid==0)
-
-                <div class="row">
-
-                    <a
-                        href="#">
-                        <div class="col s12 m4" style=" ">
-                            <div class="chip gradient-45deg-purple-deep-orange gradient-shadow white-text"
-                                 style="width:75vw">
-                                <img src="../../../app-assets/images/icon/dollar.png" alt="Materialize">
-                                برای مشاهده جلسات چهارم به بعد باید هزینه دوره را پرداخت کنید
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            @endif
-        @endif
-    @endif -->
 
     @if($member==1)
 
