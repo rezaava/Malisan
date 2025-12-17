@@ -36,11 +36,11 @@ class AuthController extends Controller
             Auth::login($user);
 
             $user = Auth::user();
-            $user2 = User::where('national', $user->national)->where('role', 2)->first();
+         
             $content = Coworker::where('user_id', $user->id)->first();
             $mosabeghat = Touruser::where('user_id', $user->id)->count();
             Session::put('user',$user);
-            Session::put('user2',$user2);
+           
             Session::put('content',$content);
             Session::put('mosabeghat',$mosabeghat);
 
@@ -55,11 +55,11 @@ class AuthController extends Controller
             $teacherCourses = CourseUser::where('role_id', '2')->whereIn('course_id', $courses)->pluck('user_id');
 
             $user = Auth::user();
-            $user2 = User::where('national', $user->national)->where('role', 2)->first();
+           
             $content = Coworker::where('user_id', $user->id)->first();
             $mosabeghat = Touruser::where('user_id', $user->id)->count();
             Session::put('user',$user);
-            Session::put('user2',$user2);
+           
             Session::put('content',$content);
             Session::put('mosabeghat',$mosabeghat);
 
@@ -88,11 +88,11 @@ class AuthController extends Controller
                 Auth::login($user);
 
                 $user = Auth::user();
-            $user2 = User::where('national', $user->national)->where('role', 2)->first();
+          
             $content = Coworker::where('user_id', $user->id)->first();
             $mosabeghat = Touruser::where('user_id', $user->id)->count();
             Session::put('user',$user);
-            Session::put('user2',$user2);
+            
             Session::put('content',$content);
             Session::put('mosabeghat',$mosabeghat);
 
@@ -109,7 +109,7 @@ class AuthController extends Controller
             $content = Coworker::where('user_id', $user->id)->first();
             $mosabeghat = Touruser::where('user_id', $user->id)->count();
             Session::put('user',$user);
-            Session::put('user2',$user2);
+           
             Session::put('content',$content);
             Session::put('mosabeghat',$mosabeghat);
 
@@ -193,11 +193,11 @@ class AuthController extends Controller
         Auth::login($user);
 
         $user = Auth::user();
-        $user2 = User::where('national', $user->national)->where('role', 2)->first();
+     
         $content = Coworker::where('user_id', $user->id)->first();
         $mosabeghat = Touruser::where('user_id', $user->id)->count();
         Session::put('user',$user);
-        Session::put('user2',$user2);
+       
         Session::put('content',$content);
         Session::put('mosabeghat',$mosabeghat);
 
