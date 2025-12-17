@@ -182,7 +182,7 @@ class SessionController extends Controller
         if (Auth::user()->hasRole('student')) {
             $student = 1;
         }
-    
+
         return view('melisan.sessions.index', compact('setting', 'content', 'user2', 'mosabeghat', 'khodazmaii', 'sessions', 'course', 'student', 'isJudment', 'member', 'user'))
             ->with([
                 'pageTitle' => 'صفحه مدیریت درس',
@@ -190,6 +190,27 @@ class SessionController extends Controller
                 'pageDescription' => Auth::user()->hasRole('student') ? "دوست من ! اینجا صفحه مدیریت کلاس درسته" : "مدرس گرامی ! داشبورد مدیریت درس در اختیار شماست",
             ]);
 
+    }
+   public function profEx(Request $request, $id)
+    {
+        $user = Auth::user();
+        $mosabeghat = Touruser::where('user_id', $user->id)->count();
+        if ($user->hasRole('student')) {
+            $user2 = User::where('national', $user->national)->where('role', 2)->first();
+        } elseif ('teacher') {
+            $user2 = User::where('national', $user->national)->where('role', 3)->first();
+        }
+
+        $session = Session::find($id);
+        $tamrinha = Exercise::where('session_id', $id)->get();
+        foreach ($tamrinha as $item) {
+            $answers = ExerciseAnswer::where('exercise_id', $item->id)->get();
+            foreach ($answers as $answer) {
+                $answer['user'] = User::find($answer->user_id);
+            }
+            $item['answers'] = $answers;
+        }
+        return view('management.exercise.list', compact('tamrinha','user','user2','mosabeghat'));
     }
 
     public function create(Request $request)
@@ -267,10 +288,17 @@ class SessionController extends Controller
 
     public function edit(Request $request, $id)
     {
+        $user = Auth::user();
+       $mosabeghat = Touruser::where('user_id', $user->id)->count();
+        if ($user->hasRole('student')) {
+            $user2 = User::where('national', $user->national)->where('role', 2)->first();
+        } elseif ('teacher') {
+            $user2 = User::where('national', $user->national)->where('role', 3)->first();
+        }
         if ($request->isMethod('get')) {
             $meeting = Session::findOrFail($id);
             $course = Course::find($meeting->course_id);
-            return view('management.sessions.edit', compact('meeting', 'course'));
+            return view('management.sessions.edit', compact('meeting', 'course','user','user2','mosabeghat'));
         } else {
 
             $data = $request->all();
@@ -326,7 +354,7 @@ class SessionController extends Controller
             } catch (\Exception $exception) {
 
                 DB::rollBack();
-                return $exception;
+                // return $exception;
                 return back()->with('error', 'خطایی در سرور رخ داده است');
             }
         }
@@ -370,18 +398,5 @@ class SessionController extends Controller
 
         return back()->with('success', 'با موفقیت انجام شد');
     }
-    public function profEx(Request $request, $id)
-    {
-        $session = Session::find($id);
-        $tamrinha = Exercise::where('session_id', $id)->get();
-        foreach ($tamrinha as $item) {
-            $answers = ExerciseAnswer::where('exercise_id', $item->id)->get();
-            foreach ($answers as $answer) {
-                $answer['user'] = User::find($answer->user_id);
-            }
-            $item['answers'] = $answers;
-        }
-        return view('management.exercise.list', compact('tamrinha'));
-    }
-
+ 
 }

@@ -3,10 +3,10 @@
 
 // use App\Http\Controllers\Api\TourController;
 
-// use App\Http\Controllers\Api\QuestionController;
+
 // use App\Http\Controllers\Auth\AuthController;
 // use App\Http\Controllers\Dashboard\DashboardController;
-// use App\Http\Controllers\Dashboard\EvaluationController;
+
 // use App\Http\Controllers\Dashboard\SessionController;
 // use App\Http\Controllers\Dashboard\SurveyController;
 // use App\Http\Controllers\FooController;
@@ -19,9 +19,10 @@ use App\Http\Controllers\site\DashboardController;
 use App\Http\Controllers\site\LayoutController;
 use App\Http\Controllers\site\SessionController;
 use App\Http\Controllers\site\KonkorController;
-
-
+// use App\Http\Controllers\site\EvaluationController;
+use App\Http\Controllers\site\QuestionController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\site\ExerciseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,7 +73,7 @@ Route::middleware('auth')->group(function () {
                     Route::any('/create', [CourseController::class, 'create'])->name('course.create');
                     Route::get('/delete/{id}', [CourseController::class, 'delete'])->name('course.delete');
                     Route::post('/period/{id}', [CourseController::class, 'period'])->name('course.period');
-                // چک course.private
+                    // چک course.private
                     Route::get('/private/{id}', [CourseController::class, 'private'])->name('course.private');
                     // چک
                     Route::get('/status/{id}', [CourseController::class, 'status'])->name('course.status');
@@ -96,7 +97,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('/list', [CourseController::class, 'list'])->name('course.list');
                 // چک
                 Route::get('/arch', [CourseController::class, 'arch'])->name('course.arch');
-            //    course.arch.post چک
+                //    course.arch.post چک
                 Route::get('/arch-post/{id}', [CourseController::class, 'archPost'])->name('course.arch.post');
                 Route::get('/students', [CourseController::class, 'students'])->name('course.students');
                 Route::get('/destroy-user', [CourseController::class, 'destroyUser'])->name('destroyUser');
@@ -182,7 +183,8 @@ Route::middleware('auth')->group(function () {
                 Route::post('/scoring', 'DiscussionController@scoring');
             });
             Route::group(['prefix' => 'question'], function () {
-                Route::get('/show', 'QuestionController@show')->name('question.show');
+                Route::get('/show', [QuestionController::class, 'show'])->name('question.show');
+
                 Route::post('/create', 'QuestionController@create');
                 Route::any('/edit/{id?}', 'QuestionController@edit')->name('editQ');
                 Route::any('/delete/{id?}', 'QuestionController@delete')->name('deleteQ');
@@ -194,21 +196,19 @@ Route::middleware('auth')->group(function () {
                 });
             });
             Route::group(['prefix' => 'exercise'], function () {
-                Route::get('/show/{session_id}', 'ExerciseController@show')->name('exercise.show');
-                Route::post('/create', 'ExerciseController@create')->name('exercise.create');
-                Route::get('/edit', 'ExerciseController@edit')->name('exercise.edit');
-                Route::get('/delete', 'ExerciseController@delete')->name('exercise.delete');
-                Route::post('/edit', 'ExerciseController@reedit')->name('exercise.reedit');
+                Route::get('/show/{session_id}', [ExerciseController::class, 'show'])->name('exercise.show');
+                Route::post('/create', [ExerciseController::class, 'create'])->name('exercise.create');
+                Route::get('/edit', [ExerciseController::class, 'edit'])->name('exercise.edit');
+                Route::get('/delete', [ExerciseController::class, 'delete'])->name('exercise.delete');
+                Route::post('/edit', [ExerciseController::class, 'reedit'])->name('exercise.reedit');
                 Route::group(['middleware' => ['role:teacher']], function () {
-                    Route::post('/scoring', 'ExerciseController@scoring');
+                    Route::post('/scoring', [ExerciseController::class, 'scoring']);
                 });
 
-                //                Route::group(['middleware' => ['role:teacher']], function () {
-
+                //   Route::group(['middleware' => ['role:teacher']], function () {
                 Route::post('/answer', 'ExerciseController@answer')->name('exercise.answer');
                 Route::post('/answer-edit', 'ExerciseController@answerEdit')->name('exercise.answerEdit');
-
-                //                });
+                //    });
 
             });
 
@@ -253,7 +253,7 @@ Route::middleware('auth')->group(function () {
             });
 
             Route::get('/barom', 'DashboardController@barom')->name('baroms');
-           
+
             Route::get('/faq', 'DashboardController@faq');
             Route::get('/konkor', 'KonkorController@konkor');
             Route::post('/konkor', 'KonkorController@konkorAdd');
@@ -270,13 +270,13 @@ Route::middleware('auth')->group(function () {
             Route::get('/konkor/decline', 'KonkorController@decline');
             Route::get('/konkor/active', 'KonkorController@active');
 
-            Route::get('/konkor/list',[App\Http\Controllers\site\KonkorController::class ,'konkors'])->name('konkors');
-            Route::get('/konkor/enter',[App\Http\Controllers\site\KonkorController::class , 'enter'])->name('enter');
+            Route::get('/konkor/list', [App\Http\Controllers\site\KonkorController::class, 'konkors'])->name('konkors');
+            Route::get('/konkor/enter', [App\Http\Controllers\site\KonkorController::class, 'enter'])->name('enter');
 
             Route::get('/konkor/question/delete/{id}', 'KonkorController@questionDelete');
             Route::get('/konkor/question/edit/{id}', 'KonkorController@questionEditGet');
             Route::post('/konkor/question/edit/{id}', 'KonkorController@questionEditPost');
-            
+
             Route::get('/konkor/box5', 'KonkorController@box5')->name('box5');
             Route::post('/konkor/answer/{id}', 'KonkorController@answer')->name('konkor.answer');
             Route::post('/konkor/upload/{id}', 'KonkorController@upload')->name('konkor.upload');

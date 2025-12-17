@@ -327,3 +327,163 @@ a {
         -ms-flex-direction: column
     }
 }
+/* profile */
+       body.pro1 {
+            font-family: 'Vazirmatn', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+.profile-card.pro1 {
+            width: 360px;
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(9px);
+            border-radius: 22px;
+            padding: 35px 30px;
+            text-align: center;
+            color: #fff;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.3);
+            margin: auto;
+        }
+
+        .avatar.pro1 {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid rgba(255,255,255,0.4);
+        }
+
+        .avatar.pro1 img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .name.pro1 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .role.pro1 {
+            font-size: 14px;
+            opacity: 0.85;
+            margin-bottom: 25px;
+        }
+
+        .stats.pro1 {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+
+        .stat.pro1 {
+            flex: 1;
+        }
+
+        .stat.pro1 span {
+            font-size: 20px;
+            font-weight: bold;
+            display: block;
+        }
+
+        .stat.pro1 small {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .bio.pro1 {
+            font-size: 14px;
+            line-height: 1.9;
+            opacity: 0.95;
+            margin-bottom: 30px;
+        }
+
+        .actions.pro1 {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn.pro1 {
+            flex: 1;
+            padding: 10px;
+            border-radius: 30px;
+            font-size: 14px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn.primary.pro1 {
+            background: #fff;
+            color: #764ba2;
+        }
+
+        .btn.primary.pro1:hover {
+            background: #f1f1f1;
+        }
+
+        .btn.outline.pro1 {
+            border: 1px solid #fff;
+            color: #fff;
+            background: transparent;
+        }
+
+        .btn.outline.pro1:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Media Queries برای تمام سایزها */
+        @media (max-width: 1200px) {
+            .profile-card.pro1 { width: 320px; padding: 28px 22px; }
+            .name.pro1 { font-size: 20px; }
+            .role.pro1 { font-size: 13px; }
+            .stat.pro1 span { font-size: 18px; }
+            .bio.pro1 { font-size: 13px; }
+        }
+
+        @media (max-width: 992px) {
+            .profile-card.pro1 { width: 300px; padding: 25px 20px; }
+            .avatar.pro1 { width: 100px; height: 100px; }
+            .name.pro1 { font-size: 19px; }
+            .role.pro1 { font-size: 12px; }
+            .stat.pro1 span { font-size: 17px; }
+            .bio.pro1 { font-size: 12px; }
+        }
+
+        @media (max-width: 768px) {
+            .profile-card.pro1 { width: 270px; padding: 22px 18px; }
+            .avatar.pro1 { width: 90px; height: 90px; }
+            .name.pro1 { font-size: 18px; }
+            .role.pro1 { font-size: 11px; }
+            .stat.pro1 span { font-size: 16px; }
+            .bio.pro1 { font-size: 11px; }
+            .actions.pro1 { flex-direction: column; gap: 10px; }
+        }
+
+        @media (max-width: 576px) {
+            .profile-card.pro1 { width: 90%; padding: 20px 15px; }
+            .avatar.pro1 { width: 80px; height: 80px; }
+            .name.pro1 { font-size: 16px; }
+            .role.pro1 { font-size: 10px; }
+            .stat.pro1 span { font-size: 15px; }
+            .bio.pro1 { font-size: 10px; }
+        }
+
+        @media (max-width: 400px) {
+            .profile-card.pro1 { width: 95%; padding: 18px 12px; }
+            .avatar.pro1 { width: 70px; height: 70px; }
+            .name.pro1 { font-size: 15px; }
+            .role.pro1 { font-size: 9px; }
+            .stat.pro1 span { font-size: 14px; }
+            .bio.pro1 { font-size: 9px; }
+            .btn.pro1 { font-size: 12px; padding: 8px; }
+        }
