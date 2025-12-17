@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="{{ asset('all-css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('all-css/style2.css') }}">
     <link rel="stylesheet" href="{{ asset('all-css/style3.css') }}">
-    <link rel="stylesheet" href="{{ asset('all-css/my-style.css') }}">
+    <!-- <link rel="stylesheet" href="{{ asset('all-css/my-style.css') }}"> -->
 
     @yield('add-styles')
     <!-- Boxicons -->

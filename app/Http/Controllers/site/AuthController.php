@@ -12,10 +12,13 @@ use App\Models\OptionUser;
 use App\Models\Role;
 use App\Models\Survey;
 use App\Models\User;
+use App\Models\Coworker;
+use App\Models\Touruser;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Validator;
 
 class AuthController extends Controller
@@ -31,6 +34,17 @@ class AuthController extends Controller
         $user = User::where('national', $request->national)->where('role', 2)->first();
         if ($user && Hash::check($request->password, $user->password)) {
             Auth::login($user);
+
+            $user = Auth::user();
+            $user2 = User::where('national', $user->national)->where('role', 2)->first();
+            $content = Coworker::where('user_id', $user->id)->first();
+            $mosabeghat = Touruser::where('user_id', $user->id)->count();
+            Session::put('user',$user);
+            Session::put('user2',$user2);
+            Session::put('content',$content);
+            Session::put('mosabeghat',$mosabeghat);
+
+
             return redirect()->route('dashboard');
         }
         //            student
@@ -38,8 +52,18 @@ class AuthController extends Controller
         if ($user && Hash::check($request->password, $user->password)) {
             Auth::login($user);
             $courses = $user->courses()->pluck('course_id');
-
             $teacherCourses = CourseUser::where('role_id', '2')->whereIn('course_id', $courses)->pluck('user_id');
+
+            $user = Auth::user();
+            $user2 = User::where('national', $user->national)->where('role', 2)->first();
+            $content = Coworker::where('user_id', $user->id)->first();
+            $mosabeghat = Touruser::where('user_id', $user->id)->count();
+            Session::put('user',$user);
+            Session::put('user2',$user2);
+            Session::put('content',$content);
+            Session::put('mosabeghat',$mosabeghat);
+
+
             return $teacherCourses;
             foreach ($teacherCourses as $item) {
                 $item = -$item;
@@ -62,6 +86,16 @@ class AuthController extends Controller
                     ]);
             } else {
                 Auth::login($user);
+
+                $user = Auth::user();
+            $user2 = User::where('national', $user->national)->where('role', 2)->first();
+            $content = Coworker::where('user_id', $user->id)->first();
+            $mosabeghat = Touruser::where('user_id', $user->id)->count();
+            Session::put('user',$user);
+            Session::put('user2',$user2);
+            Session::put('content',$content);
+            Session::put('mosabeghat',$mosabeghat);
+
                 return redirect('/dashboard/courses/list');
             }
         }
@@ -69,6 +103,17 @@ class AuthController extends Controller
         if ($user && Hash::check($request->password, $user->password)) {
 
             Auth::login($user);
+
+            $user = Auth::user();
+            $user2 = User::where('national', $user->national)->where('role', 2)->first();
+            $content = Coworker::where('user_id', $user->id)->first();
+            $mosabeghat = Touruser::where('user_id', $user->id)->count();
+            Session::put('user',$user);
+            Session::put('user2',$user2);
+            Session::put('content',$content);
+            Session::put('mosabeghat',$mosabeghat);
+
+
             return redirect()->route('dashboard');
         }
         return back()->with('error', 'نام کاربری یا کلمه عبور صحیح نمی باشد');
@@ -131,6 +176,8 @@ class AuthController extends Controller
         $user->password = bcrypt($request->password);
         $user->save();
 
+        
+
         if ($request->type == '2') {
             $user->role = 2;
             $user->save();
@@ -144,6 +191,16 @@ class AuthController extends Controller
         }
 
         Auth::login($user);
+
+        $user = Auth::user();
+        $user2 = User::where('national', $user->national)->where('role', 2)->first();
+        $content = Coworker::where('user_id', $user->id)->first();
+        $mosabeghat = Touruser::where('user_id', $user->id)->count();
+        Session::put('user',$user);
+        Session::put('user2',$user2);
+        Session::put('content',$content);
+        Session::put('mosabeghat',$mosabeghat);
+
         return redirect('/dashboard/courses/list');
 
     }

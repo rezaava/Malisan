@@ -754,5 +754,73 @@ class CourseController extends Controller
             );
         }
     }
+    public function publics(Request $request)
+    {
+        $user = Auth::user();
+        if ($user->hasRole('admin')) {
+
+            $courses = Course::where('private','1')->get();
+        } elseif ($user->hasRole('teacher')) {
+
+            $courses = $user->courses()->where('private','1')->get();
+        } elseif ($user->hasRole('student')) {
+
+            // $courses = $user->courses()->where('active', '1')->where('private','1')->get();
+            $courses = Course::where('active', '1')->where('private','1')->get();
+        }
+        $teacher_role = Role::where("name", "teacher")->pluck('id');
+
+        foreach ($courses as $course) {
+
+            $sessions = $course->sessions()->count();
+            $course['sessions'] = $sessions;
+
+            $student_role = Role::where("name", "student")->first();
+            $users = $course->users()->where('role_id', $student_role->id)->count();
+            $course['count'] = $users;
+
+            $teacher = $course->users()->where('role_id', $teacher_role)->pluck('user_id');
+            $course['user'] = User::findOrFail($teacher)->first();
+
+            if($course->type==1)
+                $course['type_name']="آموزش زبان";
+            elseif($course->type==2)
+                $course['type_name']="مهارت آموزی";
+            elseif($course->type==3)
+                $course['type_name']="آزمون های بسندگی";
+            elseif($course->type==4)
+                $course['type_name']="هنرآموزی";
+            elseif($course->type==5)
+                $course['type_name']="اموزش های عمومی";
+            else
+                $course['type_name']="نامشخص";
+
+
+            $cu = CourseUser::where('course_id', $course->id)->where('user_id', $user->id)->first();
+            if($cu) {
+                $now = Carbon::now();
+                $time = $cu->created_at;
+                $time = Carbon::parse($time);
+                $diff = $time->diffInDays($now);
+                $count = $course->sessions()->where('active', '1')->orderBy('number', 'desc')->count();
+                $activated = floor($diff / $course->period) - 1;
+                $course['activated']=floor(($activated/$count)*100);
+                if($course['activated']>100)
+                    $course['activated']=1;
+            }else
+                $course['activated']=0;
+
+
+
+        }
+//        return $courses;
+        return view('melisan.management.courses.students.publics', compact('courses'))
+            ->with([
+                'pageTitle' => 'صفحه لیست دروس',
+                'pageName' => 'دروس',
+                'pageDescription' => 'دوست من ! لیست درس هاتو برات نمایش دادم',
+            ]);
+    }
+
 
 }
