@@ -1,8 +1,8 @@
 <!-- دکمه موبایل -->
 <button class="btnMenuIcon d-lg-none" id="mobileMenuBtn">
-    <i class='bx bx-menu-alt-left fs-3'></i>
+    <span class="menu-icon">☰</span>
+    <span class="close-icon" style="display: none;">✕</span>
 </button>
-
 <!-- منوی واحد -->
 <div class="menu-container" id="mainMenu">
   
@@ -140,12 +140,32 @@
     <!-- <h1 class="text-white">سلام!</h1> -->
 
 </div>
-
 <script>
     const mobileBtn = document.getElementById('mobileMenuBtn');
-    const mainMenu = document.getElementById('mainMenu');
+    const mainMenu = document.getElementById('mainMenu'); // منوی تو
 
-    mobileBtn.addEventListener('click', () => {
-        mainMenu.classList.toggle('show');
+    mobileBtn.addEventListener('click', function() {
+        // ۱. تغییر آیکون
+        this.classList.toggle('active');
+        
+        // ۲. نمایش/مخفی منو
+        if (mainMenu) {
+            mainMenu.classList.toggle('show');
+        }
+        
+        // ۳. برای دسترسی‌پذیری (اختیاری)
+        const isOpen = this.classList.contains('active');
+        this.setAttribute('aria-expanded', isOpen);
+    });
+    
+    // بستن منو با کلیک خارج (اختیاری)
+    document.addEventListener('click', function(e) {
+        if (mainMenu && 
+            !mainMenu.contains(e.target) && 
+            !mobileBtn.contains(e.target)) {
+            mainMenu.classList.remove('show');
+            mobileBtn.classList.remove('active');
+            mobileBtn.setAttribute('aria-expanded', 'false');
+        }
     });
 </script>

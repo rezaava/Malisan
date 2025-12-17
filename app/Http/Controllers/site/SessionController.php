@@ -182,6 +182,7 @@ class SessionController extends Controller
         if (Auth::user()->hasRole('student')) {
             $student = 1;
         }
+    
         return view('melisan.sessions.index', compact('setting', 'content', 'user2', 'mosabeghat', 'khodazmaii', 'sessions', 'course', 'student', 'isJudment', 'member', 'user'))
             ->with([
                 'pageTitle' => 'صفحه مدیریت درس',

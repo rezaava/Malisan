@@ -65,18 +65,18 @@
         
       } */
       .global-bg {
-        position: fixed;
-        inset: 0;
-        background: url('/files/flat-bg.jpg') center / cover no-repeat;
-        z-index: 0;
-    }
-    
-    .container_fluid,
-    .main-master {
-        position: relative;
-        z-index: 1000;
-    }
-    
+          position: fixed;
+          inset: 0;
+          background: url('/files/flat-bg.jpg') center / cover no-repeat;
+          z-index: 0;
+      }
+
+      .container_fluid,
+      .main-master {
+          position: relative;
+          z-index: 1000;
+      }
+
 
       h1,
       h2,
@@ -108,31 +108,46 @@
       /* :startMenu */
 
       /* دکمه موبایل */
-      .btnMenuIcon {
-          position: fixed;
-          top: 20px;
-          right: 20px;
-          background: var(--gradient-primary);
-          border: none;
-          padding: 0.8rem;
-          border-radius: 50%;
-          box-shadow: 0 0 15px rgba(79, 70, 229, 0.6), 0 0 25px rgba(6, 182, 212, 0.6);
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: all 0.3s ease;
-          color: white;
-          z-index: 10550;
-      }
+    .btnMenuIcon {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100000;
+    top: 12px;
+}
 
-      .btnMenuIcon:hover {
-          transform: scale(1.1) rotate(5deg);
-      }
+.btnMenuIcon .menu-icon,
+.btnMenuIcon .close-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+}
 
-      .btnMenuIcon:active {
-          transform: scale(0.95) rotate(0deg);
-      }
+/* وقتی دکمه فعاله */
+.btnMenuIcon.active .menu-icon {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.btnMenuIcon.active .close-icon {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(0deg);
+    display: block !important;
+}
+
+.btnMenuIcon:not(.active) .close-icon {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(-90deg);
+}
 
       .nav {
           margin-top: 10%;
@@ -154,7 +169,7 @@
           z-index: 1040;
           border-radius: 0 0 0 15px;
           transition: transform 0.3s ease;
- 
+
       }
 
       /* لینک‌های منو */
@@ -283,7 +298,8 @@
         list-style-type:none;  =
         margin-bottom:0;  =
         padding-right:0px}* a{color:#7366ff;  =
-            text-decoration:none}*.btn:focus{-webkit-box-shadow:none !important;  =
+            text-decoration:none}*
+            .btn:focus{-webkit-box-shadow:none !important;  =
                 box-shadow:none !important}p{font-size:13px;  =
                 line-height:1.7;  =
                 letter-spacing:.7px}code{color:#7366ff !important;  =
@@ -45118,8 +45134,8 @@
       /* start dashord */
       /* کارت اصلی */
       .main-card-dashboard {
-             background: rgba(255, 255, 255, 0.07);
-  backdrop-filter: blur(20px);
+          background: rgba(255, 255, 255, 0.07);
+          backdrop-filter: blur(20px);
 
           box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
           padding: 40px 30px;
@@ -45280,11 +45296,13 @@
           color: var(--text-color);
           text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
       }
- .bg-card {
-       background: rgba(255, 255, 255, 0.07);
-  backdrop-filter: blur(20px);
-  color: white;
-          }
+
+      .bg-card {
+          background: rgba(255, 255, 255, 0.07);
+          backdrop-filter: blur(20px);
+          color: white;
+      }
+
       .logo-sub {
           font-size: 0.8rem;
           color: var(--text-light);
@@ -45448,6 +45466,10 @@
               display: none;
           }
 
+          .logo-section {
+              margin-right: 20px;
+          }
+
           .mobile-menu-btn {
               display: flex;
           }
@@ -45462,7 +45484,7 @@
           margin: 5% 25% 2% 25%;
           /* مرکز صفحه */
           padding: 20px 30px;
-border-radius: 15px;
+          border-radius: 15px;
           display: flex;
           justify-content: space-between;
           align-items: center;
@@ -45481,7 +45503,7 @@ border-radius: 15px;
           font-size: 22px;
           font-weight: 800;
           /* background: linear-gradient(90deg, #000000, #000000); */
-        
+
       }
 
       /* Breadcrumb container */
@@ -45544,9 +45566,15 @@ border-radius: 15px;
               width: 80%;
               padding: 18px 24px;
           }
-
+.logo-icon{
+    width: 20%;
+}
           .welcome-text-dashboard {
               font-size: 20px;
+          }
+
+          .logo-section {
+              margin-right: 20px;
           }
 
           .breadcrumb-list-dashboard {
@@ -45563,7 +45591,9 @@ border-radius: 15px;
               gap: 10px;
               padding: 18px 20px;
           }
-
+.logo-icon{
+    width: 20%;
+}
           .welcome-text-dashboard {
               font-size: 18px;
           }
@@ -45583,6 +45613,12 @@ border-radius: 15px;
               width: 95%;
               padding: 15px 18px;
               margin: 9% auto 2% auto;
+          }
+.logo-icon{
+    width: 20%;
+}
+          .logo-section {
+              margin-right: 20px;
           }
 
           .welcome-text-dashboard {
@@ -45610,7 +45646,7 @@ border-radius: 15px;
           min-height: 5vh;
           font-size: medium;
           height: 8vh;
-          z-index: 1000;
+          z-index: 100;
           padding-right: 10%;
           color: rgba(255, 255, 255, .8);
           background-color: #8e24aa;

@@ -62,6 +62,100 @@ class CourseController extends Controller
             compact('courses', 'user', 'mosabeghat', 'user2', 'content')
         );
     }
+      public function active($id)
+    {
+        $course = Course::findOrFail($id);
+        if ($course->active == 1) {
+            $course->active = 0;
+        } else {
+            $course->active = 1;
+        }
+        $course->save();
+        return redirect()->back()->with('success', ' با موفقیت انجام شد.');
+    }
+   public function archPost($id)
+    {
+        $course = Course::findOrFail($id);
+        if ($course->archieve == 1) {
+            $course->archieve = 0;
+        } else {
+            $course->archieve = 1;
+        }
+        $course->save();
+        return redirect()->back()->with('success', ' با موفقیت انجام شد.');
+
+    }
+        public function private($id)
+    {
+        $course = Course::findOrFail($id);
+        if ($course->private == 1) {
+            $course->private = 0;
+        } else {
+            $course->private = 1;
+        }
+        $course->save();
+        return redirect()->back()->with('success', ' با موفقیت انجام شد.');
+    }
+       public function status($id)
+    {
+        $course = Course::findOrFail($id);
+        if ($course->status == 1) {
+            $course->status = 0;
+        } else {
+            $course->status = 1;
+        }
+        $course->save();
+        return redirect()->back()->with('success', ' با موفقیت انجام شد.');
+    }
+ public function davari($id)
+    {
+        $course = Course::findOrFail($id);
+        if ($course->davari == 1) {
+            $course->davari = 0;
+        } else {
+            $course->davari = 1;
+        }
+
+        $course->save();
+        return redirect()->back()->with('success', ' با موفقیت انجام شد.');
+
+    }
+     public function quiz($id)
+    {
+        $course = Course::findOrFail($id);
+        if ($course->quiz == 1) {
+            $course->quiz = 0;
+        } else {
+            $course->quiz = 1;
+        }
+        $course->save();
+        return redirect()->back()->with('success', ' با موفقیت انجام شد.');
+
+    }
+      public function faaliat($id)
+    {
+        $course = Course::findOrFail($id);
+        if ($course->faaliat == 1) {
+            $course->faaliat = 0;
+        } else {
+            $course->faaliat = 1;
+        }
+        $course->save();
+        return redirect()->back()->with('success', ' با موفقیت انجام شد.');
+
+    }
+  public function pishraft($id)
+    {
+        $course = Course::findOrFail($id);
+        if ($course->pishraft == 1) {
+            $course->pishraft = 0;
+        } else {
+            $course->pishraft = 1;
+        }
+        $course->save();
+        return redirect()->back()->with('success', ' با موفقیت انجام شد.');
+
+    }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function progress(Request $request)
     {
@@ -356,7 +450,7 @@ class CourseController extends Controller
 
     public function join(Request $request)
     {
-    
+
         $data = $request->all();
         $rule = [
             'code' => 'required',

@@ -87,9 +87,9 @@
                     <br>
                     @yield('main-content')
                 </div>
-                <br>
+                <br><br><br><br>
                 <!-- BEGIN: footer-->
-                <footer class="footer-dashbord">
+                <footer class="footer-dashbord mt-3">
                     <div class="container-dushbord ">
                         <span>
                             &copy; 2020

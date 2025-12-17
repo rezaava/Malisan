@@ -72,11 +72,16 @@ Route::middleware('auth')->group(function () {
                     Route::any('/create', [CourseController::class, 'create'])->name('course.create');
                     Route::get('/delete/{id}', [CourseController::class, 'delete'])->name('course.delete');
                     Route::post('/period/{id}', [CourseController::class, 'period'])->name('course.period');
+                // چک course.private
                     Route::get('/private/{id}', [CourseController::class, 'private'])->name('course.private');
+                    // چک
                     Route::get('/status/{id}', [CourseController::class, 'status'])->name('course.status');
+                    //course.active چک 
                     Route::get('/active/{id}', [CourseController::class, 'active'])->name('course.active');
                     Route::get('/pishraft/{id}', [CourseController::class, 'pishraft'])->name('course.pishraft');
+                    // چکdavari
                     Route::get('/davari/{id}', [CourseController::class, 'davari'])->name('course.davari');
+                    // چک
                     Route::get('/quiz/{id}', [CourseController::class, 'quiz'])->name('course.quiz');
                     Route::get('/faaliat/{id}', [CourseController::class, 'faaliat'])->name('course.faaliat');
                     Route::any('/bank', [QuestionController::class, 'show'])->name('bank');
@@ -89,7 +94,9 @@ Route::middleware('auth')->group(function () {
                 });
                 ///چک
                 Route::get('/list', [CourseController::class, 'list'])->name('course.list');
+                // چک
                 Route::get('/arch', [CourseController::class, 'arch'])->name('course.arch');
+            //    course.arch.post چک
                 Route::get('/arch-post/{id}', [CourseController::class, 'archPost'])->name('course.arch.post');
                 Route::get('/students', [CourseController::class, 'students'])->name('course.students');
                 Route::get('/destroy-user', [CourseController::class, 'destroyUser'])->name('destroyUser');

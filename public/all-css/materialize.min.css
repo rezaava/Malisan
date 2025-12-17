@@ -4794,7 +4794,7 @@ small {
     flex-grow: 1
 }
 
-.tabs .tab {
+/* .tabs .tab {
     line-height: 48px;
     display: inline-block;
     height: 48px;
@@ -4813,7 +4813,7 @@ small {
     -webkit-transition: color .28s ease, background-color .28s ease;
     transition: color .28s ease, background-color .28s ease;
     color: rgba(156, 39, 176, .7)
-}
+} */
 
 .tabs .tab a:focus,
 .tabs .tab a:focus.active {
@@ -5814,7 +5814,7 @@ select:focus {
 
 button:focus {
     outline: 0;
-    background-color: #00cee8
+    /* background-color: #00cee8 */
 }
 
 label {
