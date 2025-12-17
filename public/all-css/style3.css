@@ -32,7 +32,21 @@
     flex: 1;
     display: flex;
     flex-direction: column;
+    /* backdrop-filter: blur(20px);
+          box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+          color: white;
+          background: rgba(255, 255, 255, 0.07); */
 }
+.card-content-enter {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(20px);
+          box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+          color: white;
+          background: rgba(255, 255, 255, 0.07);
+}
+
 .border-non {
     margin-top: auto !important;
 }
@@ -59,6 +73,39 @@
     position: relative;
     z-index: -1
 }
+.waves-effect2{
+    
+    
+    -webkit-tap-highlight-color: transparent;
+    z-index: -1;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-right: -10px;
+    -webkit-transition: all .7s ease-out;
+    transition: all .7s ease-out;
+    -webkit-transition-property: opacity, -webkit-transform;
+    transition-property: opacity, -webkit-transform;
+    transition-property: transform, opacity;
+    transition-property: transform, opacity, -webkit-transform;
+    -webkit-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+    pointer-events: none;
+    opacity: 0;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, .2)
+}
+.waves-effect2 input[type=button],
+.waves-effect2 input[type=reset],
+.waves-effect2 input[type=submit] {
+    font-size: inherit;
+    font-style: normal;
+    text-transform: inherit;
+    border: 0;
+    background: 0 0
+}
+
 .btn-konkor {
     background-color: #690d83b7 !important;
     line-height: 36px;
@@ -144,4 +191,27 @@
 }
 .gradient-45deg-light-blue-cyan.gradient-shadow {
     box-shadow: 0 6px 20px 0 rgba(38, 198, 218, .5) !important
+}
+.custom_answer_wrapper {
+    width: 80%;
+    padding: 30px;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+   
+}
+.gradient-45deg-amber-amber.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(255, 202, 40, .5) !important;
+}
+.gradient-45deg-amber-amber {
+    background: -webkit-linear-gradient(135deg, #ff6f00, #ffca28) !important;
+    background: linear-gradient(-45deg, #ff6f00, #ffca28) !important
+}
+.gradient-45deg-green-teal {
+    background: -webkit-linear-gradient(135deg, #43a047, #1de9b6) !important;
+    background: linear-gradient(-45deg, #43a047, #1de9b6) !important
+}
+
+.gradient-45deg-green-teal.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(29, 233, 182, .5) !important
 }

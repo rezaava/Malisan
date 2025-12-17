@@ -6,36 +6,7 @@
 /**{*/
         /*font-size:1vw !important;*/
         /*}*/
-        .base-timer {
-            position: relative;
-            width: 50px;
-            height: 50px;
-        }
-
-        .base-timer__svg {
-            transform: scaleX(-1);
-        }
-
-        .base-timer__circle {
-            fill: none;
-            stroke: none;
-        }
-
-        .base-timer__path-elapsed {
-            stroke-width: 7px;
-            stroke: grey;
-        }
-
-        .base-timer__path-remaining {
-            stroke-width: 7px;
-            stroke-linecap: round;
-            transform: rotate(90deg);
-            transform-origin: center;
-            transition: 1s linear all;
-            fill-rule: nonzero;
-            stroke: currentColor;
-        }
-
+    
         .base-timer__path-remaining.green {
             color: rgb(65, 184, 131);
         }
@@ -48,17 +19,7 @@
             color: red;
         }
 
-        .base-timer__label {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            top: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-        }
-
+     
     </style>
 
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css-rtl/pages/page-account-settings.min.css') }}">
@@ -75,7 +36,7 @@
 
 @section('main-content')
     <!--Social Card-->
-    <div id="card-panel-type1" class="section">
+    <!-- <div id="card-panel-type1" class="section">
         <div class="row">
             <div class=" s12 m6 l4 card-width">
                 <div class="text-center">
@@ -131,7 +92,7 @@
             </div>
 
         </div>
-    </div>
+    </div> -->
     <!--
     @if(Session::has('plus'))
 
@@ -183,7 +144,7 @@
 
 
 
-    <div class="row card card-content" style="margin:10px ;padding:20px">
+    <div class="row card card-content-enter" style="margin:10px ;padding:20px">
 
 
         <div class="row" style="text-align: left">
@@ -213,42 +174,42 @@
                 @if($rr==1)
                     <div class="col-md-6">
                         <label>
+                            </label>
                             <input type="radio" id="answer1" name="answer" value="1">
                             <span
                                 style="height:auto !important ;line-height:110%"
                                 class="mb-6 btn waves-effect waves-light gradient-45deg-light-blue-cyan gradient-shadow custom_answer_wrapper false_answer"
                                 onclick="formSubmit(this);" id="1">{{ $question->answer1 }}</span>
-                        </label>
                     </div>
                 @elseif($rr==2)
                     <div class="col-md-6">
                         <label>
+                            </label>
                             <input type="radio" id="answer2" name="answer" value="2">
                             <span
                                 style="height:auto !important;line-height:110%"
                                 class="mb-6 btn waves-effect waves-light gradient-45deg-light-blue-cyan gradient-shadow custom_answer_wrapper false_answer"
                                 onclick="formSubmit(this)" id="2">{{ $question->answer2 }}</span>
-                        </label>
                     </div>
                 @elseif($rr==3)
                     <div class="col-md-6">
                         <label>
+                            </label>
                             <input type="radio" id="answer3" name="answer" value="3">
                             <span
                                 style="height:auto !important;line-height:110%"
                                 class="mb-6 btn waves-effect waves-light gradient-45deg-light-blue-cyan gradient-shadow custom_answer_wrapper false_answer"
                                 onclick="formSubmit(this)" id="3">{{ $question->answer3 }}</span>
-                        </label>
                     </div>
                 @elseif($rr==4)
                     <div class="col-md-6">
                         <label>
+                            </label>
                             <input type="radio" id="answer4" name="answer" value="4">
                             <span
                                 style="height:auto !important;line-height:110%"
                                 class="mb-6 btn waves-effect waves-light gradient-45deg-light-blue-cyan gradient-shadow custom_answer_wrapper false_answer"
                                 onclick="formSubmit(this)" id="4">{{ $question->answer4 }}</span>
-                        </label>
                     </div>
                 @endif
             @endforeach
@@ -274,7 +235,9 @@
     </div>
 
     <div class="row">
-        <iframe scrolling="no" onload="iframeLoaded()" id="idIframe" class="col-12" style="display: block;width: 100%;" src="/boxes?one={{$box1}}&two={{$box2}}&three={{$box3}}&four={{$box4}}&five={{$box5}}&id={{$course->id}}"></iframe>
+        <iframe scrolling="no" onload="iframeLoaded()" id="idIframe" class="col-12" 
+        style="display: block;width: 100%;" 
+        src="/boxes?one={{$box1}}&two={{$box2}}&three={{$box3}}&four={{$box4}}&five={{$box5}}&id={{$course->id}}"></iframe>
     </div>
 
 
@@ -460,10 +423,14 @@
             let remainingPathColor = COLOR_CODES.info.color;
 
             document.getElementById("app").innerHTML = `
-<div class="base-timer">
-  <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-    <g class="base-timer__circle">
-      <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
+<div class="base-timer" style=" position: relative;
+            width: 50px;
+            height: 50px;">
+  <svg class="base-timer__svg" style=" transform: scaleX(-1);" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <g class="base-timer__circle" style="fill: none;
+            stroke: none;">
+      <circle class="base-timer__path-elapsed" style="stroke-width: 7px;
+            stroke: grey;" cx="50" cy="50" r="45"></circle>
       <path
         id="base-timer-path-remaining"
         stroke-dasharray="283"
@@ -474,14 +441,29 @@
           a 45,45 0 1,0 90,0
           a 45,45 0 1,0 -90,0
         "
+        style=" stroke-width: 7px;
+            stroke-linecap: round;
+            transform: rotate(90deg);
+            transform-origin: center;
+            transition: 1s linear all;
+            fill-rule: nonzero;
+            stroke: currentColor;"
       ></path>
     </g>
   </svg>
-  <span id="base-timer-label" class="base-timer__label">${formatTime(
+  <span id="base-timer-label" class="base-timer__label" style="  position: absolute;
+            width: 50px;
+            height: 50px;
+            top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;">${formatTime(
                 timeLeft
             )}</span>
 </div>
 `;
+
 
             startTimer();
 

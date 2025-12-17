@@ -52,7 +52,15 @@ Route::post('/survey-answer', [AuthController::class, 'Survey'])->name('survey.a
 
 ///چک پایان
 
-
+Route::get('/boxes', function(){
+    $box1=request('one');
+    $box2=request('two');
+    $box3=request('three');
+    $box4=request('four');
+    $box5=request('five');
+    $id=request('id');
+    return view('management.konkor.boxes',compact('box1','box2','box3','box4','box5','id'));
+} );
 // Route::group(['namespace' => 'Dashboard'], function () {
 //     Route::get('dashboard/actuality', [UserController::class, 'findActuality']);
 // });
@@ -272,13 +280,14 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/konkor/list',[App\Http\Controllers\site\KonkorController::class ,'konkors'])->name('konkors');
             Route::get('/konkor/enter',[App\Http\Controllers\site\KonkorController::class , 'enter'])->name('enter');
+            Route::post('/konkor/answer/{id}',[App\Http\Controllers\site\KonkorController::class , 'answer'])->name('konkor.answer');
+            
 
             Route::get('/konkor/question/delete/{id}', 'KonkorController@questionDelete');
             Route::get('/konkor/question/edit/{id}', 'KonkorController@questionEditGet');
             Route::post('/konkor/question/edit/{id}', 'KonkorController@questionEditPost');
             
             Route::get('/konkor/box5', 'KonkorController@box5')->name('box5');
-            Route::post('/konkor/answer/{id}', 'KonkorController@answer')->name('konkor.answer');
             Route::post('/konkor/upload/{id}', 'KonkorController@upload')->name('konkor.upload');
             Route::get('/konkor/delete', 'KonkorController@delete');
             Route::get('/user-content', 'KonkorController@users');

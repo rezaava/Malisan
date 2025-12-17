@@ -12,7 +12,7 @@
             <a class="nav-link" href="{{ route('dashboard') }}">
                 <i class='bx bx-desktop fs-4 text-primary'></i>میزکار </a>
         </li>
-        @if($user->hasRole('student'))
+        @if( Session::get('user')->hasRole('student'))
             <li class="nav-item {{ request()->routeIs('course.list') ? 'nav_active' : '' }}">
                 <a class="nav-link" href="{{ route('course.list') }}">
                     <i class='bx bx-book fs-4 text-primary'></i>درس های من </a>
@@ -29,7 +29,7 @@
                 آزمون ها</a>
         </li>
         <!-- منو بر اساس نقش کاربر -->
-        @if($user->hasRole('admin'))
+        @if(Session::get('user')->hasRole('admin'))
             <!-- منوی ادمین -->
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('baroms') }}">
@@ -56,16 +56,16 @@
                     کاربران
                 </a>
             </li>
-        @elseif($user->hasRole('touradmin'))
+        @elseif(Session::get('user')->hasRole('touradmin'))
             <!-- منوی ادمین مسابقات -->
             <li class="nav-item">
                 <a class="nav-link" href="/dashboard/tour/create">
                     <i class="material-icons">border_all</i>
                     ساخت مسابقه</a>
             </li>
-        @elseif($user->hasRole('teacher'))
+        @elseif(Session::get('user')->hasRole('teacher'))
             <!-- منوی استاد -->
-            @if($content)
+            @if( Session::get('content'))
                 <li class="nav-item">
                     <a class="nav-link" href="/dashboard/konkor">
                         <i class="material-icons">content_paste</i>
@@ -74,7 +74,7 @@
                 </li>
             @endif
 
-        @elseif($user->hasRole('content'))
+        @elseif( Session::get('user')->hasRole('content'))
             <!-- منوی محتوا -->
             <li class="nav-item">
                 <a class="nav-link" href="/dashboard/survey/cats">
@@ -97,7 +97,7 @@
         @endif
 
         <!-- منوی مسابقات برای شرایط خاص -->
-        @if($mosabeghat > 0 || $user->hasRole('touradmin'))
+        @if( Session::get('mosabeghat') > 0 || Session::get('user')->hasRole('touradmin'))
             <li class="nav-item">
                 <a class="nav-link" href="/dashboard/tour">
                     <i class="material-icons">border_all</i>
@@ -106,15 +106,15 @@
         @endif
 
         <!-- قابلیت تغییر پنل -->
-        @if($user2)
-            @if($user->hasRole('teacher'))
+        @if(Session::get('user2'))
+            @if( Session::get('user')->hasRole('teacher'))
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('change') }}">
                         <i class='bx bx-refresh fs-4'></i>
                         انتقال به پنل دانشجو
                     </a>
                 </li>
-            @elseif($user->hasRole('student'))
+            @elseif(Session::get('user')->hasRole('student'))
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('change') }}">
                         <i class='bx bx-refresh fs-4'></i>
