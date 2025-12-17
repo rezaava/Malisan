@@ -356,62 +356,60 @@
                                         
                                         @if($course->private == 1 || $session->soal_last > 0)
                                             <a href="/dashboard/question/show?session_id={{ $session->id }}" id="questions"
-                                               class="mb-6 btn-floating waves-effect waves-light gradient-45deg-light-blue-cyan gradient-shadow tooltipped"
+                                               class=" m-1 btn-floating tooltipped"
                                                data-position="bottom" data-tooltip="طرح سوال">
-                                                <i class="material-icons dp48">help_outline</i>
+                                       <i class="material-icons dp48">help_outline</i>
                                             </a>
                                         @endif
                                         
                                         @if ($user->hasRole('teacher'))
                                             <a id="homework_teacher"
                                                href="/dashboard/exercise/show/{{ $session->id }}"
-                                               class="mb-6 btn-floating waves-effect waves-light gradient-45deg-light-blue-cyan gradient-shadow tooltipped"
+                                               class="m-1 btn-floating tooltipped"
                                                data-position="bottom" data-tooltip="دادن تکلیف">
-                                                <i class="material-icons dp48">format_textdirection_r_to_l</i>
+                                            <i class="material-icons dp48">assignment_add</i>
                                             </a>
-                                        @endif
-                                        
-                                        @if ($user->hasRole('teacher'))
+                             
                                             <a id="active"
                                                href="/dashboard/courses/sessions/active/{{ $session->id }}"
-                                               class="mb-6 btn-floating waves-effect waves-light gradient-45deg-light-blue-cyan gradient-shadow tooltipped"
+                                               class="m-1 btn-floating tooltipped"
                                                data-position="bottom"
                                                data-tooltip="@if($session->active==1)غیرفعال کردن@else فعال کردن @endif">
-                                                <i class="material-icons dp48">done</i>
+                                               <i class="material-icons dp48">@if($session->active==1)toggle_on @else toggle_off @endif</i> 
+                                            </a>
+                                    
+                                            <a id="edit"
+                                               href="/dashboard/courses/sessions/edit/{{ $session->id }}"
+                                               class="m-1 btn-floating tooltipped"
+                                               data-position="bottom" data-tooltip="ویرایش">
+                                             <i class="material-icons dp48">edit</i>
+                                            </a>
+                                            
+                                            <a id="edit"
+                                               href="/dashboard/courses/sessions/prof-ex/{{ $session->id }}"
+                                               class="m-1 btn-floating tooltipped"
+                                               data-position="bottom" data-tooltip="تکلیفها">
+                                               <i class="material-icons dp48">list_alt</i>
                                             </a>
                                         @endif
                                         
                                         @if(($course->private==1 && $session->ex_count>0)|| ($session->ex_count>0 && $session->taklif_last>0))
                                             <a id="homework"
                                                href="{{ route('exercise.show', $session->id) }}"
-                                               class="mb-6 btn-floating waves-effect waves-light gradient-45deg-light-blue-cyan gradient-shadow tooltipped"
+                                               class="m-1 btn-floating tooltipped"
                                                data-position="bottom" data-tooltip="تکلیف">
-                                                <i class="material-icons dp48">format_textdirection_r_to_l</i>
+                                              <i class="material-icons dp48">assignment</i>
                                             </a>
                                         @endif
                                         
-                                        @if ($user->hasRole('teacher'))
-                                            <a id="edit"
-                                               href="/dashboard/courses/sessions/edit/{{ $session->id }}"
-                                               class="mb-6 btn-floating waves-effect waves-light gradient-45deg-light-blue-cyan gradient-shadow tooltipped"
-                                               data-position="bottom" data-tooltip="ویرایش">
-                                                <i class="material-icons dp48">edit</i>
-                                            </a>
-                                            
-                                            <a id="edit"
-                                               href="/dashboard/courses/sessions/prof-ex/{{ $session->id }}"
-                                               class="mb-6 btn-floating waves-effect waves-light gradient-45deg-light-blue-cyan gradient-shadow tooltipped"
-                                               data-position="bottom" data-tooltip="تکلیفها">
-                                                <i class="material-icons dp48">format_textdirection_r_to_l</i>
-                                            </a>
-                                        @endif
+                                   
                                         
                                         @if ($user->hasRole('student'))
                                             @if($course->private==1 || $session->gozaresh_last)
                                                 <a href="{{ route('disc.show', $session->id) }}" id="disc"
-                                                   class="mb-6 btn-floating waves-effect waves-light gradient-45deg-light-blue-cyan gradient-shadow tooltipped"
+                                                   class="m-1 btn-floating tooltipped"
                                                    data-position="bottom" data-tooltip="گزارش">
-                                                    <i class="material-icons dp48">drafts</i>
+                                                     <i class="material-icons dp48">assessment</i>
                                                 </a>
                                             @endif
                                         @endif
@@ -423,8 +421,8 @@
                                                         <li class="active">
                                                             <div class="collapsible-header custom_header_of_collapsible" tabindex="0">
                                                                 <a class="btn btn-floating custom_floating_header_collapsible">
-                                                                    <i class="material-icons dp48">notifications_active</i>
-                                                                </a> طرح درس یا محتوای درس
+                                                         <i class="material-icons">menu_book</i>    </a>
+                                                                        <p >        طرح درس یا محتوای درس</p>
                                                             </div>
                                                             <div class="collapsible-body" style="display: block;">
                                                                 <p>{!! $session->text !!}</p>
@@ -491,7 +489,8 @@
         </div>
     </section>
     
-    <input type="text" value="دانشجوی عزیز، برای دسترسی به درس {{ $course->name }} ابتدا از طریق سایت WWW.MALISAN.IR در سامانه آموزشی ملیسان با هویت واقعی ثبت نام کنید، سپس با استفاده از شناسه {{ $course->code }} در درس ذکر شده عضو شوید." id="myInput" style="height: 0px;background: transparent;">
+    <!-- <input type="text" value="دانشجوی عزیز، برای دسترسی به درس {{ $course->name }} ابتدا از طریق سایت WWW.MALISAN.IR در سامانه آموزشی ملیسان با هویت واقعی ثبت نام کنید، سپس با استفاده از شناسه
+     {{ $course->code }} در درس ذکر شده عضو شوید." id="myInput" style="height: 0px;background: transparent;"> -->
     
     <div class="col s12">
         <div class="tap-target cyan" data-target="menu">
@@ -596,7 +595,14 @@
             }
         }
     </script>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // این خط tooltip‌ها را فعال می‌کند
+    var elems = document.querySelectorAll('.tooltipped');
+    var instances = M.Tooltip.init(elems);
+});
+</script>
     <!-- BEGIN PAGE LEVEL JS-->
     <script src="{{ asset('app-assets/js/scripts/advance-ui-feature-discovery.min.js') }}"></script>
 @endsection
