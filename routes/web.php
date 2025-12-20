@@ -278,15 +278,10 @@ Route::middleware('auth')->group(function () {
             Route::get('/konkor/decline', 'KonkorController@decline');
             Route::get('/konkor/active', 'KonkorController@active');
 
-<<<<<<< HEAD
-            Route::get('/konkor/list', [App\Http\Controllers\site\KonkorController::class, 'konkors'])->name('konkors');
-            Route::get('/konkor/enter', [App\Http\Controllers\site\KonkorController::class, 'enter'])->name('enter');
-=======
             Route::get('/konkor/list',[App\Http\Controllers\site\KonkorController::class ,'konkors'])->name('konkors');
             Route::get('/konkor/enter',[App\Http\Controllers\site\KonkorController::class , 'enter'])->name('enter');
             Route::post('/konkor/answer/{id}',[App\Http\Controllers\site\KonkorController::class , 'answer'])->name('konkor.answer');
             
->>>>>>> 6f9f247f66f519ec6d12628bd51278fe06c00e34
 
             Route::get('/konkor/question/delete/{id}', 'KonkorController@questionDelete');
             Route::get('/konkor/question/edit/{id}', 'KonkorController@questionEditGet');
