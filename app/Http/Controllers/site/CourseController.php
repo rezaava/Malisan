@@ -21,7 +21,7 @@ use App\Models\Score;
 use App\Models\Scoring;
 use App\Models\Session;
 use App\Models\Setting;
-
+use Illuminate\Support\Carbon;
 use Facade\FlareClient\Report;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -804,7 +804,7 @@ class CourseController extends Controller
                 $diff = $time->diffInDays($now);
                 $count = $course->sessions()->where('active', '1')->orderBy('number', 'desc')->count();
                 $activated = floor($diff / $course->period) - 1;
-                $course['activated']=floor(($activated/$count)*100);
+                // $course['activated']=floor(( $activated / $count ) * 100);   
                 if($course['activated']>100)
                     $course['activated']=1;
             }else

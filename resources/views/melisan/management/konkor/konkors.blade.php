@@ -21,7 +21,7 @@
 @section('main-content')
 @if(isset($konkors))
 
-<div class="container mb-5">
+<div class="container-fluid mb-5">
 
 
     <div class="row" style="margin-right:10px">

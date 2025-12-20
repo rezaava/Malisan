@@ -17,7 +17,7 @@
             <ul class="navbar-list ">
                 <li>
                     <!-- آیکون سوالات -->
-                    <a class="" @if($user->hasRole('teacher')) href="{{asset('/files/help.pdf')}}"
+                    <a class="" @if( Session::get('user')->hasRole('teacher')) href="{{asset('/files/help.pdf')}}"
                     @elseif($user->hasRole('student')) href="{{asset('/files/help2.pdf')}}" @endif 
                     data-target="" style="font-size: 20px;">❓
                     </a>
@@ -29,9 +29,9 @@
                 <li>
          
                     <!-- پروفایل به صورت آیکون -->
-                    <a class="" href="/dashboard/user/{{$user->id}}">
+                    <a class="" href="/dashboard/user/{{ Session::get('user')->id}}">
                         <span class="avatar-status avatar-online">
-                            <img src="{{ asset('/files/user/' . $user->image) }}" alt="profile">
+                            <img src="{{ asset('/files/user/' . Session::get('user')->image) }}" alt="profile">
                         </span>
                     </a>
                 </li>

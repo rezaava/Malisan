@@ -3,7 +3,7 @@
 @section('title', 'صفحه اصلی')
 @section('main-content')
 
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             @if(isset($courses))
                 @if ($user->hasRole('teacher'))
