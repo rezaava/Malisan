@@ -222,56 +222,87 @@ rotate(0deg)*/
     <div class="container">
     </div>
 
-    <div class="row g-4 course-list-wrapper">
-    @foreach ($courses as $course)
-        <div class="col-md-4">
-            <div class="course-list-card">
+    <div class="container">
+    </div>
 
-                <div class="course-list-image">
-                    <img src="{{ asset('/files/icons/' . $course->header.'.jpg') }}" alt="">
-                </div>
+    <div class="row" style="margin-right:10px">
+        @foreach ($courses as $course)
 
-                <div class="course-list-body">
-                    <h6 class="course-list-title">
-                        <a href="/dashboard/courses/sessions?course_id={{ $course->id }}">
-                            {{ $course->name }}
-                        </a>
-                    </h6>
-
-                    <p class="course-list-tag">اینجا تگ هست</p>
-
-                    <ul class="course-list-info">
-                        <li><span>کد درس:</span> {{ $course->code }}</li>
-                        <li><span>تعداد جلسه:</span> {{ $course->sessions_length }}</li>
-                        <li><span>طول دوره:</span> {{ $course->length }} روز</li>
-                        <li><span>هزینه:</span> {{ $course->price }} تومان</li>
-                        <li>
-                            <span>
-                                @if($course->type==1) آموزش زبان
-                                @elseif($course->type==2) مهارت آموزی
-                                @elseif($course->type==3) آزمون بسندگی
-                                @elseif($course->type==4) هنر آموزی
-                                @elseif($course->type==5) آموزش عمومی
-                                @endif
-                            </span>
-                        </li>
-                    </ul>
-
-                    <div class="course-list-progress">
-                        <div class="course-list-progress-bar"
-                             style="width: {{ $course['activated'] }}%"></div>
+            <div class="col-md-4">
+                <div class="card horizontal border-radius-6">
+                    <div class="card-image ">
+                        <img class="responsive-img height " src="{{ asset('/files/icons/' . $course->header.'.jpg') }}" alt="">
                     </div>
+                    <div class="card-stacked">
+                        <div class="card-content pl-2 pt-2 pr-2 pb-2">
+                            <h6><a href="#" class="mt-5">{{$course->name}}</a></h6>
+                            <!-- <p onmouseenter="this.innerHTML='{{$course->desc , 50}}'" onmouseleave="this.innerHTML='{{\Illuminate\Support\Str::limit($course->desc,50)}}'">
+                                 {{\Illuminate\Support\Str::limit($course->desc,50)}}
 
-                    <a href="/dashboard/courses/sessions?course_id={{ $course->id }}"
-                       class="course-list-btn">
-                        مشاهده
-                    </a>
+                            </p> -->
+                            <p> اینجا تگ هست</p>
+                            <div class="mt-5 p-3 m-3">
+                                <div class=" s7 p-0 mt-5">
+                                    <a href="/dashboard/courses/sessions?course_id={{ $course->id }}"><span class="ml-1 vertical-align-top">کد درس:</span></a>
+                                    <span class="ml-1 vertical-align-top">{{$course->code}}</span>
+                                </div>
+                                <div class=" s7 p-0 mt-1">
+                                    <a href="/dashboard/courses/sessions?course_id={{ $course->id }}"><span class="ml-1 vertical-align-top">تعداد جلسه:</span></a>
+
+                                    <span class="ml-1 vertical-align-top">{{$course->sessions_length}}</span>
+                                </div>
+                                <div class=" s7 p-0 mt-1">
+                                    <a href="/dashboard/courses/sessions?course_id={{ $course->id }}"><span class="ml-1 vertical-align-top">طول دوره(روز):</span></a>
+
+                                    <span class="ml-1 vertical-align-top">{{$course->length}}</span>
+                                </div>
+                                <div class="s7 p-0 mt-1">
+                                    <a href="/dashboard/courses/sessions?course_id={{ $course->id }}"><span class="ml-1 vertical-align-top">هزینه(تومان):</span></a>
+
+                                    <span class="ml-1 vertical-align-top">{{$course->price}}</span>
+                                </div>
+                                <div class=" s7 p-0 mt-1">
+{{--                                    <a href="#"><span class="ml-1 vertical-align-top">توضیح:</span></a>--}}
+
+                                    <span class="ml-1 vertical-align-top"> @if($course->type==1)
+                                            آموزش زبان
+                                        @elseif($course->type==2)
+                                            مهارت آموزی
+                                        @elseif($course->type==3)
+                                            آزمون های بسندگی
+                                        @elseif($course->type==4)
+                                            هنر آموزی
+                                        @elseif($course->type==5)
+                                            آموزش های عمومی
+                                        @else
+                                            <br>
+                                        @endif</span>
+                                </div>
+
+                                <div class="bar-container">
+                                    <div class="loader" style="width: {{$course['activated']}}">
+                                        <span class="loader-bar" style="width: {{$course['activated']}}%"></span>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                        <div class="card-action pt-4 pb-3 center-align ">
+                            <div class="row mt-4">
+                                <div class=" s7 mt-1 center-align ">
+                                    <a
+                                        href="/dashboard/courses/sessions?course_id={{ $course->id }}"
+                                        class="waves-effect waves-light card-width btn gradient-45deg-light-blue-cyan box-shadow-none border-round mr-1 mb-1">مشاهده </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
             </div>
-        </div>
-    @endforeach
-</div>
+        @endforeach
+    </div>
 
     @elseif(!$user->mobile)
         <div class="row">

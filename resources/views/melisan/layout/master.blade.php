@@ -15,23 +15,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <link rel="apple-touch-icon" href="{{ asset('files/main.png') }}">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('files/main.png') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+
+    <!-- جدیددددد -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"> -->
+    
+   
     <!-- css -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('all-css/app-assets/style-rtl.min.css') }}">
     <link rel="stylesheet" href="{{ asset('all-css/custom.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('all-css/materialize.min.css') }}">
     <link rel="stylesheet" href="{{ asset('all-css/app-assets/vendors.min.css') }}">
+    <!-- <link rel="stylesheet" href="{{ asset('all-css/my-style.css') }}"> -->
+    
+    @yield('add-styles')
+    <!-- Boxicons -->
+    <!-- <link rel="stylesheet" type="text/css" href="{{ asset('all-css/style.min.css') }}"> -->
+    
     <link rel="stylesheet" href="{{ asset('all-css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('all-css/style2.css') }}">
     <link rel="stylesheet" href="{{ asset('all-css/style3.css') }}">
-    <!-- <link rel="stylesheet" href="{{ asset('all-css/my-style.css') }}"> -->
-
-    @yield('add-styles')
-    <!-- Boxicons -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('all-css/style.min.css') }}">
-
     <!-- <link href="all-css/assets/fonts/Boxicons.min.css" rel="stylesheet"> -->
 <link rel="stylesheet" href="{{ asset('app-assets/css-rtl/custom/style.css') }}">
     
@@ -43,6 +47,7 @@
         href="{{ asset('app-assets/css-rtl/themes/vertical-menu-nav-dark-template/style.min.css') }}"> -->
    
     <style>
+
         .main-master {
             padding-right: 50px;
             margin-top: 5%;
@@ -66,7 +71,12 @@
                 margin-right: 5%;
             }
         }
+
+
+        
     </style>
+
+    
     </head>
 
     <body class="" data-open="click" data-menu="vertical-modern-menu" data-col="2-columns">

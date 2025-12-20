@@ -106,7 +106,7 @@
         @endif
 
         <!-- قابلیت تغییر پنل -->
-        @if($user2)
+        @if( Session::get('user2'))
             @if( Session::get('user')->hasRole('teacher'))
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('change') }}">

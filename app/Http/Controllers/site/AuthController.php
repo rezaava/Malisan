@@ -36,13 +36,20 @@ class AuthController extends Controller
             Auth::login($user);
 
             $user = Auth::user();
-         
+
             $content = Coworker::where('user_id', $user->id)->first();
             $mosabeghat = Touruser::where('user_id', $user->id)->count();
-            Session::put('user',$user);
-           
-            Session::put('content',$content);
-            Session::put('mosabeghat',$mosabeghat);
+            if ($user->hasRole('teacher')) {
+                $user2 = User::where('national', $user->national)->where('role', 3)->first();
+                Session::put('user2', $user2);
+            } elseif ($user->hasRole('student')) {
+                $user2 = User::where('national', $user->national)->where('role', 2)->first();
+                Session::put('user2', $user2);
+            }
+            Session::put('user', $user);
+
+            Session::put('content', $content);
+            Session::put('mosabeghat', $mosabeghat);
 
 
             return redirect()->route('dashboard');
@@ -55,13 +62,21 @@ class AuthController extends Controller
             $teacherCourses = CourseUser::where('role_id', '2')->whereIn('course_id', $courses)->pluck('user_id');
 
             $user = Auth::user();
-           
+
             $content = Coworker::where('user_id', $user->id)->first();
             $mosabeghat = Touruser::where('user_id', $user->id)->count();
-            Session::put('user',$user);
-           
-            Session::put('content',$content);
-            Session::put('mosabeghat',$mosabeghat);
+
+            if ($user->hasRole('teacher')) {
+                $user2 = User::where('national', $user->national)->where('role', 3)->first();
+                Session::put('user2', $user2);
+            } elseif ($user->hasRole('student')) {
+                $user2 = User::where('national', $user->national)->where('role', 2)->first();
+                Session::put('user2', $user2);
+            }
+            Session::put('user', $user);
+
+            Session::put('content', $content);
+            Session::put('mosabeghat', $mosabeghat);
 
 
             return $teacherCourses;
@@ -88,13 +103,21 @@ class AuthController extends Controller
                 Auth::login($user);
 
                 $user = Auth::user();
-          
-            $content = Coworker::where('user_id', $user->id)->first();
-            $mosabeghat = Touruser::where('user_id', $user->id)->count();
-            Session::put('user',$user);
-            
-            Session::put('content',$content);
-            Session::put('mosabeghat',$mosabeghat);
+
+                $content = Coworker::where('user_id', $user->id)->first();
+                $mosabeghat = Touruser::where('user_id', $user->id)->count();
+
+                if ($user->hasRole('teacher')) {
+                    $user2 = User::where('national', $user->national)->where('role', 3)->first();
+                    Session::put('user2', $user2);
+                } elseif ($user->hasRole('student')) {
+                    $user2 = User::where('national', $user->national)->where('role', 2)->first();
+                    Session::put('user2', $user2);
+                }
+                Session::put('user', $user);
+
+                Session::put('content', $content);
+                Session::put('mosabeghat', $mosabeghat);
 
                 return redirect('/dashboard/courses/list');
             }
@@ -108,10 +131,17 @@ class AuthController extends Controller
             $user2 = User::where('national', $user->national)->where('role', 2)->first();
             $content = Coworker::where('user_id', $user->id)->first();
             $mosabeghat = Touruser::where('user_id', $user->id)->count();
-            Session::put('user',$user);
-           
-            Session::put('content',$content);
-            Session::put('mosabeghat',$mosabeghat);
+
+            if ($user->hasRole('teacher')) {
+                $user2 = User::where('national', $user->national)->where('role', 3)->first();
+                Session::put('user2', $user2);
+            } elseif ($user->hasRole('student')) {
+                $user2 = User::where('national', $user->national)->where('role', 2)->first();
+                Session::put('user2', $user2);
+            }
+            Session::put('user', $user);
+            Session::put('content', $content);
+            Session::put('mosabeghat', $mosabeghat);
 
 
             return redirect()->route('dashboard');
@@ -176,7 +206,7 @@ class AuthController extends Controller
         $user->password = bcrypt($request->password);
         $user->save();
 
-        
+
 
         if ($request->type == '2') {
             $user->role = 2;
@@ -193,16 +223,23 @@ class AuthController extends Controller
         Auth::login($user);
 
         $user = Auth::user();
-     
+
         $content = Coworker::where('user_id', $user->id)->first();
         $mosabeghat = Touruser::where('user_id', $user->id)->count();
-        Session::put('user',$user);
-       
-        Session::put('content',$content);
-        Session::put('mosabeghat',$mosabeghat);
+
+        if ($user->hasRole('teacher')) {
+            $user2 = User::where('national', $user->national)->where('role', 3)->first();
+            Session::put('user2', $user2);
+        } elseif ($user->hasRole('student')) {
+            $user2 = User::where('national', $user->national)->where('role', 2)->first();
+            Session::put('user2', $user2);
+        }
+        Session::put('user', $user);
+
+        Session::put('content', $content);
+        Session::put('mosabeghat', $mosabeghat);
 
         return redirect('/dashboard/courses/list');
-
     }
     public function logout()
     {

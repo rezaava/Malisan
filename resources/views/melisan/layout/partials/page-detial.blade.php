@@ -5,11 +5,11 @@
 <div class="top-header-dashboard">
 
     <h2 class="welcome-text-dashboard">
-        @if ($user->hasRole('teacher')) استاد
-        @elseif($user->hasRole('student')) دانشجو
-        @elseif($user->hasRole('admin')) مدیر محترم
+        @if (Session::get('user')->hasRole('teacher')) استاد
+        @elseif(Session::get('user')->hasRole('student')) دانشجو
+        @elseif(Session::get('user')->hasRole('admin')) مدیر محترم
         @endif
-        {{$user->name . ' ' . $user->family }} عزیز خوش آمدید
+        {{Session::get('user')->name . ' ' . Session::get('user')->family }} عزیز خوش آمدید
     </h2>
 
     <ol class="breadcrumb-list-dashboard">
