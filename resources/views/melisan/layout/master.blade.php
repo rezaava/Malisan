@@ -19,8 +19,8 @@
     <!-- جدیددددد -->
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"> -->
-    
-   
+
+
     <!-- css -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('all-css/app-assets/style-rtl.min.css') }}">
@@ -28,26 +28,25 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('all-css/materialize.min.css') }}">
     <link rel="stylesheet" href="{{ asset('all-css/app-assets/vendors.min.css') }}">
     <!-- <link rel="stylesheet" href="{{ asset('all-css/my-style.css') }}"> -->
-    
+
     @yield('add-styles')
     <!-- Boxicons -->
     <!-- <link rel="stylesheet" type="text/css" href="{{ asset('all-css/style.min.css') }}"> -->
-    
+
     <link rel="stylesheet" href="{{ asset('all-css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('all-css/style2.css') }}">
     <link rel="stylesheet" href="{{ asset('all-css/style3.css') }}">
     <!-- <link href="all-css/assets/fonts/Boxicons.min.css" rel="stylesheet"> -->
-<link rel="stylesheet" href="{{ asset('app-assets/css-rtl/custom/style.css') }}">
-    
+    <link rel="stylesheet" href="{{ asset('app-assets/css-rtl/custom/style.css') }}">
+
 
 
     <!-- <link rel="stylesheet" type="text/css"
         href="{{ asset('app-assets/css-rtl/themes/vertical-menu-nav-dark-template/materialize.min.css') }}">
     <link rel="stylesheet" type="text/css"
         href="{{ asset('app-assets/css-rtl/themes/vertical-menu-nav-dark-template/style.min.css') }}"> -->
-   
-    <style>
 
+    <style>
         .main-master {
             padding-right: 50px;
             margin-top: 5%;
@@ -71,16 +70,13 @@
                 margin-right: 5%;
             }
         }
-
-
-        
     </style>
 
-    
+
     </head>
 
     <body class="" data-open="click" data-menu="vertical-modern-menu" data-col="2-columns">
-    <div class="global-bg"></div>
+        <div class="global-bg"></div>
 
         <div class="container_fluid">
 
@@ -92,7 +88,11 @@
 
             <!-- BEGIN: Page Main-->
             <div id="main" style="" class="main-master">
-                @include('melisan.layout.partials.page-detial')
+
+                @if($show_nav ?? true) {{-- پیش‌فرض true --}}
+                        @include('melisan.layout.partials.page-detial')
+                @endif
+
                 <div class="container-dushbord">
                     <br>
                     @yield('main-content')
