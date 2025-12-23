@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Auth;
 use DB;
 use Validator;
 use Illuminate\Support\Str;
-
+use Illuminate\Support\Facades\Session as DefulSession;
 
 class CourseController extends Controller
 {
@@ -55,14 +55,14 @@ class CourseController extends Controller
             }
         }
         $mosabeghat = Touruser::where('user_id', $user->id)->count();
-
+        // return $user2;
         return view(
             'melisan.management.courses.index'
             ,
             compact('courses', 'user', 'mosabeghat', 'user2', 'content')
         );
     }
-      public function active($id)
+    public function active($id)
     {
         $course = Course::findOrFail($id);
         if ($course->active == 1) {
@@ -73,7 +73,68 @@ class CourseController extends Controller
         $course->save();
         return redirect()->back()->with('success', ' با موفقیت انجام شد.');
     }
-   public function archPost($id)
+    function arch(Request $request)
+    {
+        $user = Auth::user();
+        $content = Coworker::where('user_id', $user->id)->first();
+        $mosabeghat = Touruser::where('user_id', $user->id)->count();
+
+        if ($user->hasRole('teacher')) {
+            $user2 = User::where('national', $user->national)->where('role', 3)->first();
+            DefulSession::put('user2', $user2);
+        } elseif ($user->hasRole('student')) {
+            $user2 = User::where('national', $user->national)->where('role', 2)->first();
+            DefulSession::put('user2', $user2);
+        }
+        DefulSession::put('user', $user);
+        DefulSession::put('content', $content);
+        DefulSession::put('mosabeghat', $mosabeghat);
+        $courses = $user->courses()->where('archieve', 1)->get();
+        $teacher_role = Role::where("name", "teacher")->pluck('id');
+
+        foreach ($courses as $course) {
+            if (!$course->header) {
+                $course->header = rand(1, 33);
+                $course->save();
+            }
+            $sessions = $course->sessions()->count();
+            $course['sessions'] = $sessions;
+
+            $student_role = Role::where("name", "student")->first();
+            $users = $course->users()->where('role_id', $student_role->id)->count();
+            $course['count'] = $users;
+
+            $teacher = $course->users()->where('role_id', $teacher_role)->pluck('user_id');
+            $course['user'] = User::findOrFail($teacher)->first();
+
+
+            //            $students = $course->users()->where('role_id', $student_role->id)->orderBy('image', 'desc')->take('5')->get();
+
+            //            $course['students'] = $students;
+
+        }
+        //        return $courses;
+
+
+        if ($user->hasRole('teacher') && $user->hasRole('admin')) {
+            return view('melisan.management.courses.index', compact('courses', 'user', 'mosabeghat', 'content', 'user2'))
+                ->with([
+                    'pageTitle' => 'صفحه لیست دروس',
+                    'pageName' => 'دروس',
+                    'pageDescription' => 'مدرس عزیز ! لیست دروس شما به شرح زیر میباشد ',
+                ]);
+        }
+        return view('melisan.management.courses.index', compact('courses', 'user', 'mosabeghat', 'content', 'user2'))
+            ->with([
+                'pageTitle' => 'صفحه لیست دروس',
+                'pageName' => 'دروس',
+                'pageDescription' => 'دوست من ! لیست درس هاتو برات نمایش دادم',
+            ]);
+
+        //        return view('dashboard.course.list', compact('courses'));
+
+    }
+    public function archPost($id)
     {
         $course = Course::findOrFail($id);
         if ($course->archieve == 1) {
@@ -85,7 +146,7 @@ class CourseController extends Controller
         return redirect()->back()->with('success', ' با موفقیت انجام شد.');
 
     }
-        public function private($id)
+    public function private($id)
     {
         $course = Course::findOrFail($id);
         if ($course->private == 1) {
@@ -96,7 +157,7 @@ class CourseController extends Controller
         $course->save();
         return redirect()->back()->with('success', ' با موفقیت انجام شد.');
     }
-       public function status($id)
+    public function status($id)
     {
         $course = Course::findOrFail($id);
         if ($course->status == 1) {
@@ -107,7 +168,7 @@ class CourseController extends Controller
         $course->save();
         return redirect()->back()->with('success', ' با موفقیت انجام شد.');
     }
- public function davari($id)
+    public function davari($id)
     {
         $course = Course::findOrFail($id);
         if ($course->davari == 1) {
@@ -120,7 +181,7 @@ class CourseController extends Controller
         return redirect()->back()->with('success', ' با موفقیت انجام شد.');
 
     }
-     public function quiz($id)
+    public function quiz($id)
     {
         $course = Course::findOrFail($id);
         if ($course->quiz == 1) {
@@ -132,7 +193,7 @@ class CourseController extends Controller
         return redirect()->back()->with('success', ' با موفقیت انجام شد.');
 
     }
-      public function faaliat($id)
+    public function faaliat($id)
     {
         $course = Course::findOrFail($id);
         if ($course->faaliat == 1) {
@@ -144,7 +205,7 @@ class CourseController extends Controller
         return redirect()->back()->with('success', ' با موفقیت انجام شد.');
 
     }
-  public function pishraft($id)
+    public function pishraft($id)
     {
         $course = Course::findOrFail($id);
         if ($course->pishraft == 1) {
@@ -448,84 +509,31 @@ class CourseController extends Controller
         //            }
     }
 
-    public function join(Request $request)
+    public function join($id)
     {
-
-        $data = $request->all();
-        $rule = [
-            'code' => 'required',
-        ];
-        $valid = Validator::make($data, $rule);
-        if ($valid->fails())
-            return response()->json(
-                [
-                    'status' => 'failed',
-                    'message' => $valid->errors()->first(),
-                ],
-                422,
-                array('Content-Type' => 'application/json;charset:utf-8;'),
-                JSON_UNESCAPED_UNICODE
-            );
 
         DB::beginTransaction();
         $user = Auth::user();
         $role = Role::where("name", "student")->first();
 
         //        $course = Course::find($request->code);
-        $course = Course::where('code', $request->code)->first();
+        $course = Course::where('id', $id)->first();
         if ($course) {
             $repeat = $user->courses()->where('course_id', $course->id)->first();
 
             if ($repeat)
-                return response()->json(
-                    [
-                        'status' => 'fail',
-                        'message' => 'کلاس تکراری است',
-                    ],
-                    200,
-                    array('Content-Type' => 'application/json; charset=utf-8'),
-                    JSON_UNESCAPED_UNICODE
-                );
+                return redirect()->back()->with('success', 'کلاس تکراری است');
             try {
                 $course->users()->attach($user, ['role_id' => $role->id]);
                 DB::commit();
-
-                return response()->json(
-                    [
-                        'status' => 'ok',
-                        'message' => 'با موفقیت وارد کلاس شدید',
-                    ],
-                    200,
-                    array('Content-Type' => 'application/json; charset=utf-8'),
-                    JSON_UNESCAPED_UNICODE
-                );
+                return redirect()->back()->with('success', 'با موفقیت وارد کلاس شدید');
 
             } catch (\Exception $exception) {
-
                 DB::rollBack();
-
-                return response()->json(
-                    [
-                        'status' => 'fail',
-                        'message' => 'خطایی در سرور رخ داده است',
-                    ],
-                    200,
-                    array('Content-Type' => 'application/json; charset=utf-8'),
-                    JSON_UNESCAPED_UNICODE
-                );
-
+                return redirect()->back()->with('success', 'خطایی در سرور رخ داده است', );
 
             }
         }
-        return response()->json(
-            [
-                'status' => 'fail',
-                'message' => 'کد اشتباه است',
-            ],
-            200,
-            array('Content-Type' => 'application/json; charset=utf-8'),
-            JSON_UNESCAPED_UNICODE
-        );
     }
 
     public function create(Request $request)
@@ -759,14 +767,14 @@ class CourseController extends Controller
         $user = Auth::user();
         if ($user->hasRole('admin')) {
 
-            $courses = Course::where('private','1')->get();
+            $courses = Course::where('private', '1')->get();
         } elseif ($user->hasRole('teacher')) {
 
-            $courses = $user->courses()->where('private','1')->get();
+            $courses = $user->courses()->where('private', '1')->get();
         } elseif ($user->hasRole('student')) {
 
             // $courses = $user->courses()->where('active', '1')->where('private','1')->get();
-            $courses = Course::where('active', '1')->where('private','1')->get();
+            $courses = Course::where('active', '1')->where('private', '1')->get();
         }
         $teacher_role = Role::where("name", "teacher")->pluck('id');
 
@@ -782,22 +790,22 @@ class CourseController extends Controller
             $teacher = $course->users()->where('role_id', $teacher_role)->pluck('user_id');
             $course['user'] = User::findOrFail($teacher)->first();
 
-            if($course->type==1)
-                $course['type_name']="آموزش زبان";
-            elseif($course->type==2)
-                $course['type_name']="مهارت آموزی";
-            elseif($course->type==3)
-                $course['type_name']="آزمون های بسندگی";
-            elseif($course->type==4)
-                $course['type_name']="هنرآموزی";
-            elseif($course->type==5)
-                $course['type_name']="اموزش های عمومی";
+            if ($course->type == 1)
+                $course['type_name'] = "آموزش زبان";
+            elseif ($course->type == 2)
+                $course['type_name'] = "مهارت آموزی";
+            elseif ($course->type == 3)
+                $course['type_name'] = "آزمون های بسندگی";
+            elseif ($course->type == 4)
+                $course['type_name'] = "هنرآموزی";
+            elseif ($course->type == 5)
+                $course['type_name'] = "اموزش های عمومی";
             else
-                $course['type_name']="نامشخص";
+                $course['type_name'] = "نامشخص";
 
 
             $cu = CourseUser::where('course_id', $course->id)->where('user_id', $user->id)->first();
-            if($cu) {
+            if ($cu) {
                 $now = Carbon::now();
                 $time = $cu->created_at;
                 $time = Carbon::parse($time);
@@ -805,15 +813,15 @@ class CourseController extends Controller
                 $count = $course->sessions()->where('active', '1')->orderBy('number', 'desc')->count();
                 $activated = floor($diff / $course->period) - 1;
                 // $course['activated']=floor(( $activated / $count ) * 100);   
-                if($course['activated']>100)
-                    $course['activated']=1;
-            }else
-                $course['activated']=0;
+                if ($course['activated'] > 100)
+                    $course['activated'] = 1;
+            } else
+                $course['activated'] = 0;
 
 
 
         }
-//        return $courses;
+        //        return $courses;
         return view('melisan.management.courses.students.publics', compact('courses'))
             ->with([
                 'pageTitle' => 'صفحه لیست دروس',

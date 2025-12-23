@@ -7,18 +7,16 @@
         <div class="row">
             @if(isset($courses))
                 @if ($user->hasRole('teacher'))
-                    <div class=" col-md-6">
+                    <div class=" col-md-12">
                         <a href="/dashboard/courses/create" class="add-btn-list" aria-label="افزودن درس">
                             <span class="icon-list">+</span>
                             <span class="text-list">افزودن درس</span>
                         </a>
-                    </div>
-                    <div class=" col-md-6">
+                
                         <div class=" s7 mt-1 right-align ">
-                            <a href="{{ route('course.arch') }}"
-                                class="waves-effect waves-light card-width btn  gradient-45deg-green-teal  box-shadow-none border-round mr-1 mb-1">
-                                ارشیو
-                                شده
+                            <a href="{{ route('course.arch') }}" id="arch-course"
+                                class=" btn">
+                               <i class="material-icons">archive</i>
                             </a>
                         </div>
                     </div>

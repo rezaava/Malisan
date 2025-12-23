@@ -21,6 +21,28 @@
 
 <body class="login-bg">
     <div class="container">
+        <!-- پیام موفقیت و خطا -->
+        <div class="alertCat">
+            @if(session('success'))
+                <div class="alert-success-custom">
+                    <div class="alert-content">
+                        <span class="alert-icon">✓</span>
+                        <span class="alert-message">{{ session('success') }}</span>
+                        <button class="alert-close"
+                            onclick="this.parentElement.parentElement.style.display='none'">×</button>
+                    </div>
+                </div>
+            @elseif(session('error'))
+                <div class="alert-error-custom">
+                    <div class="alert-content">
+                        <span class="alert-icon">!</span>
+                        <span class="alert-message">{{ session('error') }}</span>
+                        <button class="alert-close"
+                            onclick="this.parentElement.parentElement.style.display='none'">×</button>
+                    </div>
+                </div>
+            @endif
+        </div>
         <div class="login-card-login ">
             <div class="neon-line-login"></div>
             <h3 class="h3-login">ورود به حساب</h3>
@@ -68,11 +90,8 @@
     </div>
 
 </body>
-{{-- import Notifications Program Status --}}
-@include('management.layout.notifications.notifications')
-{{-- import Error Program --}}
-@include('management.layout.notifications.error')
-{{-- Main Content Is Here --}}
+
+
 @yield('main-content')
 {{-- End Main Content --}}
 <!-- BEGIN VENDOR JS-->

@@ -23,16 +23,16 @@ use Illuminate\Support\Facades\Http;
 
 class DashboardController extends Controller
 {
-    public function dashboards(Request $request)
+    public function dashboards()
     {
-    //  return 'aaaaaaaaaa';
+
         $user = Auth::user();
         $content = Coworker::where('user_id', $user->id)->first();
-         
+// return $user;
         $aneto = null;
         $angizesh = Angizesh::whereIn('level', [7, 8])->inRandomOrder()->first();
         $mosabeghat = Touruser::where('user_id', $user->id)->count();
-            // return $user->hasRole();
+        // return $user->hasRole();
         if ($user->hasRole('teacher')) {
             $user2 = User::where('national', $user->national)->where('role', 3)->first();
             // return $user2;
@@ -43,11 +43,13 @@ class DashboardController extends Controller
                     'pageDescription' => '    خوش امدید',
                 ]);
         } elseif ($user->hasRole('student')) {
-        //  return 'test';
+            //  return 'test';
             $user2 = User::where('national', $user->national)->where('role', 2)->first();
-           
-            return view('melisan.dashbord.user.index',
-             compact('user', 'user2', 'aneto', 'angizesh', 'content', 'mosabeghat'))
+
+            return view(
+                'melisan.dashbord.user.index',
+                compact('user', 'user2', 'aneto', 'angizesh', 'content', 'mosabeghat')
+            )
                 ->with([
                     'pageTitle' => 'صفحه مدرس',
                     'pageName' => 'مدرس',
@@ -55,6 +57,12 @@ class DashboardController extends Controller
                 ]);
         } elseif ($user->hasRole('touradmin')) {
             $mosabeghat = Touradmin::where('user_id', $user->id)->count();
+            return view('melisan.dashbord.user.index', compact('user', 'user2', 'angizesh', 'content', 'mosabeghat'))
+                ->with([
+                    'pageTitle' => 'صفحه دانشجو',
+                    'pageName' => 'دانشجو',
+                    'pageDescription' => '    خوش امدید',
+                ]);
         }
     }
     /////////////////////////////////////////////////////////////////////////

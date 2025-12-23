@@ -49,7 +49,7 @@ Route::get('/ref', [AuthController::class, 'ref'])->name('ref');
 Route::get('/reg', [AuthController::class, 'reg'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 Route::get('/global', [AuthController::class, 'reg'])->name('global');
-Route::post('/survey-answer', [AuthController::class, 'Survey'])->name('survey.answer');
+Route::post('/survey-answer', [AuthController::class, 'survey'])->name('survey.answer');
 
 ///چک پایان
 
@@ -112,7 +112,7 @@ Route::middleware('auth')->group(function () {
                 //                    Route::get('/destroy-user/{id}/{cid}', 'CourseController@destroyUser')->name('destroyUser');
 
                 Route::group(['middleware' => ['role:student']], function () {
-                    Route::any('/join', [CourseController::class, 'join']);
+                    Route::any('/join/{id}', [CourseController::class, 'join']);
                 });
                 Route::group(['prefix' => 'sessions'], function () {
                     Route::get('/', [SessionController::class, 'list'])->name('session.list');

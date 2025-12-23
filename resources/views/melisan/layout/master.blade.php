@@ -82,6 +82,28 @@
 
             <!-- BEGIN: Header-->
             @include('melisan.layout.partials.top-header')
+ <!-- پیام موفقیت و خطا -->
+        <div class="alertCat">
+            @if(session('success'))
+                <div class="alert-success-custom">
+                    <div class="alert-content">
+                        <span class="alert-icon">✓</span>
+                        <span class="alert-message">{{ session('success') }}</span>
+                        <button class="alert-close" onclick="this.parentElement.parentElement.style.display='none'">×</button>
+                    </div>
+                </div>
+            @elseif(session('error'))
+                <div class="alert-error-custom">
+                    <div class="alert-content">
+                        <span class="alert-icon">!</span>
+                        <span class="alert-message">{{ session('error') }}</span>
+                        <button class="alert-close" onclick="this.parentElement.parentElement.style.display='none'">×</button>
+                    </div>
+                </div>
+            @endif
+        </div>
+
+
 
             <!-- BEGIN: SideNav-->
             @include('melisan.layout.partials.aside')

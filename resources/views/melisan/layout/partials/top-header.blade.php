@@ -31,7 +31,7 @@
                     <!-- پروفایل به صورت آیکون -->
                     <a class="" href="/dashboard/user/{{ Session::get('user')->id}}">
                         <span class="avatar-status avatar-online">
-                            <img src="{{ asset('/files/user/' . Session::get('user')->image) }}" alt="profile">
+                            <img src="{{ asset( Session::get('user')->image) }}" alt="profile">
                         </span>
                     </a>
                 </li>

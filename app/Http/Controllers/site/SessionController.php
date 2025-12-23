@@ -182,7 +182,7 @@ class SessionController extends Controller
         if (Auth::user()->hasRole('student')) {
             $student = 1;
         }
-
+        
         return view('melisan.sessions.index', compact('setting', 'content', 'user2', 'mosabeghat', 'khodazmaii', 'sessions', 'course', 'student', 'isJudment', 'member', 'user'))
             ->with([
                 'pageTitle' => 'صفحه مدیریت درس',
@@ -191,7 +191,7 @@ class SessionController extends Controller
             ]);
 
     }
-   public function profEx(Request $request, $id)
+    public function profEx(Request $request, $id)
     {
         $user = Auth::user();
         $mosabeghat = Touruser::where('user_id', $user->id)->count();
@@ -210,7 +210,7 @@ class SessionController extends Controller
             }
             $item['answers'] = $answers;
         }
-        return view('management.exercise.list', compact('tamrinha','user','user2','mosabeghat'));
+        return view('management.exercise.list', compact('tamrinha', 'user', 'user2', 'mosabeghat'));
     }
 
     public function create(Request $request)
@@ -289,7 +289,7 @@ class SessionController extends Controller
     public function edit(Request $request, $id)
     {
         $user = Auth::user();
-       $mosabeghat = Touruser::where('user_id', $user->id)->count();
+        $mosabeghat = Touruser::where('user_id', $user->id)->count();
         if ($user->hasRole('student')) {
             $user2 = User::where('national', $user->national)->where('role', 2)->first();
         } elseif ('teacher') {
@@ -298,7 +298,7 @@ class SessionController extends Controller
         if ($request->isMethod('get')) {
             $meeting = Session::findOrFail($id);
             $course = Course::find($meeting->course_id);
-            return view('management.sessions.edit', compact('meeting', 'course','user','user2','mosabeghat'));
+            return view('management.sessions.edit', compact('meeting', 'course', 'user', 'user2', 'mosabeghat'));
         } else {
 
             $data = $request->all();
@@ -398,5 +398,5 @@ class SessionController extends Controller
 
         return back()->with('success', 'با موفقیت انجام شد');
     }
- 
+
 }
