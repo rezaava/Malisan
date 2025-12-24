@@ -23,6 +23,7 @@ use App\Http\Controllers\site\KonkorController;
 use App\Http\Controllers\site\QuestionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\site\ExerciseController;
+use App\Http\Controllers\site\ChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -248,8 +249,8 @@ Route::middleware('auth')->group(function () {
             });
 
             //                chat
-            Route::get('/chat', 'ChatController@chats')->name('chats');
-            Route::post('/chat', 'ChatController@chat')->name('chat');
+            Route::get('/chat', [ChatController::class, 'chats'])->name('chats');
+            Route::post('/chat', [ChatController::class, 'chat'])->name('chat');
             Route::group(['prefix' => 'azmon'], function () {
                 Route::get('/', 'AzmonController@list');
                 Route::get('/create', 'AzmonController@create');

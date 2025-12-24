@@ -223,7 +223,6 @@ class AuthController extends Controller
         Auth::login($user);
 
         $user = Auth::user();
-
         $content = Coworker::where('user_id', $user->id)->first();
         $mosabeghat = Touruser::where('user_id', $user->id)->count();
 
@@ -235,7 +234,6 @@ class AuthController extends Controller
             Session::put('user2', $user2);
         }
         Session::put('user', $user);
-
         Session::put('content', $content);
         Session::put('mosabeghat', $mosabeghat);
 

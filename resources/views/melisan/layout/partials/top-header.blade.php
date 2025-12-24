@@ -18,7 +18,7 @@
                 <li>
                     <!-- آیکون سوالات -->
                     <a class="" @if( Session::get('user')->hasRole('teacher')) href="{{asset('/files/help.pdf')}}"
-                    @elseif($user->hasRole('student')) href="{{asset('/files/help2.pdf')}}" @endif 
+                    @elseif(Session::get('user')->hasRole('student')) href="{{asset('/files/help2.pdf')}}" @endif 
                     data-target="" style="font-size: 20px;">❓
                     </a>
                 </li>

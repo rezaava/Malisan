@@ -328,7 +328,7 @@ a {
     }
 }
 /* profile */
-       /* body.pro1 {
+       body.pro1 {
             font-family: 'Vazirmatn', sans-serif;
             min-height: 100vh;
             background: linear-gradient(135deg, #667eea, #764ba2);
@@ -439,10 +439,10 @@ a {
 
         .btn.outline.pro1:hover {
             background: rgba(255,255,255,0.2);
-        } */
+        }
 
         /* Media Queries برای تمام سایزها */
-        /* @media (max-width: 1200px) {
+        @media (max-width: 1200px) {
             .profile-card.pro1 { width: 320px; padding: 28px 22px; }
             .name.pro1 { font-size: 20px; }
             .role.pro1 { font-size: 13px; }
@@ -486,4 +486,4 @@ a {
             .stat.pro1 span { font-size: 14px; }
             .bio.pro1 { font-size: 9px; }
             .btn.pro1 { font-size: 12px; padding: 8px; }
-        } */
+        }

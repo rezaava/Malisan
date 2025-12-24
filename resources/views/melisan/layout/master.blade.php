@@ -36,6 +36,7 @@
     <link rel="stylesheet" href="{{ asset('all-css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('all-css/style2.css') }}">
     <link rel="stylesheet" href="{{ asset('all-css/style3.css') }}">
+   
     <!-- <link href="all-css/assets/fonts/Boxicons.min.css" rel="stylesheet"> -->
 <link rel="stylesheet" href="{{ asset('app-assets/css-rtl/custom/style.css') }}">
     
