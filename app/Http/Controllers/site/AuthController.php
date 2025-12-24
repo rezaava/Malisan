@@ -131,39 +131,29 @@ class AuthController extends Controller
         $user->password = bcrypt($request->password);
         $user->save();
 
-
-
         if ($request->type == '2') {
             $user->role = 2;
             $user->save();
-            $role = Role::where('name', 'teacher')->first();
-            $user->roles()->attach($role);
+            // $role = Role::where('name', 'teacher')->first();
+            // $user->roles()->attach($role);
+            $user->hasRole('teacher');
         } else {
             $user->role = 3;
             $user->save();
-            $role = Role::where('name', 'student')->first();
-            $user->roles()->attach($role);
+            // $role = Role::where('name', 'student')->first();
+            // $user->roles()->attach($role);
+            $user->hasRole('student');
         }
-
         Auth::login($user);
-
-        $user = Auth::user();
-
+        // $user = Auth::user();
         $content = Coworker::where('user_id', $user->id)->first();
         $mosabeghat = Touruser::where('user_id', $user->id)->count();
 
         if ($user->hasRole('teacher')) {
             $user2 = User::where('national', $user->national)->where('role', 3)->first();
-            Session::put('user2', $user2);
         } elseif ($user->hasRole('student')) {
             $user2 = User::where('national', $user->national)->where('role', 2)->first();
-            Session::put('user2', $user2);
         }
-        Session::put('user', $user);
-
-        Session::put('content', $content);
-        Session::put('mosabeghat', $mosabeghat);
-
         return redirect('/dashboard/courses/list');
     }
     public function logout()
@@ -173,29 +163,23 @@ class AuthController extends Controller
     }
     public function change(Request $request)
     {
-        // return $request;
         $user = Auth::user();
-
         $user2 = User::where('national', $user->national)->where('role', '!=', $user->role)->first();
 
         if ($user2) {
             Auth::logout();
-            if ($user2->role == 2) {
+            if ($user2->hasRole('teacher')) {
                 Auth::login($user2);
                 return redirect()->route('dashboard');
-            } else {
+            } elseif ($user->hasRole('student')) {
                 Auth::login($user2);
                 $courses = $user->courses()->pluck('course_id');
-                // return $courses;
                 $teacherCourses = CourseUser::where('role_id', '3')->whereIn('course_id', $courses)->pluck('user_id');
                 foreach ($teacherCourses as $item) {
                     $item = -$item;
                 }
-                // return $teacherCourses;
                 $answers = OptionUser::where('user_id', $user->id)->pluck('survey_id');
-                //  return $answers;
-                $surveys = Survey::query()
-                    ->where(function ($query) use ($courses, $teacherCourses) {
+                $surveys = Survey::query()->where(function ($query) use ($courses, $teacherCourses) {
                         $query->whereIn('group', $courses)
                             ->orWhere('group', '0')
                             ->orWhereIn('user_id', $teacherCourses);
@@ -203,14 +187,11 @@ class AuthController extends Controller
                     ->whereNotIn('id', $answers)
                     ->where('active', true) // استفاده از boolean به جای string
                     ->get();
-
                 if (count($surveys)) {
                     $random = $surveys->random();
                     if ($random->type != '1') {
-
                         $random['options'] = Option::where('survey_id', $random->id)->get();
                     }
-                    // return $random;
                     $user = $user2;
                     return view('melisan.management.courses.students.survays', compact('random', 'user'))
                         ->with([
@@ -227,9 +208,9 @@ class AuthController extends Controller
     }
     public function survey(Request $req)
     {
-        
+
         // $user = User::where('id', $req->user_id)->first();
-   
+
         // $random['options'] = null;
         // // if ($user->hasRole('student')) {
         // $courses = $user->courses()->pluck('course_id');
@@ -248,9 +229,9 @@ class AuthController extends Controller
         //         $random['options'] = $options;
         //     }
         // }
-       
-         return redirect('/dashboard/courses/list');
-        
+
+        return redirect('/dashboard/courses/list');
+
     }
 
     // }

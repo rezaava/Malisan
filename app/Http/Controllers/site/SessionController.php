@@ -26,7 +26,7 @@ class SessionController extends Controller
     //
     function list(Request $request)
     {
-
+        $course = Course::findOrFail($request->course_id);
         $user = Auth::user();
         $member = 0;
         $mosabeghat = Touruser::where('user_id', $user->id)->count();
@@ -56,8 +56,6 @@ class SessionController extends Controller
         // } else {
         //     $member = 0;
         // }
-
-        /////چک
 
         $setting = Setting::where('course_id', $course->id)->first();
         if ($user->hasRole('student')) {
@@ -106,9 +104,6 @@ class SessionController extends Controller
             $user2 = User::where('national', $user->national)->where('role', 3)->first();
             $sessions = $course->sessions()->orderBy('number', 'desc')->get();
         }
-        /////چک
-
-
         //tedad soalat khod azmaii
         $max_q = $setting->q_num;
         $sess = $sessions->pluck('id');
@@ -182,7 +177,7 @@ class SessionController extends Controller
         if (Auth::user()->hasRole('student')) {
             $student = 1;
         }
-        
+
         return view('melisan.sessions.index', compact('setting', 'content', 'user2', 'mosabeghat', 'khodazmaii', 'sessions', 'course', 'student', 'isJudment', 'member', 'user'))
             ->with([
                 'pageTitle' => 'صفحه مدیریت درس',
@@ -191,6 +186,7 @@ class SessionController extends Controller
             ]);
 
     }
+    //////////////////////////////////
     public function profEx(Request $request, $id)
     {
         $user = Auth::user();

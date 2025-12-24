@@ -13,7 +13,7 @@ use App\Models\Coworker;
 
 class UserController extends Controller
 {
-    //
+    //check
     public function profile(Request $request)
     {
         $user = Auth::user();
@@ -56,7 +56,7 @@ class UserController extends Controller
     }
     // return view('/melisan/dashbord/user/user', compact('user'))->with('success', 'ب موفقیت ویرایش شد');
 
-    //////////////////////////////////////////////////////////////
+ 
     public function edit(Request $request, $id)
     {
         // $data = $request->all();

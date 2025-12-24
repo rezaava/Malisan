@@ -35,6 +35,7 @@ class CourseController extends Controller
     //
     public function list()
     {
+      
         $user = Auth::user();
         $content = Coworker::where('user_id', $user->id)->first();
         // $courses = $user->courses()->get();
@@ -81,37 +82,29 @@ class CourseController extends Controller
 
         if ($user->hasRole('teacher')) {
             $user2 = User::where('national', $user->national)->where('role', 3)->first();
-            DefulSession::put('user2', $user2);
         } elseif ($user->hasRole('student')) {
             $user2 = User::where('national', $user->national)->where('role', 2)->first();
-            DefulSession::put('user2', $user2);
         }
-        DefulSession::put('user', $user);
-        DefulSession::put('content', $content);
-        DefulSession::put('mosabeghat', $mosabeghat);
         $courses = $user->courses()->where('archieve', 1)->get();
-        $teacher_role = Role::where("name", "teacher")->pluck('id');
+
 
         foreach ($courses as $course) {
             if (!$course->header) {
                 $course->header = rand(1, 33);
                 $course->save();
             }
-            $sessions = $course->sessions()->count();
-            $course['sessions'] = $sessions;
+            $course['sessions'] = $course->sessions()->count();
+            // $course['sessions'] = $sessions;
 
-            $student_role = Role::where("name", "student")->first();
-            $users = $course->users()->where('role_id', $student_role->id)->count();
-            $course['count'] = $users;
-
-            $teacher = $course->users()->where('role_id', $teacher_role)->pluck('user_id');
+            // $student_role = Role::where("name", "student")->first();
+//    $users = $course->users()->where('role_id', $student_role->id)->count();
+// $course['count'] = $users;
+            $course['count'] = $course->users()->hasRole('student')->count();
+            // $teacher_role = Role::where("name", "teacher")->pluck('id');
+            $teacher = $course->users()->hasRole('teacher')->pluck('user_id');
             $course['user'] = User::findOrFail($teacher)->first();
-
-
-            //            $students = $course->users()->where('role_id', $student_role->id)->orderBy('image', 'desc')->take('5')->get();
-
-            //            $course['students'] = $students;
-
+            //  $students = $course->users()->where('role_id', $student_role->id)->orderBy('image', 'desc')->take('5')->get();
+            //  $course['students'] = $students;
         }
         //        return $courses;
 
