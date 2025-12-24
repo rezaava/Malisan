@@ -12,19 +12,23 @@
 @section('title', 'مدیریت درس')
 
 @section('main-content')
+<div class="container-fluid">
 
-       @if( !$sessions)
-             @if ($user->hasRole('teacher'))
-                        @include('melisan.layout.btn.btn-loader' , [
-                            'url' => '/dashboard/courses/sessions/create?course_id='. $course->id,
-                            'icon' => "<i class='material-icons dp48'>add_circle_outline</i>",
-                            'pos' => 'top',
-                            'text' => 'جلسه جدید'
-                        ])
-                    @endif
-   
- @elseif ($sessions)
-    @if($member == 1)
+    @if(empty($sessions) || $sessions->isEmpty())
+        {{-- حالت بدون جلسات --}}
+        @if ($user->hasRole('teacher'))
+            @include('melisan.layout.btn.btn-loader' , [
+                'url' => '/dashboard/courses/sessions/create?course_id='. $course->id,
+                'icon' => "<i class='material-icons dp48'>add_circle_outline</i>",
+                'pos' => 'top',
+                'text' => 'جلسه جدید'
+            ])
+        @endif
+        <p class="p-session" style=" ">جلسه ای یافت  نشد ! </p>
+
+    @else
+        {{-- حالت با جلسات --}}
+        @if($member == 1)
         <div class="row">
             <div class="col 12 s12">
                 @if ($user->hasRole('teacher'))
@@ -35,58 +39,36 @@
                             <i class="material-icons dp48">help</i>
                         </a>
                     </div>
-                    
                     @include('management.layout.components.btn-back.btn-back')
                 @endif
                 
-         @if($member == 1)
-    <div class="row">
-        <div class="col 12 s12">
-            @if ($user->hasRole('teacher'))
-                <div class="col s12" style="width: fit-content; padding: 0 5px">
-                    <a onclick="onHelpClick()"
-                       class="btn-floating waves-effect waves-light gradient-45deg-amber-amber gradient-shadow tooltipped"
-                       data-position="bottom" data-tooltip="میخوام راهنماییت کنم">
-                        <i class="material-icons">help</i>
+                {{-- دکمه‌های کنار هم --}}
+                <div class="col s12" style="display: flex; gap: 12px; align-items: center; padding: 8px 0; flex-wrap: wrap;">
+                    @if($user->hasRole('student'))
+                        <!-- دکمه عضویت (سبز) -->
+                        <form action="/dashboard/courses/join/{{ $course->id }}" method="post" style="margin: 0;">
+                            @csrf
+                            <button class="btn-floating waves-effect waves-light green tooltipped"
+                                   data-position="bottom" 
+                                   data-tooltip="عضویت در درس"
+                                   style="border: none; cursor: pointer; transform: scale(0.9);">
+                                <i class="material-icons">check_circle</i>    
+                            </button>
+                        </form>
+                    @endif
+
+                    <!-- دکمه تنظیمات (زرد/نارنجی) -->
+                    <a onclick="showDetail()"
+                       class="btn-floating waves-effect waves-light amber tooltipped"
+                       data-position="bottom" 
+                       data-tooltip="  تنظیمات"
+                       style="cursor: pointer; transform: scale(0.9);">
+                        <i class="material-icons" style="color: #333;">settings</i>
                     </a>
                 </div>
-            @endif
-            
-            <!-- دکمه‌های کنار هم -->
-            <div class="col s12" style="display: flex; gap: 12px; align-items: center; padding: 8px 0; flex-wrap: wrap;">
-                 @if($user->hasRole('student'))
-                        <!-- دکمه عضویت (سبز) -->
-                <form action="/dashboard/courses/join/{{ $course->id }}" method="post" style="margin: 0;">
-                    @csrf
-                    <button class="btn-floating waves-effect waves-light green tooltipped"
-                           data-position="bottom" 
-                           data-tooltip="عضویت در درس"
-                           style="border: none; cursor: pointer; transform: scale(0.9);">
-                        <i class="material-icons">check_circle</i>    
-                    </button>
-                </form>
-    @endif
-
-                
-                <!-- دکمه تنظیمات (زرد/نارنجی) -->
-                <a onclick="showDetail()"
-                   class="btn-floating waves-effect waves-light amber tooltipped"
-                   data-position="bottom" 
-                   data-tooltip="  تنظیمات"
-                   style="cursor: pointer; transform: scale(0.9);">
-                    <i class="material-icons" style="color: #333;">settings</i>
-                </a>
-                
             </div>
         </div>
-    </div>
-    
-    <div id="colla" style="display: none">
-        <!-- ... بقیه کد ... -->
-    </div>
-@endif
-        </div>
-     </div>
+        
         <div id="colla" style="display: none">
             <div class="row">
                 @if ($user->hasRole('teacher'))
@@ -233,9 +215,9 @@
                 @endif
             </div>
         </div>
-    @endif
+        @endif {{-- پایان if($member == 1) --}}
 
-    @if ($user->hasRole('teacher'))
+        @if ($user->hasRole('teacher'))
         <div class="row">
             <div class="col-md-12">
                 <div id="checkboxes" class="card card-tabs bg-card" style="padding: 30px; background: rgba(255, 255, 255, 0.07); backdrop-filter: blur(20px);">
@@ -328,319 +310,200 @@
                 </div>
             </div>
         </div>
-    @endif
+        @endif
 
-    <section class="tabs-vertical mt-1 section">
-        <div class="row">
-            <div id="student" hidden>{{ $student }}</div>
+        <section class="tabs-vertical mt-1 section">
+            <div class="row">
+                <div id="student" hidden>{{ $student }}</div>
 
-            <div class="col-md-5 ">
-                <!-- tabs -->
-                <div class="card-panel user-list-box bg-card x">
-                    @if ($user->hasRole('teacher'))
-                        @include('melisan.layout.btn.btn-loader' , [
-                            'url' => '/dashboard/courses/sessions/create?course_id='. $course->id,
-                            'icon' => "<i class='material-icons dp48'>add_circle_outline</i>",
-                            'pos' => 'top',
-                            'text' => 'جلسه جدید'
-                        ])
-                    @endif
-                    
-                    <ul class="tabs" onclick=" ">
+                <div class="col-md-5 ">
+                    <!-- tabs -->
+                    <div class="card-panel user-list-box bg-card x">
+                        @if ($user->hasRole('teacher'))
+                            @include('melisan.layout.btn.btn-loader' , [
+                                'url' => '/dashboard/courses/sessions/create?course_id='. $course->id,
+                                'icon' => "<i class='material-icons dp48'>add_circle_outline</i>",
+                                'pos' => 'top',
+                                'text' => 'جلسه جدید'
+                            ])
+                        @endif
+                        
+                        <ul class="tabs" onclick=" ">
+                            @foreach ($sessions as $session)
+                                @if($member == 1 || $session->number == 1)
+                                    <li class="tab">
+                                        <a href="#general{{ $session->id }}" class="person" onclick="fun1()">
+                                            (جلسه {{ $session->number }})
+                                            <i class="material-icons" style="@if($session->active==1) color:green @else color:red @endif">
+                                                @if($session->active==1)
+                                                    check
+                                                @else
+                                                    clear
+                                                @endif
+                                            </i>
+                                            <span>{{ $session->name }}</span>
+                                        </a>
+                                    </li>
+                                @endif
+                            @endforeach
+                            <li class="indicator" style="left: 0px; right: 0px;"></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div id="mohtava" class="col-md-7 bg-card ">
+                    <!-- tabs content -->
+                    @if($course->status == 1 || $user->hasRole('teacher'))
                         @foreach ($sessions as $session)
                             @if($member == 1 || $session->number == 1)
-                                <li class="tab">
-                                    <a href="#general{{ $session->id }}" class="person" onclick="fun1()">
-                                        (جلسه {{ $session->number }})
-                                        <i class="material-icons" style="@if($session->active==1) color:green @else color:red @endif">
-                                            @if($session->active==1)
-                                                check
-                                            @else
-                                                clear
-                                            @endif
-                                        </i>
-                                        <span>{{ $session->name }}</span>
-                                    </a>
-                                </li>
-                            @endif
-                        @endforeach
-                        <li class="indicator" style="left: 0px; right: 0px;"></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div id="mohtava" class="col-md-7 bg-card ">
-                <!-- tabs content -->
-                @if($course->status == 1 || $user->hasRole('teacher'))
-                    @foreach ($sessions as $session)
-                        @if($member == 1 || $session->number == 1)
-                            <div id="general{{ $session->id }}" style="display: block;" class="active mt-1">
-                                <div class="mt-4">
-                                    <div class="row">
-                                        <span class="user-id" id="user-id" hidden data-name="{{ $session->id }}">{{ $session->id }}</span>
-                                        <span id="taklif_last" hidden data-name="{{ $session->id }}">{{ $session->taklif_last }}</span>
-                                        <span id="gozaresh_last" hidden data-name="{{ $session->id }}">{{ $session->gozaresh_last }}</span>
-                                        <span id="soal_last" hidden data-name="{{ $session->id }}">{{ $session->soal_last }}</span>
-                                        <span id="user-ex" data-name="{{ $session->ex_count }}" hidden>{{ $session->ex_count }}</span>
+                                <div id="general{{ $session->id }}" style="display: block;" class="active mt-1">
+                                    <div class="mt-4">
+                                        <div class="row">
+                                            <span class="user-id" id="user-id" hidden data-name="{{ $session->id }}">{{ $session->id }}</span>
+                                            <span id="taklif_last" hidden data-name="{{ $session->id }}">{{ $session->taklif_last }}</span>
+                                            <span id="gozaresh_last" hidden data-name="{{ $session->id }}">{{ $session->gozaresh_last }}</span>
+                                            <span id="soal_last" hidden data-name="{{ $session->id }}">{{ $session->soal_last }}</span>
+                                            <span id="user-ex" data-name="{{ $session->ex_count }}" hidden>{{ $session->ex_count }}</span>
 
-                                        <h5 mt-3>جلسه {{ $session->number }} : {{ $session->name }}</h5>
-                                        
-                                        @if($course->private == 1 || $session->soal_last > 0)
-                                            <a href="/dashboard/question/show?session_id={{ $session->id }}" id="questions"
-                                               class=" m-1 btn-floating tooltipped"
-                                               data-position="bottom" data-tooltip="طرح سوال">
-                                       <i class="material-icons dp48">help_outline</i>
-                                            </a>
-                                        @endif
-                                        
-                                        @if ($user->hasRole('teacher'))
-                                            <a id="homework_teacher"
-                                               href="/dashboard/exercise/show/{{ $session->id }}"
-                                               class="m-1 btn-floating tooltipped"
-                                               data-position="bottom" data-tooltip="دادن تکلیف">
-                                            <i class="material-icons dp48">assignment_add</i>
-                                            </a>
-                             
-                                            <a id="active"
-                                               href="/dashboard/courses/sessions/active/{{ $session->id }}"
-                                               class="m-1 btn-floating tooltipped"
-                                               data-position="bottom"
-                                               data-tooltip="@if($session->active==1 )غیرفعال کردن
-                                               @else
-                                                فعال کردن 
-                                               @endif
-                                               ">
-                                               <i class="material-icons dp48">@if($session->active==1)toggle_on @else toggle_off @endif</i> 
-                                            </a>
-                                    
-                                            <a id="edit"
-                                               href="/dashboard/courses/sessions/edit/{{ $session->id }}"
-                                               class="m-1 btn-floating tooltipped"
-                                               data-position="bottom" data-tooltip="ویرایش">
-                                             <i class="material-icons dp48">edit</i>
-                                            </a>
+                                            <h5 mt-3>جلسه {{ $session->number }} : {{ $session->name }}</h5>
                                             
-                                            <a id="edit"
-                                               href="/dashboard/courses/sessions/prof-ex/{{ $session->id }}"
-                                               class="m-1 btn-floating tooltipped"
-                                               data-position="bottom" data-tooltip="تکلیفها">
-                                               <i class="material-icons dp48">list_alt</i>
-                                            </a>
-                                        @endif
-                                        
-                                        @if(($course->private==1 && $session->ex_count>0)|| ($session->ex_count>0 && $session->taklif_last>0))
-                                            <a id="homework"
-                                               href="{{ route('exercise.show', $session->id) }}"
-                                               class="m-1 btn-floating tooltipped"
-                                               data-position="bottom" data-tooltip="تکلیف">
-                                              <i class="material-icons dp48">assignment</i>
-                                            </a>
-                                        @endif
-                                        
-                                   
-                                        
-                                        @if ($user->hasRole('student'))
-                                            @if($course->private==1 || $session->gozaresh_last)
-                                                <a href="{{ route('disc.show', $session->id) }}" id="disc"
-                                                   class="m-1 btn-floating tooltipped"
-                                                   data-position="bottom" data-tooltip="گزارش">
-                                                     <i class="material-icons dp48">assessment</i>
+                                            @if($course->private == 1 || $session->soal_last > 0)
+                                                <a href="/dashboard/question/show?session_id={{ $session->id }}" id="questions"
+                                                   class=" m-1 btn-floating tooltipped"
+                                                   data-position="bottom" data-tooltip="طرح سوال">
+                                           <i class="material-icons dp48">help_outline</i>
                                                 </a>
                                             @endif
-                                        @endif
+                                            
+                                            @if ($user->hasRole('teacher'))
+                                                <a id="homework_teacher"
+                                                   href="/dashboard/exercise/show/{{ $session->id }}"
+                                                   class="m-1 btn-floating tooltipped"
+                                                   data-position="bottom" data-tooltip="دادن تکلیف">
+                                                <i class="material-icons dp48">assignment_add</i>
+                                                </a>
+                                 
+                                                <a id="active"
+                                                   href="/dashboard/courses/sessions/active/{{ $session->id }}"
+                                                   class="m-1 btn-floating tooltipped"
+                                                   data-position="bottom"
+                                                   data-tooltip="@if($session->active==1 )غیرفعال کردن
+                                                   @else
+                                                    فعال کردن 
+                                                   @endif
+                                                   ">
+                                                   <i class="material-icons dp48">@if($session->active==1)toggle_on @else toggle_off @endif</i> 
+                                                </a>
+                                        
+                                                <a id="edit"
+                                                   href="/dashboard/courses/sessions/edit/{{ $session->id }}"
+                                                   class="m-1 btn-floating tooltipped"
+                                                   data-position="bottom" data-tooltip="ویرایش">
+                                                 <i class="material-icons dp48">edit</i>
+                                                </a>
+                                                
+                                                <a id="edit"
+                                                   href="/dashboard/courses/sessions/prof-ex/{{ $session->id }}"
+                                                   class="m-1 btn-floating tooltipped"
+                                                   data-position="bottom" data-tooltip="تکلیفها">
+                                                   <i class="material-icons dp48">list_alt</i>
+                                                </a>
+                                            @endif
+                                            
+                                            @if(($course->private==1 && $session->ex_count>0)|| ($session->ex_count>0 && $session->taklif_last>0))
+                                                <a id="homework"
+                                                   href="{{ route('exercise.show', $session->id) }}"
+                                                   class="m-1 btn-floating tooltipped"
+                                                   data-position="bottom" data-tooltip="تکلیف">
+                                                  <i class="material-icons dp48">assignment</i>
+                                                </a>
+                                            @endif
+                                            
+                                            @if ($user->hasRole('student'))
+                                                @if($course->private==1 || $session->gozaresh_last)
+                                                    <a href="{{ route('disc.show', $session->id) }}" id="disc"
+                                                       class="m-1 btn-floating tooltipped"
+                                                       data-position="bottom" data-tooltip="گزارش">
+                                                         <i class="material-icons dp48">assessment</i>
+                                                    </a>
+                                                @endif
+                                            @endif
 
-                                        @isset($session->text)
-                                            <div class="row">
-                                                <div class="col s12">
-                                                    <ul class="collapsible" data-collapsible="accordion">
-                                                        <li class="active">
-                                                            <div class="collapsible-header custom_header_of_collapsible" tabindex="0">
-                                                                <a class="btn btn-floating custom_floating_header_collapsible">
-                                                         <i class="material-icons">menu_book</i>    </a>
-                                                                        <p >        طرح درس یا محتوای درس</p>
-                                                            </div>
-                                                            <div class="collapsible-body" style="display: block;">
-                                                                <p>{!! $session->text !!}</p>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
+                                            @isset($session->text)
+                                                <div class="row">
+                                                    <div class="col s12">
+                                                        <ul class="collapsible" data-collapsible="accordion">
+                                                            <li class="active">
+                                                                <div class="collapsible-header custom_header_of_collapsible" tabindex="0">
+                                                                    <a class="btn btn-floating custom_floating_header_collapsible">
+                                                             <i class="material-icons">menu_book</i>    </a>
+                                                                            <p >        طرح درس یا محتوای درس</p>
+                                                                </div>
+                                                                <div class="collapsible-body" style="display: block;">
+                                                                    <p>{!! $session->text !!}</p>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        @endisset
-                                        
-                                        @if (isset($session->file))
-                                            @if(explode('.', $session->file)[1] != 'pdf')
-                                                <div class="col s12 display-flex justify-content-end form-action">
-                                                    <a href="{{ URL::to('/files/session' . $session->file) }}" target="_blank"
-                                                       class="btn indigo waves-effect waves-light mr-1 iransans">دانلود فایل پیوست</a>
-                                                </div>
+                                            @endisset
+                                            
+                                            @if (isset($session->file))
+                                                @if(explode('.', $session->file)[1] != 'pdf')
+                                                    <div class="col s12 display-flex justify-content-end form-action">
+                                                        <a href="{{ URL::to('/files/session' . $session->file) }}" target="_blank"
+                                                           class="btn indigo waves-effect waves-light mr-1 iransans">دانلود فایل پیوست</a>
+                                                    </div>
+                                                @endif
                                             @endif
-                                        @endif
-                                        
-                                        @if (isset($session->link))
-                                            @if ($session->link)
-                                                <div class="col s12 display-flex justify-content-end form-action">
-                                                    <a href="{{ URL::to('http://' . $session->link) }}" target="_blank"
-                                                       class="btn indigo waves-effect waves-light mr-1 iransans">
-                                                        محتوای درس
-                                                    </a>
-                                                </div>
+                                            
+                                            @if (isset($session->link))
+                                                @if ($session->link)
+                                                    <div class="col s12 display-flex justify-content-end form-action">
+                                                        <a href="{{ URL::to('http://' . $session->link) }}" target="_blank"
+                                                           class="btn indigo waves-effect waves-light mr-1 iransans">
+                                                            محتوای درس
+                                                        </a>
+                                                    </div>
+                                                @endif
                                             @endif
-                                        @endif
-                                        
-                                        @if (isset($session->majazi))
-                                            @if ($session->majazi)
-                                                <div class="col s12 display-flex justify-content-end form-action">
-                                                    <a href="{{ URL::to('http://' . $session->majazi) }}" target="_blank"
-                                                       class="btn indigo waves-effect waves-light mr-1 iransans">
-                                                        فیلم ضبط شده کلاس
-                                                    </a>
-                                                </div>
+                                            
+                                            @if (isset($session->majazi))
+                                                @if ($session->majazi)
+                                                    <div class="col s12 display-flex justify-content-end form-action">
+                                                        <a href="{{ URL::to('http://' . $session->majazi) }}" target="_blank"
+                                                           class="btn indigo waves-effect waves-light mr-1 iransans">
+                                                            فیلم ضبط شده کلاس
+                                                        </a>
+                                                    </div>
+                                                @endif
                                             @endif
-                                        @endif
-                                        
-                                        @isset($session->aparat)
-                                            <div class="row mt-2">
-                                                <div class="col s12">
-                                                    {!! $session->aparat !!}
+                                            
+                                            @isset($session->aparat)
+                                                <div class="row mt-2">
+                                                    <div class="col s12">
+                                                        {!! $session->aparat !!}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        @endisset
-                                        
-                                        @if(isset($session->file))
-                                            @if(explode('.', $session->file)[1] == 'pdf')
-                                                <object data="{{ URL::to('/files/session' . $session->file) }}" type="application/pdf" width="100%" height="500px">
-                                                    <object width="100%" height="500" data="https://docs.google.com/gview?embedded=true&url={{ URL::to('/files/session' . $session->file) }}"></object>
-                                                </object>
+                                            @endisset
+                                            
+                                            @if(isset($session->file))
+                                                @if(explode('.', $session->file)[1] == 'pdf')
+                                                    <object data="{{ URL::to('/files/session' . $session->file) }}" type="application/pdf" width="100%" height="500px">
+                                                        <object width="100%" height="500" data="https://docs.google.com/gview?embedded=true&url={{ URL::to('/files/session' . $session->file) }}"></object>
+                                                    </object>
+                                                @endif
                                             @endif
-                                        @endif
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        @endif
-                    @endforeach
-                @endif
-            </div>
-        </div>
-    </section>
-
- @endif
-
-    
-    <!-- <input type="text" value="دانشجوی عزیز، برای دسترسی به درس {{ $course->name }} ابتدا از طریق سایت WWW.MALISAN.IR در سامانه آموزشی ملیسان با هویت واقعی ثبت نام کنید، سپس با استفاده از شناسه
-     {{ $course->code }} در درس ذکر شده عضو شوید." id="myInput" style="height: 0px;background: transparent;"> -->
-    
-    <!-- <div class="col s12">
-        <div class="tap-target cyan" data-target="menu">
-            <div class="tap-target-content white-text">
-                <h5 class="white-text">
-                    @if ($user->hasRole('teacher'))
-                        درود مدرس گرامی !
-                    @elseif($user->hasRole('student'))
-                        دانشجو گرامی !
+                            @endif
+                        @endforeach
                     @endif
-                </h5>
-                <p class="white-text">
-                    @if ($user->hasRole('teacher'))
-                        دکمه های بالا دکمه های مدیریتی برای شماست و در باکس پایین اطلاعات مربوط به هر جلسه نمایش داده شده است
-                    @elseif($user->hasRole('student'))
-                        دکمه های بالا دکمه های مدیریتی برای شماست و در باکس پایین اطلاعات مربوط به هر جلسه نمایش داده شده است
-                    @endif
-                </p>
+                </div>
             </div>
-        </div>
-    </div> -->
-@endsection
-
-@section('js')
-    <script>
-        function fun1() {
-            document.getElementById('mohtava').scrollIntoView();
-        }
-    </script>
-    
-    <script src="{{ asset('app-assets/js/scripts/page-account-settings.min.js') }}"></script>
-    <script src="{{ asset('app-assets/js/scripts/css-transition.js') }}"></script>
-    
-    <script>
-        $('.person').on('click', function (event) {
-            $idd = document.getElementById('user-id').innerHTML;
-            $taklif_last = document.getElementById('taklif_last').innerHTML;
-            $gozaresh_last = document.getElementById('gozaresh_last').innerHTML;
-            $soal_last = document.getElementById('soal_last').innerHTML;
-            $ex_c = document.getElementById('user-ex').innerHTML;
-            $xx = document.getElementById("student").innerHTML;
-            
-            $edit = document.getElementById("edit");
-            if ($edit) {
-                document.getElementById("edit").href = '/dashboard/courses/sessions/edit/' + $idd;
-            }
-        });
-    </script>
-    
-    <script>
-        $('.ajaxLink').click(function (e) {
-            e.preventDefault();
-            $.ajax({
-                url: $(this).attr('href'),
-                success: function (data) {
-                    $text = document.getElementById("statuss").innerText;
-                    if ($text == "جلسه برای دانشجویان قابل مشاهده می باشد")
-                        document.getElementById("statuss").innerHTML =
-                            " <h6>\n" +
-                            "  <span style=\"color: red\">\n" +
-                            "    جلسه برای دانشجویان قابل مشاهده نمی باشد\n" +
-                            "  </span>\n" +
-                            "</h6>"
-                    else
-                        document.getElementById("statuss").innerHTML =
-                            " <h6>\n" +
-                            "  <span style=\"color: green\">\n" +
-                            "    جلسه برای دانشجویان قابل مشاهده می باشد\n" +
-                            "  </span>\n" +
-                            "</h6>"
-                }
-            });
-        });
-    </script>
-    
-    <script>
-        function share() {
-            var copyText = document.getElementById("myInput");
-            console.log(copyText)
-            copyText.select();
-            copyText.setSelectionRange(0, 99999);
-            document.execCommand("copy");
-            
-            alert("متن زیر در حافظه کپی شد:\nبرای دعوت دانشجویان خود به کلاس می توانید آنرا از طریق شبکه های اجتماعی یا پیامک برایشان ارسال کنید.\n " +
-                copyText.value);
-        }
-    </script>
-    
-    <script>
-        function onHelpClick() {
-            $('.tap-target').tapTarget('open');
-        }
-    </script>
-    
-    <script>
-        function showDetail() {
-            colla = document.getElementById('colla')
-            if (colla.style.display == 'none') {
-                colla.style.display = 'block';
-            } else {
-                colla.style.display = 'none';
-            }
-        }
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // این خط tooltip‌ها را فعال می‌کند
-    var elems = document.querySelectorAll('.tooltipped');
-    var instances = M.Tooltip.init(elems);
-});
-</script>
-    <!-- BEGIN PAGE LEVEL JS-->
-    <script src="{{ asset('app-assets/js/scripts/advance-ui-feature-discovery.min.js') }}"></script>
+        </section>
+    @endif
+     {{-- پایان else (حالت با جلسات) --}}
+</div>
 @endsection

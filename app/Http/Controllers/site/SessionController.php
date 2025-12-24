@@ -26,6 +26,7 @@ class SessionController extends Controller
     //
     function list(Request $request)
     {
+        // return $request;
         $course = Course::findOrFail($request->course_id);
         $user = Auth::user();
         $member = 0;

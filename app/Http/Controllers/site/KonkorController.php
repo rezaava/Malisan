@@ -26,6 +26,7 @@ class KonkorController extends Controller
 
     public function konkor()
     {
+       
         $user = Auth::user();
         if ($user->hasRole('admin')) {
             $konkors = Konkor::all();
@@ -33,7 +34,7 @@ class KonkorController extends Controller
             $konkors_id = Coworker::where('user_id', $user->id)->pluck('konkor_id');
             $konkors = Konkor::whereIn('id', $konkors_id)->get();
         }
-        return view('management.konkor.list', compact('konkors'));
+        return view('management.konkor.list', compact('konkors','user'));
     }
 
     public function konkorAdd(Request $request)

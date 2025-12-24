@@ -215,7 +215,7 @@ rotate(0deg)*/
 <div class="row">
     <div class="col 12 s12">
 
-        @if ( Session::get('user')->hasRole('teacher'))
+        @if ($user->hasRole('teacher'))
         @include('management.layout.components.btn-loader.btn-loader' ,
         ['url' => '/dashboard/courses/create' ,
         'icon' => "<i class='material-icons dp48'>add_circle_outline</i>" ,
