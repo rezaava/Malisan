@@ -277,7 +277,7 @@ class SessionController extends Controller
             } catch (\Exception $exception) {
 
                 DB::rollBack();
-                return $exception;
+                // return $exception;
                 return back()->with('error', 'خطایی در سرور رخ داده است');
             }
         }
