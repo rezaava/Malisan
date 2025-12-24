@@ -12,23 +12,18 @@
 @section('title', 'مدیریت درس')
 
 @section('main-content')
-    @if($user->hasRole('student'))
-        <div class="row">
-            <form action="/dashboard/courses/join" method="post">
-                @csrf
-                <input name="code" value="{{ $course->code }}" style="display:none">
-                <button type="submit" class="chip gradient-45deg-purple-deep-orange gradient-shadow white-text">
-                    <div class="col s12 m4" style=" ">
-                        <div class="chip gradient-45deg-purple-deep-orange gradient-shadow white-text" style="width:55vw">
-                            <img src="../../../app-assets/images/icon/true.png" alt="Materialize">
-                            عضویت
-                        </div>
-                    </div>
-                </button>
-            </form>
-        </div>
-    @endif
 
+       @if( !$sessions)
+             @if ($user->hasRole('teacher'))
+                        @include('melisan.layout.btn.btn-loader' , [
+                            'url' => '/dashboard/courses/sessions/create?course_id='. $course->id,
+                            'icon' => "<i class='material-icons dp48'>add_circle_outline</i>",
+                            'pos' => 'top',
+                            'text' => 'جلسه جدید'
+                        ])
+                    @endif
+   
+ @elseif ($sessions)
     @if($member == 1)
         <div class="row">
             <div class="col 12 s12">
@@ -44,18 +39,54 @@
                     @include('management.layout.components.btn-back.btn-back')
                 @endif
                 
-                <!-- علامت تنظیمات -->
-                <div class="col-md-12" style="width: fit-content; padding: 0 5px">
-                    <a onclick="showDetail()"
-                       class="mb-6 btn-floating waves-effect waves-light gradient-45deg-amber-amber gradient-shadow tooltipped"
-                       data-position="bottom" data-tooltip="نمایش جزئیات">
-                        <i class="material-icons dp48">settings</i>
+         @if($member == 1)
+    <div class="row">
+        <div class="col 12 s12">
+            @if ($user->hasRole('teacher'))
+                <div class="col s12" style="width: fit-content; padding: 0 5px">
+                    <a onclick="onHelpClick()"
+                       class="btn-floating waves-effect waves-light gradient-45deg-amber-amber gradient-shadow tooltipped"
+                       data-position="bottom" data-tooltip="میخوام راهنماییت کنم">
+                        <i class="material-icons">help</i>
                     </a>
                 </div>
-                <!-- پایان علامت تنظیمات -->
+            @endif
+            
+            <!-- دکمه‌های کنار هم -->
+            <div class="col s12" style="display: flex; gap: 12px; align-items: center; padding: 8px 0; flex-wrap: wrap;">
+                 @if($user->hasRole('student'))
+                        <!-- دکمه عضویت (سبز) -->
+                <form action="/dashboard/courses/join/{{ $course->id }}" method="post" style="margin: 0;">
+                    @csrf
+                    <button class="btn-floating waves-effect waves-light green tooltipped"
+                           data-position="bottom" 
+                           data-tooltip="عضویت در درس"
+                           style="border: none; cursor: pointer; transform: scale(0.9);">
+                        <i class="material-icons">check_circle</i>    
+                    </button>
+                </form>
+    @endif
+
+                
+                <!-- دکمه تنظیمات (زرد/نارنجی) -->
+                <a onclick="showDetail()"
+                   class="btn-floating waves-effect waves-light amber tooltipped"
+                   data-position="bottom" 
+                   data-tooltip="  تنظیمات"
+                   style="cursor: pointer; transform: scale(0.9);">
+                    <i class="material-icons" style="color: #333;">settings</i>
+                </a>
+                
             </div>
         </div>
-
+    </div>
+    
+    <div id="colla" style="display: none">
+        <!-- ... بقیه کد ... -->
+    </div>
+@endif
+        </div>
+     </div>
         <div id="colla" style="display: none">
             <div class="row">
                 @if ($user->hasRole('teacher'))
@@ -374,7 +405,11 @@
                                                href="/dashboard/courses/sessions/active/{{ $session->id }}"
                                                class="m-1 btn-floating tooltipped"
                                                data-position="bottom"
-                                               data-tooltip="@if($session->active==1)غیرفعال کردن@else فعال کردن @endif">
+                                               data-tooltip="@if($session->active==1 )غیرفعال کردن
+                                               @else
+                                                فعال کردن 
+                                               @endif
+                                               ">
                                                <i class="material-icons dp48">@if($session->active==1)toggle_on @else toggle_off @endif</i> 
                                             </a>
                                     
@@ -488,11 +523,14 @@
             </div>
         </div>
     </section>
+
+ @endif
+
     
     <!-- <input type="text" value="دانشجوی عزیز، برای دسترسی به درس {{ $course->name }} ابتدا از طریق سایت WWW.MALISAN.IR در سامانه آموزشی ملیسان با هویت واقعی ثبت نام کنید، سپس با استفاده از شناسه
      {{ $course->code }} در درس ذکر شده عضو شوید." id="myInput" style="height: 0px;background: transparent;"> -->
     
-    <div class="col s12">
+    <!-- <div class="col s12">
         <div class="tap-target cyan" data-target="menu">
             <div class="tap-target-content white-text">
                 <h5 class="white-text">
@@ -511,7 +549,7 @@
                 </p>
             </div>
         </div>
-    </div>
+    </div> -->
 @endsection
 
 @section('js')

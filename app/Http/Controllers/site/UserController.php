@@ -13,8 +13,29 @@ use App\Models\Coworker;
 
 class UserController extends Controller
 {
-    //
+    //check
     public function profile(Request $request)
+    {
+        $user = Auth::user();
+        // return $user;
+        $mosabeghat = Touruser::where('user_id', $user->id)->count();
+        if ($user->hasRole('student')) {
+            $user2 = User::where('national', $user->national)->where('role', 2)->first();
+        } elseif ('teacher') {
+            $user2 = User::where('national', $user->national)->where('role', 3)->first();
+        }
+        $content = Coworker::where('user_id', $user->id)->first();
+
+        // return $user;
+        $edit = '5';
+        return view(
+            '/melisan/dashbord/user/profile1',
+            compact('user', 'edit', 'mosabeghat', 'user2', 'content'),
+            ['show_nav' => false]
+        );
+    }
+
+    public function editprofile(Request $request)
     {
         $user = Auth::user();
         $mosabeghat = Touruser::where('user_id', $user->id)->count();
@@ -25,29 +46,25 @@ class UserController extends Controller
         }
         $content = Coworker::where('user_id', $user->id)->first();
 
-// return $user;
+        // return $user;
         $edit = '5';
-        return view('/melisan/dashbord/user/profile1', compact('user', 'edit','mosabeghat','user2','content'));
+        return view(
+            '/melisan/dashbord/user/user',
+            compact('user', 'edit', 'mosabeghat', 'user2', 'content'),
+            ['show_nav' => false]
+        );
     }
-    //////////////////////////////////////////////////////////////
+    // return view('/melisan/dashbord/user/user', compact('user'))->with('success', 'ب موفقیت ویرایش شد');
+
+ 
     public function edit(Request $request, $id)
     {
-        $data = $request->all();
-        $rule = [
-            'national' => 'required|max:255|unique:users,national,' . $id,
-        ];
-        $valid = Validator::make($data, $rule);
-        if ($valid->fails())
-            return response()->json(
-                [
-                    'status' => 'failed',
-                    'message' => $valid->errors()->first(),
-                ],
-                422,
-                array('Content-Type' => 'application/json;charset:utf-8;'),
-                JSON_UNESCAPED_UNICODE
-            );
-
+        // $data = $request->all();
+        // $rule = [
+        //     'national' => 'required|max:10|unique:users,national,' . $id,
+        // ];
+        //  $valid = Validator::make($data, $rule);
+        //    return $valid;
 
         $user = User::findOrFail($id);
 
@@ -58,8 +75,8 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->tel = $request->tel;
         $user->gender = $request->gender;
-        //     $user->email=$request->email;
-        $user->national = $request->national;
+            $user->email=$request->email;
+        // $user->national = $request->national;
         $user->shenasname = $request->shenasname;
         $user->personal = $request->personal;
         $user->birthdate = $request->birthdate;
@@ -87,8 +104,10 @@ class UserController extends Controller
             $image_name = $id . "_" . $request->name . "_" . time() . "." . $image->getClientOriginalExtension();
             $destination_path = 'files/user';
             $image->move($destination_path, $image_name);
-            $user->image = '/' . $image_name;
+            $user->image =   $destination_path. '/' . $image_name;
         }
+
+
         $user->save();
         // return response()->json([
         //     'status' => 'ok',
@@ -97,7 +116,7 @@ class UserController extends Controller
         //     array('Content-Type' => 'application/json; charset=utf-8'),
         //     JSON_UNESCAPED_UNICODE);
 
-        return view('/melisan/dashbord/user/user', compact('user'))->with('success', 'ب موفقیت ویرایش شد');
+        return view('/melisan/dashbord/user/profile1', compact('user'))->with('success', 'ب موفقیت ویرایش شد');
     }
 
 }

@@ -16,7 +16,7 @@ use App\Models\Coworker;
 use App\Models\Touruser;
 use DB;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Validator;
@@ -30,123 +30,48 @@ class AuthController extends Controller
     public function loginpost(Request $request)
     {
         $user = User::where('national', $request->national)->first();
-        //            teacher
-        $user = User::where('national', $request->national)->where('role', 2)->first();
         if ($user && Hash::check($request->password, $user->password)) {
             Auth::login($user);
-
-            $user = Auth::user();
-
             $content = Coworker::where('user_id', $user->id)->first();
             $mosabeghat = Touruser::where('user_id', $user->id)->count();
             if ($user->hasRole('teacher')) {
+                // agar moaleme          
                 $user2 = User::where('national', $user->national)->where('role', 3)->first();
-                Session::put('user2', $user2);
+                return redirect()->route('dashboard');
             } elseif ($user->hasRole('student')) {
+                // agar studente
+                $courses = $user->courses()->pluck('course_id');
+                $teacherCourses = CourseUser::where('role_id', '2')->whereIn('course_id', $courses)->pluck('user_id');
                 $user2 = User::where('national', $user->national)->where('role', 2)->first();
-                Session::put('user2', $user2);
-            }
-            Session::put('user', $user);
-
-            Session::put('content', $content);
-            Session::put('mosabeghat', $mosabeghat);
-
-
-            return redirect()->route('dashboard');
-        }
-        //            student
-        $user = User::where('national', $request->national)->where('role', 3)->first();
-        if ($user && Hash::check($request->password, $user->password)) {
-            Auth::login($user);
-            $courses = $user->courses()->pluck('course_id');
-            $teacherCourses = CourseUser::where('role_id', '2')->whereIn('course_id', $courses)->pluck('user_id');
-
-            $user = Auth::user();
-
-            $content = Coworker::where('user_id', $user->id)->first();
-            $mosabeghat = Touruser::where('user_id', $user->id)->count();
-
-            if ($user->hasRole('teacher')) {
-                $user2 = User::where('national', $user->national)->where('role', 3)->first();
-                Session::put('user2', $user2);
-            } elseif ($user->hasRole('student')) {
-                $user2 = User::where('national', $user->national)->where('role', 2)->first();
-                Session::put('user2', $user2);
-            }
-            Session::put('user', $user);
-
-            Session::put('content', $content);
-            Session::put('mosabeghat', $mosabeghat);
-
-
-            return $teacherCourses;
-            foreach ($teacherCourses as $item) {
-                $item = -$item;
-            }
-            $answers = OptionUser::where('user_id', $user->id)->pluck('survey_id');
-            $surveys = Survey::where(function ($query) use ($courses, $teacherCourses) {
-                $query->whereIn('group', $courses)->orWhere('group', '0')->orWhereIn('user_id', $teacherCourses);
-            })->whereNotIn('id', $answers)->where('active', '1')->get();
-            if (count($surveys)) {
-                $random = $surveys->random();
-                if ($random->type != '1') {
-                    $options = Option::where('survey_id', $random->id)->get();
-                    $random['options'] = $options;
+                foreach ($teacherCourses as $item) {
+                    $item = -$item;
                 }
-                return view('melisan/dashbord/user/students/servays/survays', compact('random', 'user'))
-                    ->with([
-                        'pageTitle' => 'صفحه نظرسنجی',
-                        'pageName' => 'نظرسنجی',
-                        'pageDescription' => 'دوست من ! این یه فرم نظرسنجی هست لطفا با دقت جواب بده',
-                    ]);
-            } else {
-                Auth::login($user);
-
-                $user = Auth::user();
-
-                $content = Coworker::where('user_id', $user->id)->first();
-                $mosabeghat = Touruser::where('user_id', $user->id)->count();
-
-                if ($user->hasRole('teacher')) {
-                    $user2 = User::where('national', $user->national)->where('role', 3)->first();
-                    Session::put('user2', $user2);
-                } elseif ($user->hasRole('student')) {
-                    $user2 = User::where('national', $user->national)->where('role', 2)->first();
-                    Session::put('user2', $user2);
+                $answers = OptionUser::where('user_id', $user->id)->pluck('survey_id');
+                $surveys = Survey::where(function ($query) use ($courses, $teacherCourses) {
+                    $query->whereIn('group', $courses)->orWhere('group', '0')->orWhereIn('user_id', $teacherCourses);
+                })->whereNotIn('id', $answers)->where('active', '1')->get();
+                if (count($surveys)) {
+                    // agar nazar sanji hast
+                    $random = $surveys->random();
+                    if ($random->type != '1') {
+                        $options = Option::where('survey_id', $random->id)->get();
+                        $random['options'] = $options;
+                    }
+                    return view('melisan.management.courses.students.survays', compact('random', 'user'))
+                        ->with([
+                            'pageTitle' => 'صفحه نظرسنجی',
+                            'pageName' => 'نظرسنجی',
+                            'pageDescription' => 'دوست من ! این یه فرم نظرسنجی هست لطفا با دقت جواب بده',
+                        ]);
+                } else {
+                    // agar nazarsanji nist
+                    return redirect('/dashboard/courses/list');
                 }
-                Session::put('user', $user);
-
-                Session::put('content', $content);
-                Session::put('mosabeghat', $mosabeghat);
-
-                return redirect('/dashboard/courses/list');
             }
+        } else {
+            //    agar user pass eshtebahe
+            return back()->with('error', 'نام کاربری یا کلمه عبور صحیح نمی باشد');
         }
-        $user = User::where('national', $request->national)->first();
-        if ($user && Hash::check($request->password, $user->password)) {
-
-            Auth::login($user);
-
-            $user = Auth::user();
-            $user2 = User::where('national', $user->national)->where('role', 2)->first();
-            $content = Coworker::where('user_id', $user->id)->first();
-            $mosabeghat = Touruser::where('user_id', $user->id)->count();
-
-            if ($user->hasRole('teacher')) {
-                $user2 = User::where('national', $user->national)->where('role', 3)->first();
-                Session::put('user2', $user2);
-            } elseif ($user->hasRole('student')) {
-                $user2 = User::where('national', $user->national)->where('role', 2)->first();
-                Session::put('user2', $user2);
-            }
-            Session::put('user', $user);
-            Session::put('content', $content);
-            Session::put('mosabeghat', $mosabeghat);
-
-
-            return redirect()->route('dashboard');
-        }
-        return back()->with('error', 'نام کاربری یا کلمه عبور صحیح نمی باشد');
     }
     public function reg()
     {
@@ -206,37 +131,41 @@ class AuthController extends Controller
         $user->password = bcrypt($request->password);
         $user->save();
 
-
-
         if ($request->type == '2') {
             $user->role = 2;
             $user->save();
-            $role = Role::where('name', 'teacher')->first();
-            $user->roles()->attach($role);
+            // $role = Role::where('name', 'teacher')->first();
+            // $user->roles()->attach($role);
+            $user->hasRole('teacher');
         } else {
             $user->role = 3;
             $user->save();
-            $role = Role::where('name', 'student')->first();
-            $user->roles()->attach($role);
+            // $role = Role::where('name', 'student')->first();
+            // $user->roles()->attach($role);
+            $user->hasRole('student');
         }
-
         Auth::login($user);
+<<<<<<< HEAD
 
         $user = Auth::user();
+=======
+        // $user = Auth::user();
+>>>>>>> d9f5a84fd6202b546ed893f42658218fadb3b17e
         $content = Coworker::where('user_id', $user->id)->first();
         $mosabeghat = Touruser::where('user_id', $user->id)->count();
 
         if ($user->hasRole('teacher')) {
             $user2 = User::where('national', $user->national)->where('role', 3)->first();
-            Session::put('user2', $user2);
         } elseif ($user->hasRole('student')) {
             $user2 = User::where('national', $user->national)->where('role', 2)->first();
-            Session::put('user2', $user2);
         }
+<<<<<<< HEAD
         Session::put('user', $user);
         Session::put('content', $content);
         Session::put('mosabeghat', $mosabeghat);
 
+=======
+>>>>>>> d9f5a84fd6202b546ed893f42658218fadb3b17e
         return redirect('/dashboard/courses/list');
     }
     public function logout()
@@ -246,29 +175,23 @@ class AuthController extends Controller
     }
     public function change(Request $request)
     {
-        // return $request;
         $user = Auth::user();
-
         $user2 = User::where('national', $user->national)->where('role', '!=', $user->role)->first();
 
         if ($user2) {
             Auth::logout();
-            if ($user2->role == 2) {
+            if ($user2->hasRole('teacher')) {
                 Auth::login($user2);
                 return redirect()->route('dashboard');
-            } else {
+            } elseif ($user->hasRole('student')) {
                 Auth::login($user2);
                 $courses = $user->courses()->pluck('course_id');
-                // return $courses;
                 $teacherCourses = CourseUser::where('role_id', '3')->whereIn('course_id', $courses)->pluck('user_id');
                 foreach ($teacherCourses as $item) {
                     $item = -$item;
                 }
-                // return $teacherCourses;
                 $answers = OptionUser::where('user_id', $user->id)->pluck('survey_id');
-                //  return $answers;
-                $surveys = Survey::query()
-                    ->where(function ($query) use ($courses, $teacherCourses) {
+                $surveys = Survey::query()->where(function ($query) use ($courses, $teacherCourses) {
                         $query->whereIn('group', $courses)
                             ->orWhere('group', '0')
                             ->orWhereIn('user_id', $teacherCourses);
@@ -276,14 +199,11 @@ class AuthController extends Controller
                     ->whereNotIn('id', $answers)
                     ->where('active', true) // استفاده از boolean به جای string
                     ->get();
-
                 if (count($surveys)) {
                     $random = $surveys->random();
                     if ($random->type != '1') {
-
                         $random['options'] = Option::where('survey_id', $random->id)->get();
                     }
-                    // return $random;
                     $user = $user2;
                     return view('melisan.management.courses.students.survays', compact('random', 'user'))
                         ->with([
@@ -298,47 +218,33 @@ class AuthController extends Controller
             }
         }
     }
-    public function survey()
+    public function survey(Request $req)
     {
 
-        $random['options'] = null;
+        // $user = User::where('id', $req->user_id)->first();
 
-        $user = Auth::user();
-        if ($user->hasRole('student')) {
-            $courses = $user->courses()->pluck('course_id');
+        // $random['options'] = null;
+        // // if ($user->hasRole('student')) {
+        // $courses = $user->courses()->pluck('course_id');
+        // $teacherCourses = CourseUser::where('role_id', '3')
+        // ->whereIn('course_id', $courses)->pluck('user_id');
+        // foreach ($teacherCourses as $item) {
+        //     $item = -$item;  }
+        // $answers = OptionUser::where('user_id', $user->id)->pluck('survey_id');
+        // $surveys = Survey::where(function ($query) use ($courses, $teacherCourses) {
+        //     $query->whereIn('group', $courses)->orWhere('group', '0')->orWhereIn('user_id', $teacherCourses);
+        // })->whereNotIn('id', $answers)->where('active', '1')->get();
+        // if (count($surveys)) {
+        //     $random = $surveys->random();
+        //     if ($random->type != '1') {
+        //         $options = Option::where('survey_id', $random->id)->get();
+        //         $random['options'] = $options;
+        //     }
+        // }
 
-            $teacherCourses = CourseUser::where('role_id', '3')
-                ->whereIn('course_id', $courses)->pluck('user_id');
-            foreach ($teacherCourses as $item) {
-                $item = -$item;
-            }
-            $answers = OptionUser::where('user_id', $user->id)->pluck('survey_id');
-            $surveys = Survey::where(function ($query) use ($courses, $teacherCourses) {
-                $query->whereIn('group', $courses)->orWhere('group', '0')->orWhereIn('user_id', $teacherCourses);
-            })->whereNotIn('id', $answers)->where('active', '1')->get();
-            if (count($surveys)) {
-                $random = $surveys->random();
-                if ($random->type != '1') {
-                    $options = Option::where('survey_id', $random->id)->get();
-                    $random['options'] = $options;
-                }
-                return redirect('/dashboard/courses/list');
-                // return response()->json([
-                //     'status' => 'ok',
-                //     'message' => 'نظر سنجی',
-                //     'empty' => '0',
-                //     'survey' => $random,
-                // ], 200,
-                //     array('Content-Type' => 'application/json; charset=utf-8'),
-                //     JSON_UNESCAPED_UNICODE);
-            }
-        }
-        // return response()->json([
-        //     'status' => 'ok',
-        //     'message' => 'نظرسنجی وجود ندارد',
-        //     'empty' => '1',
-        // ], 200,
-        //     array('Content-Type' => 'application/json; charset=utf-8'),
-        //     JSON_UNESCAPED_UNICODE);
+        return redirect('/dashboard/courses/list');
+
     }
+
+    // }
 }

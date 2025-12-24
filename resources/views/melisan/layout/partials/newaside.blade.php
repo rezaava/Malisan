@@ -11,7 +11,7 @@
                     class="material-icons">settings_input_svideo</i><span class="menu-title"
                                                                           data-i18n="Mail">میزکار</span></a>
         </li>
-        @if(!\Illuminate\Support\Facades\Auth::user()->hasRole('content') )
+        @if(!$user->hasRole('content') )
             <li class="bold"><a class="waves-effect waves-cyan " href="{{ route('course.list') }}"><i class="material-icons">format_list_bulleted</i><span
                         class="menu-title" data-i18n="Chat">درس های من</span></a>
             </li>

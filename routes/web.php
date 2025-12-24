@@ -50,19 +50,19 @@ Route::get('/ref', [AuthController::class, 'ref'])->name('ref');
 Route::get('/reg', [AuthController::class, 'reg'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 Route::get('/global', [AuthController::class, 'reg'])->name('global');
-Route::post('/survey-answer', [AuthController::class, 'Survey'])->name('survey.answer');
+Route::post('/survey-answer', [AuthController::class, 'survey'])->name('survey.answer');
 
 ///چک پایان
 
-Route::get('/boxes', function(){
-    $box1=request('one');
-    $box2=request('two');
-    $box3=request('three');
-    $box4=request('four');
-    $box5=request('five');
-    $id=request('id');
-    return view('management.konkor.boxes',compact('box1','box2','box3','box4','box5','id'));
-} );
+Route::get('/boxes', function () {
+    $box1 = request('one');
+    $box2 = request('two');
+    $box3 = request('three');
+    $box4 = request('four');
+    $box5 = request('five');
+    $id = request('id');
+    return view('management.konkor.boxes', compact('box1', 'box2', 'box3', 'box4', 'box5', 'id'));
+});
 // Route::group(['namespace' => 'Dashboard'], function () {
 //     Route::get('dashboard/actuality', [UserController::class, 'findActuality']);
 // });
@@ -113,7 +113,7 @@ Route::middleware('auth')->group(function () {
                 //                    Route::get('/destroy-user/{id}/{cid}', 'CourseController@destroyUser')->name('destroyUser');
 
                 Route::group(['middleware' => ['role:student']], function () {
-                    Route::any('/join', [CourseController::class, 'join']);
+                    Route::any('/join/{id}', [CourseController::class, 'join']);
                 });
                 Route::group(['prefix' => 'sessions'], function () {
                     Route::get('/', [SessionController::class, 'list'])->name('session.list');
@@ -143,6 +143,7 @@ Route::middleware('auth')->group(function () {
 
             // Route::get('/', 'CourseController@list')->name('course.list');
             Route::get('/user/{id}', [UserController::class, 'profile']);
+            Route::get('/user/edit/{id}', [UserController::class, 'editprofile']);
             Route::post('/user/edit/{id}', [UserController::class, 'edit']);
 
             Route::group(['middleware' => ['role:teacher|admin']], function () {
@@ -279,10 +280,10 @@ Route::middleware('auth')->group(function () {
             Route::get('/konkor/decline', 'KonkorController@decline');
             Route::get('/konkor/active', 'KonkorController@active');
 
-            Route::get('/konkor/list',[App\Http\Controllers\site\KonkorController::class ,'konkors'])->name('konkors');
-            Route::get('/konkor/enter',[App\Http\Controllers\site\KonkorController::class , 'enter'])->name('enter');
-            Route::post('/konkor/answer/{id}',[App\Http\Controllers\site\KonkorController::class , 'answer'])->name('konkor.answer');
-            
+            Route::get('/konkor/list', [App\Http\Controllers\site\KonkorController::class, 'konkors'])->name('konkors');
+            Route::get('/konkor/enter', [App\Http\Controllers\site\KonkorController::class, 'enter'])->name('enter');
+            Route::post('/konkor/answer/{id}', [App\Http\Controllers\site\KonkorController::class, 'answer'])->name('konkor.answer');
+
 
             Route::get('/konkor/question/delete/{id}', 'KonkorController@questionDelete');
             Route::get('/konkor/question/edit/{id}', 'KonkorController@questionEditGet');
