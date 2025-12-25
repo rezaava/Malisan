@@ -2,9 +2,9 @@
 @section('add-styles')
 
 <link href="{{("/all-css/assets/css/apps/mailing-chat.css")}}" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" type="text/css" href="{{("/all-css/assets/css/widgets/modules-widgets.css")}}">
+<!-- <link rel="stylesheet" type="text/css" href="{{("/all-css/assets/css/widgets/modules-widgets.css")}}">
 
-<link rel="stylesheet" type="text/css" href="{{("/all-css/assets/css/forms/switches.css")}}">
+<link rel="stylesheet" type="text/css" href="{{("/all-css/assets/css/forms/switches.css")}}"> -->
 
 <script>
     $ex_c = 0;
@@ -17,7 +17,9 @@
     .search {
         background: linear-gradient(-45deg, #303f9f, #7b1fa2) !important;
     }
-    .form-control{
+
+ 
+    .form-control {
         color: #fff !important;
     }
 
@@ -89,7 +91,7 @@
     }
 
     /* فوتر */
-    .chat-system .chat-box .chat-footer.chat-active {
+    .chat-system .chat-box .chat-active {
         padding: 8px 12px !important;
         box-shadow: none !important;
     }
@@ -110,7 +112,7 @@
         padding: 8px;
     }
 
- 
+
 
     /* موبایل */
     @media (max-width: 768px) {
@@ -122,31 +124,44 @@
             max-width: 85%;
         }
     }
+
     /* ستون لیست چت */
-.chat-system {
-    display: flex;
-    height: calc(100vh - 260px); /* هماهنگ با داشبورد */
-}
+    .chat-system {
+        display: flex;
+        height: calc(100vh - 260px);
+        /* هماهنگ با داشبورد */
+    }
 
-/* لیست سمت راست */
-.user-list-box {
-    width: 320px;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
+    /* لیست سمت راست */
+    .user-list-box {
+        width: 320px;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
 
-/* باکس جستجو */
-.user-list-box .search {
-    flex-shrink: 0;
-}
+    /* باکس جستجو */
+    .user-list-box .search {
+        flex-shrink: 0;
+    }
 
-/* 🔥 خود لیست اسکرول‌دار */
-.user-list-box .people {
-    flex: 1;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
+    /* 🔥 خود لیست اسکرول‌دار */
+    .user-list-box .people {
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    /* کل باکس چت */
+    .chat-box {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        min-height: 0;
+    }
+
+    /* محتوای وسط (پیام‌ها) */
+
 
 </style>
 @endsection
@@ -249,7 +264,7 @@
                                 </div>
 
                                 {{-- Messages --}}
-                                <div class="chat-conversation-box">
+                                <div class="chat-conversation-box" style="position: absolute;">
                                     <div id="chat-conversation-box-scroll">
                                         @foreach($chats as $chat)
                                         <div class="chat" data-chat="chat{{ $chat->chat_id }}" id="chat{{ $chat->chat_id }}">
@@ -270,7 +285,7 @@
                                 </div>
 
                                 {{-- Footer / Send --}}
-                                <div class="chat-footer">
+                                <div class="chat-footer" style="position: absolute;bottom: 0;width: 100%;">
                                     <form class="chat-form d-flex gap-2" id="form-id" method="post" action="/dashboard/chat">
                                         @csrf
 

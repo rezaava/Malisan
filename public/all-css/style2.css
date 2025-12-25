@@ -460,11 +460,7 @@ a {
         -ms-flex-direction: column
     }
 }
-<<<<<<< HEAD
-/* profile */
-=======
 /* profile1 */
->>>>>>> d9f5a84fd6202b546ed893f42658218fadb3b17e
        body.pro1 {
             font-family: 'Vazirmatn', sans-serif;
             min-height: 100vh;
@@ -576,17 +572,10 @@ a {
 
         .btn.outline.pro1:hover {
             background: rgba(255,255,255,0.2);
-<<<<<<< HEAD
-        }
-
-        /* Media Queries برای تمام سایزها */
-        @media (max-width: 1200px) {
-=======
         } 
 
         /* Media Queries برای تمام سایزها */
        @media (max-width: 1200px) {
->>>>>>> d9f5a84fd6202b546ed893f42658218fadb3b17e
             .profile-card.pro1 { width: 320px; padding: 28px 22px; }
             .name.pro1 { font-size: 20px; }
             .role.pro1 { font-size: 13px; }
@@ -630,8 +619,6 @@ a {
             .stat.pro1 span { font-size: 14px; }
             .bio.pro1 { font-size: 9px; }
             .btn.pro1 { font-size: 12px; padding: 8px; }
-<<<<<<< HEAD
-=======
         } 
         /* profile2 */
              .body-pro2 {
@@ -710,5 +697,4 @@ a {
         }
         .title-pro2{
             color: white;
->>>>>>> d9f5a84fd6202b546ed893f42658218fadb3b17e
         }

@@ -145,12 +145,8 @@ class AuthController extends Controller
             $user->hasRole('student');
         }
         Auth::login($user);
-<<<<<<< HEAD
 
         $user = Auth::user();
-=======
-        // $user = Auth::user();
->>>>>>> d9f5a84fd6202b546ed893f42658218fadb3b17e
         $content = Coworker::where('user_id', $user->id)->first();
         $mosabeghat = Touruser::where('user_id', $user->id)->count();
 
@@ -159,13 +155,6 @@ class AuthController extends Controller
         } elseif ($user->hasRole('student')) {
             $user2 = User::where('national', $user->national)->where('role', 2)->first();
         }
-<<<<<<< HEAD
-        Session::put('user', $user);
-        Session::put('content', $content);
-        Session::put('mosabeghat', $mosabeghat);
-
-=======
->>>>>>> d9f5a84fd6202b546ed893f42658218fadb3b17e
         return redirect('/dashboard/courses/list');
     }
     public function logout()

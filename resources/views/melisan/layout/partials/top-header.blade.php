@@ -17,15 +17,9 @@
             <ul class="navbar-list ">
                 <li>
                     <!-- آیکون سوالات -->
-<<<<<<< HEAD
-                    <a class="" @if( Session::get('user')->hasRole('teacher')) href="{{asset('/files/help.pdf')}}"
-                    @elseif(Session::get('user')->hasRole('student')) href="{{asset('/files/help2.pdf')}}" @endif 
-                    data-target="" style="font-size: 20px;">❓
-=======
-                    <a class="" @if($user->hasRole('teacher')) href="{{asset('/files/help.pdf')}}"
+                    <a class="" @if( $user->hasRole('teacher')) href="{{asset('/files/help.pdf')}}"
                     @elseif($user->hasRole('student')) href="{{asset('/files/help2.pdf')}}" @endif data-target=""
                         style="font-size: 20px;">❓
->>>>>>> d9f5a84fd6202b546ed893f42658218fadb3b17e
                     </a>
                 </li>
                 <!-- آیکون پیام‌ها -->

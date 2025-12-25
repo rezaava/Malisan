@@ -6,6 +6,8 @@ use App\Models\Chat;
 use App\Models\Course;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Coworker;
+use App\Models\Touruser;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Message;
@@ -18,6 +20,8 @@ class ChatController extends Controller
     {
 
         $user = Auth::user();
+        $content = Coworker::where('user_id', $user->id)->first();
+        $mosabeghat = Touruser::where('user_id', $user->id)->count();
         if ($user->hasRole('student')) {
 //            $chats = Chat::where('student_id',$user->id)->get();
             $courses=$user->courses()->get();
@@ -73,10 +77,16 @@ class ChatController extends Controller
             }
             $chats=$courses->sortByDesc('time');
             // $chats=$courses;
+
+            if ($user->hasRole('teacher')) {         
+                $user2 = User::where('national', $user->national)->where('role', 3)->first(); 
+            } elseif ($user->hasRole('student')) {
+                $user2 = User::where('national', $user->national)->where('role', 2)->first();
+            }
          
-            return view('melisan.management.chat.list', compact('chats'))->with([
+            return view('melisan.management.chat.list', compact('chats','user','content','mosabeghat','user2'))->with([
                  'pageDescription' => 'مکالمات'
-            ]);
+            ],['show_nav'=>false]);
         }
 
         $courses = $user->courses()->pluck('course_id');
@@ -114,10 +124,15 @@ class ChatController extends Controller
 
 
         }
+        if ($user->hasRole('teacher')) {         
+            $user2 = User::where('national', $user->national)->where('role', 3)->first(); 
+        } elseif ($user->hasRole('student')) {
+            $user2 = User::where('national', $user->national)->where('role', 2)->first();
+        }
             // return $chats;
-        return view('melisan.management.chat.list', compact('chats'))->with([
+        return view('melisan.management.chat.list', compact('chats','user','content','mosabeghat','user2'))->with([
                  'pageDescription' => 'مکالمات'
-            ]);
+        ],['show_nav'=>false]);
 
 
     }

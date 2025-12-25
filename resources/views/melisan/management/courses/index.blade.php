@@ -41,7 +41,7 @@
                     <div class="row">
                         @foreach ($courses as $course)
                             <div class=" col-md-3 mt-3">
-                                <div class="card border-radius-7 " style='max-height: 87vh;  height: 53vh;       background: rgba(255, 255, 255, 0.07);
+                                <div class="card border-radius-7 " style='max-height: 53vh;  height: 53vh;       background: rgba(255, 255, 255, 0.07);
                                                                   backdrop-filter: blur(20px);'>
                                     <!-- <a href="/dashboard/courses/sessions?course_id={{ $course->id }}"> -->
                                     <img src="{{ asset('/files/icons/' . $course->header . '.jpg') }}" class="card-img-top"
