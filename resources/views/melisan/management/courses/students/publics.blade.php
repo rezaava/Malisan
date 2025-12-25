@@ -213,9 +213,9 @@ rotate(0deg)*/
 @section('main-content')
 @if(isset($courses))
 <div class="row">
-    <div class="col 12 s12">
+    <div class="col-md-12">
 
-        @if ( Session::get('user')->hasRole('teacher'))
+        @if ($user->hasRole('teacher'))
         @include('management.layout.components.btn-loader.btn-loader' ,
         ['url' => '/dashboard/courses/create' ,
         'icon' => "<i class='material-icons dp48'>add_circle_outline</i>" ,
@@ -271,7 +271,7 @@ rotate(0deg)*/
                 </div>
 
                 <a href="/dashboard/courses/sessions?course_id={{ $course->id }}"
-                    class="course-list-btn">
+                    class="btn btn-view-list mt-auto">
                     مشاهده
                 </a>
             </div>

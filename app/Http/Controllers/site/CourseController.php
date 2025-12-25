@@ -35,7 +35,7 @@ class CourseController extends Controller
     //
     public function list()
     {
-      
+
         $user = Auth::user();
         $content = Coworker::where('user_id', $user->id)->first();
         // $courses = $user->courses()->get();
@@ -758,14 +758,18 @@ class CourseController extends Controller
     public function publics(Request $request)
     {
         $user = Auth::user();
+        $content = Coworker::where('user_id', $user->id)->first();
+        // $courses = $user->courses()->get();
+        $mosabeghat = Touruser::where('user_id', $user->id)->count();
+
         if ($user->hasRole('admin')) {
 
             $courses = Course::where('private', '1')->get();
         } elseif ($user->hasRole('teacher')) {
-
+            $user2 = User::where('national', $user->national)->where('role', 3)->first();
             $courses = $user->courses()->where('private', '1')->get();
         } elseif ($user->hasRole('student')) {
-
+            $user2 = User::where('national', $user->national)->where('role', 2)->first();
             // $courses = $user->courses()->where('active', '1')->where('private','1')->get();
             $courses = Course::where('active', '1')->where('private', '1')->get();
         }
@@ -811,11 +815,9 @@ class CourseController extends Controller
             } else
                 $course['activated'] = 0;
 
-
-
         }
         //        return $courses;
-        return view('melisan.management.courses.students.publics', compact('courses'))
+        return view('melisan.management.courses.students.publics', compact('courses', 'user', 'mosabeghat', 'user2', 'content'))
             ->with([
                 'pageTitle' => 'صفحه لیست دروس',
                 'pageName' => 'دروس',

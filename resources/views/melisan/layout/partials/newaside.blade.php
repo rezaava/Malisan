@@ -19,7 +19,7 @@
             </li>
              
             </li>
-            @if(!\Illuminate\Support\Facades\Auth::user()->hasRole('content') )
+            @if(!$user()->hasRole('content') )
 
                 <li class="bold"><a class="waves-effect waves-cyan " href="/dashboard/survey/cats"><i class="material-icons">import_contacts</i><span
                             class="menu-title" data-i18n="File Manager"> نظر سنجی</span></a>

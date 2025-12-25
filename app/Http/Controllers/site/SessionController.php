@@ -26,6 +26,7 @@ class SessionController extends Controller
     //
     function list(Request $request)
     {
+        // return $request;
         $course = Course::findOrFail($request->course_id);
         $user = Auth::user();
         $member = 0;
@@ -276,7 +277,7 @@ class SessionController extends Controller
             } catch (\Exception $exception) {
 
                 DB::rollBack();
-                return $exception;
+                // return $exception;
                 return back()->with('error', 'خطایی در سرور رخ داده است');
             }
         }
