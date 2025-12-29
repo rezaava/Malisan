@@ -79,7 +79,6 @@ class CourseController extends Controller
         $user = Auth::user();
         $content = Coworker::where('user_id', $user->id)->first();
         $mosabeghat = Touruser::where('user_id', $user->id)->count();
-
         if ($user->hasRole('teacher')) {
             $user2 = User::where('national', $user->national)->where('role', 3)->first();
         } elseif ($user->hasRole('student')) {
@@ -94,23 +93,14 @@ class CourseController extends Controller
                 $course->save();
             }
             $course['sessions'] = $course->sessions()->count();
-            // $course['sessions'] = $sessions;
+            // student_role
+            $course['count'] = $course->users()->where('role', 3)->count();
 
-            // $student_role = Role::where("name", "student")->first();
-//    $users = $course->users()->where('role_id', $student_role->id)->count();
-// $course['count'] = $users;
-// student_role
-            $course['count'] = $course->users()->where('role',3)->count();
-            // $teacher_role = Role::where("name", "teacher")->pluck('id');
             // teacher_role
-            $teacher = $course->users()->where('role',2)->pluck('user_id');
+            $teacher = $course->users()->where('role', 3)->pluck('user_id');
             $course['user'] = User::findOrFail($teacher)->first();
-            //  $students = $course->users()->where('role_id', $student_role->id)->orderBy('image', 'desc')->take('5')->get();
-            //  $course['students'] = $students;
+
         }
-        //        return $courses;
-
-
         if ($user->hasRole('teacher') && $user->hasRole('admin')) {
             return view('melisan.management.courses.index', compact('courses', 'user', 'mosabeghat', 'content', 'user2'))
                 ->with([
@@ -531,25 +521,28 @@ class CourseController extends Controller
         }
     }
 
-    public function create(Request $request)
+    public function create()
     {
-        return $request;
+    }
+   public function createPost(Request $request)
+    {
+   
         $data = $request->all();
         $rule = [
             'name' => 'required',
             'max_session' => 'required',
         ];
         $valid = Validator::make($data, $rule);
-        if ($valid->fails())
-            return response()->json(
-                [
-                    'status' => 'failed',
-                    'message' => $valid->errors()->first(),
-                ],
-                422,
-                array('Content-Type' => 'application/json;charset:utf-8;'),
-                JSON_UNESCAPED_UNICODE
-            );
+        // if ($valid->fails())
+        //     return response()->json(
+        //         [
+        //             'status' => 'failed',
+        //             'message' => $valid->errors()->first(),
+        //         ],
+        //         422,
+        //         array('Content-Type' => 'application/json;charset:utf-8;'),
+        //         JSON_UNESCAPED_UNICODE
+        //     );
 
 
         DB::beginTransaction();
@@ -577,30 +570,29 @@ class CourseController extends Controller
 
             $course->users()->attach($user, ['role_id' => $role->id]);
             DB::commit();
-            return response()->json(
-                [
-                    'status' => 'ok',
-                    'message' => 'با موفقیت ایجاد شد',
-                ],
-                200,
-                array('Content-Type' => 'application/json; charset=utf-8'),
-                JSON_UNESCAPED_UNICODE
-            );
+            // return response()->json(
+            //     [
+            //         'status' => 'ok',
+            //         'message' => 'با موفقیت ایجاد شد',
+            //     ],
+            //     200,
+            //     array('Content-Type' => 'application/json; charset=utf-8'),
+            //     JSON_UNESCAPED_UNICODE
+            // );
         } catch (\Exception $exception) {
 
             DB::rollBack();
-            return response()->json(
-                [
-                    'status' => 'fail',
-                    'message' => $exception,
-                ],
-                200,
-                array('Content-Type' => 'application/json; charset=utf-8'),
-                JSON_UNESCAPED_UNICODE
-            );
+            // return response()->json(
+            //     [
+            //         'status' => 'fail',
+            //         'message' => $exception,
+            //     ],
+            //     200,
+            //     array('Content-Type' => 'application/json; charset=utf-8'),
+            //     JSON_UNESCAPED_UNICODE
+            // );
         }
     }
-
     public function sessionCreate(Request $request)
     {
         $data = $request->all();
@@ -611,16 +603,16 @@ class CourseController extends Controller
 
         ];
         $valid = Validator::make($data, $rule);
-        if ($valid->fails())
-            return response()->json(
-                [
-                    'status' => 'failed',
-                    'message' => $valid->errors()->first(),
-                ],
-                422,
-                array('Content-Type' => 'application/json;charset:utf-8;'),
-                JSON_UNESCAPED_UNICODE
-            );
+        // if ($valid->fails())
+        //     return response()->json(
+        //         [
+        //             'status' => 'failed',
+        //             'message' => $valid->errors()->first(),
+        //         ],
+        //         422,
+        //         array('Content-Type' => 'application/json;charset:utf-8;'),
+        //         JSON_UNESCAPED_UNICODE
+        //     );
 
         DB::beginTransaction();
         $course = Course::findOrFail($request->course_id);

@@ -79,7 +79,8 @@ Route::middleware('auth')->group(function () {
                 Route::group(['middleware' => ['role:teacher|admin|student']], function () {
                     Route::middleware('cours')->group(function () {
                     });
-                    Route::any('/create', [CourseController::class, 'create'])->name('course.create');
+                    Route::get('/create', [CourseController::class, 'create'])->name('course.create');
+                    Route::post('/createPost', [CourseController::class, 'createPost'])->name('course.createPost');
                     Route::get('/delete/{id}', [CourseController::class, 'delete'])->name('course.delete');
                     Route::post('/period/{id}', [CourseController::class, 'period'])->name('course.period');
                     // چک course.private
