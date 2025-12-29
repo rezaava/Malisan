@@ -36,7 +36,7 @@
                                                                                                                                                                                                 </div>
                                                                                                                                                                                             </div> -->
                 @endif
-<<<<<<< HEAD
+                @endif
             </div>
             <div class="row">
                 <div class="col-md-12 ">
@@ -46,17 +46,6 @@
                                 <div class="card border-radius-7 " style='max-height: 53vh;  height: 53vh;       background: rgba(255, 255, 255, 0.07);
                                                                   backdrop-filter: blur(20px);'>
                                     <!-- <a href="/dashboard/courses/sessions?course_id={{ $course->id }}"> -->
-=======
-            @endif
-        </div>
-        <div class="row">
-            <div class="col-md-12 ">
-                <div class="row">
-                    @foreach ($courses as $course)
-                        <div class=" col-md-3 mt-3">
-                            <div class="card border-radius-7 " style='max-height: 87vh;  height: 53vh;   background: rgba(255, 255, 255, .75);'>
-                                <!-- <a href="/dashboard/courses/sessions?course_id={{ $course->id }}"> -->
->>>>>>> efcf78904f3f948464f7bdf650b5a559801c0115
                                     <img src="{{ asset('/files/icons/' . $course->header . '.jpg') }}" class="card-img-top"
                                         alt="درس ">
                                     <div class="card-body d-flex flex-column text-end">

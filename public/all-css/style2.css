@@ -472,7 +472,6 @@ a {
         -ms-flex-direction: column
     }
 }
-<<<<<<< HEAD
 /* profile1 */
        body.pro1 {
             font-family: 'Vazirmatn', sans-serif;
@@ -635,21 +634,6 @@ a {
         } 
         /* profile2 */
              .body-pro2 {
-=======
-
-/* profile1 */
-body.pro1 {
-    font-family: 'Vazirmatn', sans-serif;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.profile-card.pro1 {
-    width: 360px;
->>>>>>> efcf78904f3f948464f7bdf650b5a559801c0115
     background: rgba(255, 255, 255, 0.18);
     backdrop-filter: blur(9px);
     border-radius: 22px;
@@ -715,22 +699,6 @@ body.pro1 {
     margin-bottom: 30px;
 }
 
-<<<<<<< HEAD
-        .btn-save-pro2 {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: #fff;
-            border-radius: 18px;
-            height: 54px;
-            font-weight: 700;
-                width: 50%;
-        }
-        .label-pro2{
-            color: white;
-        }
-        .title-pro2{
-            color: white;
-        }
-=======
 .actions.pro1 {
     display: flex;
     gap: 12px;
@@ -995,4 +963,3 @@ textarea.form-control-pro2 {
 .title-pro2 {
     color: white;
 }
->>>>>>> efcf78904f3f948464f7bdf650b5a559801c0115

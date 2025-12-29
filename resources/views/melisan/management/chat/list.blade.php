@@ -18,9 +18,8 @@
         background: linear-gradient(-45deg, #303f9f, #7b1fa2) !important;
     }
 
- 
     .form-control {
-        color: #fff !important;
+        color: aqua !important;
     }
 
     /* ===== Chat UI Cleaner Override ===== */
@@ -168,12 +167,12 @@
 @section('title', 'گفتگو')
 @section('title', 'گفتگو')
 @section('main-content')
-<div id="content" class="main-content mb-5" style="margin: 0 !important;">
+<div id="content" class="main-content  mt-3" style="margin: 0;">
     <div class="layout-px-spacing">
 
         <div class="chat-section layout-top-spacing">
             <div class="row">
-                <div class="col-12">
+                <div class="col-md-12">
 
                     <div class="chat-system">
 
@@ -267,7 +266,7 @@
                                 <div class="chat-conversation-box" style="position: absolute;">
                                     <div id="chat-conversation-box-scroll">
                                         @foreach($chats as $chat)
-                                        <div class="chat" data-chat="chat{{ $chat->chat_id }}" id="chat{{ $chat->chat_id }}">
+                                        <div class="chat" style="margin-bottom: 80px;" data-chat="chat{{ $chat->chat_id }}" id="chat{{ $chat->chat_id }}">
                                             @foreach($chat->messages as $message)
                                             <div
                                                 class="bubble
