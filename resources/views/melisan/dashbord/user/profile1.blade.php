@@ -19,7 +19,7 @@
 
             <div class="avatar pro1">
                 <img src="{{ asset($user->image) }}" alt="Profile">
-                      <!-- <img src="{{ asset('/files/user/' . Session::get('user')->image) }}" alt="profile"> -->
+            
             </div>
 
             <div class="name pro1"> {{ $user->name }}{{ $user->family }}</div>

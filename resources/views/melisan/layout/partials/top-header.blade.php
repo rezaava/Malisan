@@ -17,15 +17,12 @@
             <ul class="navbar-list ">
                 <li>
                     <!-- آیکون سوالات -->
-<<<<<<< HEAD
-                    <a class="" @if( $user->hasRole('teacher')) href="{{asset('/files/help.pdf')}}"
-=======
                     <a class="" @if($user->hasRole('teacher')) href="{{asset('/files/help.pdf')}}"
->>>>>>> efcf78904f3f948464f7bdf650b5a559801c0115
                     @elseif($user->hasRole('student')) href="{{asset('/files/help2.pdf')}}" @endif data-target=""
                         style="font-size: 20px;">❓
                     </a>
                 </li>
+               
                 <!-- آیکون پیام‌ها -->
                 <li>
                     <a class="" href="/dashboard/chat" style="font-size: 20px;">💬</a>

@@ -495,3 +495,15 @@
 }
 
 /* پایان پیام موفقیت */
+/* دکمه */
+.btn-view-list {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: #fff;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+.btn-view-list:hover {
+    background: linear-gradient(135deg, var(--primary-color), #6a11cb);
+    transform: scale(1.03);
+}
