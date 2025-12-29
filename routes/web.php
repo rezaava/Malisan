@@ -195,10 +195,10 @@ Route::middleware('auth')->group(function () {
             });
             Route::group(['prefix' => 'question'], function () {
                 Route::get('/show', [QuestionController::class, 'show'])->name('question.show');
-
-                Route::post('/create', 'QuestionController@create');
-                Route::any('/edit/{id?}', 'QuestionController@edit')->name('editQ');
-                Route::any('/delete/{id?}', 'QuestionController@delete')->name('deleteQ');
+                Route::post('/create', [QuestionController::class, 'create']);
+                Route::any('/edit/{id?}',[QuestionController::class, 'edit'])->name('editQ');
+                Route::any('/delete/{id?}', [QuestionController::class, 'delete'])->name('deleteQ');
+                // سواللللللللل...............................................................
                 Route::group(['middleware' => ['role:teacher|student']], function () {
                     Route::post('/scoring', 'QuestionController@scoring');
                 });

@@ -45139,7 +45139,7 @@
 
           box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
           padding: 40px 30px;
-          max-width: 990px;
+          /* max-width: 990px; */
           width: 100%;
       }
 
@@ -45910,8 +45910,8 @@
       }
 
       textarea.materialize-textarea:focus {
-          border-color: var(--primary-color);
-          box-shadow: 0 0 0 1px var(--primary-color);
+          border-color: cyan;
+          box-shadow: cyan;
       }
 
       [type="radio"]:checked+span:after {

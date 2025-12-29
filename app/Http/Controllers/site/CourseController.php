@@ -202,6 +202,124 @@ class CourseController extends Controller
         return redirect()->back()->with('success', ' با موفقیت انجام شد.');
 
     }
+       public function create()
+    {
+        
+        $user =Auth::user();
+        $content = Coworker::where('user_id', $user->id)->first();
+        $mosabeghat = Touruser::where('user_id', $user->id)->count();
+        if ($user->hasRole('student')) {
+            $user2 = User::where('national', $user->national)->where('role', 2)->first();
+        } elseif ('teacher') {
+            $user2 = User::where('national', $user->national)->where('role', 3)->first();
+        }
+          return view('melisan.management.courses.insert', compact( 'content','user', 'user2', 'mosabeghat'));
+    }
+   public function createPost(Request $request)
+    {
+   
+        //  $tekrari = 1;
+        // while ($tekrari) {
+        //     $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        //     // ایجاد یک رشته تصادفی با طول بیشتر
+        //     $randomString = '';
+        //     for ($i = 0; $i < 5; $i++) {
+        //         $randomString .= $characters[rand(0, strlen($characters) - 1)];
+        //     }
+        //     $old = Category::where('code', $randomString)->first();
+        //     if (!$old)
+        //         $tekrari = 0;
+        // }
+
+
+       if ($request->isMethod("get")) {
+            $old = null;
+            if ($request->copy) {
+                $old = Course::find($request->copy);
+            }
+            return view('management.courses.teachers.create', compact('old'))->with([
+                'pageTitle' => 'صفحه ایجاد دروس',
+                'pageName' => 'ایجاد درس',
+                'pageDescription' => 'مدرس گرامی! برای ایجاد درس جدید لطفا فرم زیرا را تکمیل نمایید',
+            ]);
+        } elseif ($request->isMethod("post")) {
+
+            $valid = Validator::make($request->all(), [
+                'name' => 'required',
+//                'max_session' => 'required',
+                //                'code'=>'required|unique:courses',
+            ]);
+            if ($valid->fails()) {
+                return back()->withErrors($valid);
+            }
+            DB::beginTransaction();
+            $user = Auth::user();
+            $role = Role::where("name", "teacher")->first();
+            $code = Str::random(5);
+            $uniq = Course::where('code', $code)->first();
+            while ($uniq) {
+                $code = Str::random(5);
+                $uniq = Course::where('code', $code)->first();
+            }
+            $course = new Course();
+            $course->name = $request->name;
+            $link = str_replace('http://', '', $request->majazi);
+            $link = str_replace('https://', '', $link);
+//            return $link;
+            $course->majazi = $link;
+            $course->max_session = 16;
+            $course->code = $code;
+            try {
+                $course->save();
+                $setting = new Setting();
+                $setting->course_id = $course->id;
+                $setting->save();
+
+                $score = new Scoring();
+                $score->course_id = $course->id;
+                $score->save();
+
+                $course->users()->attach($user, ['role_id' => $role->id]);
+
+//                copy
+                if ($request->copy) {
+                    $old = Course::find($request->copy);
+                    $sessions = Session::where('course_id', $old->id)->orderBy('id', 'asc')->get();
+                    $i = 0;
+                    foreach ($sessions as $session) {
+                        $ss = new Session();
+
+                        $ss->course_id = $course->id;
+                        $ss->text = $session->text;
+                        $ss->file = $session->file;
+                        $ss->link = $session->link;
+                        $ss->majazi = $session->majazi;
+                        if ($i == 0)
+                            $ss->active = 1;
+                        else
+                            $ss->active = 0;
+                        $i++;
+                        $ss->number = $session->number;
+                        $ss->name = $session->name;
+                        $ss->save();
+                    }
+                }
+//                endcopy
+                DB::commit();
+                // return "sa";
+                $result=$this->anetoTrans($user,50000,5,'ایجاد درس '.$course->name);
+                // return $result;
+                $msg = "دانشجوی عزیز، برای دسترسی به درس " . $course->name . " ابتدا از طریق سایت WWW.MALISAN.IR در سامانه آموزشی ملیسان با هویت واقعی ثبت نام کنید، سپس با استفاده از شناسه " . $course->code . " در درس ذکر شده عضو شوید.";
+                return redirect('/dashboard/courses/list')->with('success', $msg);
+//                return redirect('/dashboard/courses/list')->with('success', ' درس ' . $request->name . ' با شناسه' . $request->code)->with('crete', "ok");
+            } catch (\Exception $exception) {
+
+                DB::rollBack();
+                return $exception;
+                return back()->with('error', 'خطایی در سرور رخ داده است');
+            }
+        }
+    }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function progress(Request $request)
     {
@@ -521,78 +639,7 @@ class CourseController extends Controller
         }
     }
 
-    public function create()
-    {
-    }
-   public function createPost(Request $request)
-    {
-   
-        $data = $request->all();
-        $rule = [
-            'name' => 'required',
-            'max_session' => 'required',
-        ];
-        $valid = Validator::make($data, $rule);
-        // if ($valid->fails())
-        //     return response()->json(
-        //         [
-        //             'status' => 'failed',
-        //             'message' => $valid->errors()->first(),
-        //         ],
-        //         422,
-        //         array('Content-Type' => 'application/json;charset:utf-8;'),
-        //         JSON_UNESCAPED_UNICODE
-        //     );
-
-
-        DB::beginTransaction();
-        $user = Auth::user();
-        $role = Role::where("name", "teacher")->first();
-        $code = Str::random(5);
-        $uniq = Course::where('code', $code)->first();
-        while ($uniq) {
-            $code = Str::random(5);
-            $uniq = Course::where('code', $code)->first();
-        }
-        $course = new Course();
-        $course->name = $request->name;
-        $course->max_session = $request->max_session;
-        $course->code = $code;
-        try {
-            $course->save();
-            $setting = new Setting();
-            $setting->course_id = $course->id;
-            $setting->save();
-
-            $score = new Scoring();
-            $score->course_id = $course->id;
-            $score->save();
-
-            $course->users()->attach($user, ['role_id' => $role->id]);
-            DB::commit();
-            // return response()->json(
-            //     [
-            //         'status' => 'ok',
-            //         'message' => 'با موفقیت ایجاد شد',
-            //     ],
-            //     200,
-            //     array('Content-Type' => 'application/json; charset=utf-8'),
-            //     JSON_UNESCAPED_UNICODE
-            // );
-        } catch (\Exception $exception) {
-
-            DB::rollBack();
-            // return response()->json(
-            //     [
-            //         'status' => 'fail',
-            //         'message' => $exception,
-            //     ],
-            //     200,
-            //     array('Content-Type' => 'application/json; charset=utf-8'),
-            //     JSON_UNESCAPED_UNICODE
-            // );
-        }
-    }
+ 
     public function sessionCreate(Request $request)
     {
         $data = $request->all();

@@ -5947,11 +5947,13 @@ input[type=search]:not(.browser-default):focus:not([readonly]),
 input[type=tel]:not(.browser-default):focus:not([readonly]),
 input[type=text]:not(.browser-default):focus:not([readonly]),
 input[type=time]:not(.browser-default):focus:not([readonly]),
-input[type=url]:not(.browser-default):focus:not([readonly]),
-textarea.materialize-textarea:focus:not([readonly]) {
+input[type=url]:not(.browser-default):focus:not([readonly]) {
     border-bottom: 1px solid #00bcd4;
     box-shadow: 0 1px 0 0 #00bcd4
 }
+
+/* ,
+textarea.materialize-textarea:focus:not([readonly]) */
 
 input:not([type]):focus:not([readonly])+label,
 input[type=date]:not(.browser-default):focus:not([readonly])+label,
@@ -6041,12 +6043,14 @@ input.valid[type=text]:not(.browser-default):focus,
 input.valid[type=time]:not(.browser-default),
 input.valid[type=time]:not(.browser-default):focus,
 input.valid[type=url]:not(.browser-default),
-input.valid[type=url]:not(.browser-default):focus,
-textarea.materialize-textarea.valid,
-textarea.materialize-textarea.valid:focus {
+input.valid[type=url]:not(.browser-default):focus {
     border-bottom: 1px solid #00bfa5;
     box-shadow: 0 1px 0 0 #00bfa5
 }
+
+/* ,
+textarea.materialize-textarea.valid,
+textarea.materialize-textarea.valid:focus */
 
 .select-wrapper.invalid>input.select-dropdown,
 .select-wrapper.invalid>input.select-dropdown:focus,
@@ -6073,13 +6077,13 @@ input.invalid[type=text]:not(.browser-default):focus,
 input.invalid[type=time]:not(.browser-default),
 input.invalid[type=time]:not(.browser-default):focus,
 input.invalid[type=url]:not(.browser-default),
-input.invalid[type=url]:not(.browser-default):focus,
-textarea.materialize-textarea.invalid,
-textarea.materialize-textarea.invalid:focus {
+input.invalid[type=url]:not(.browser-default):focus {
     border-bottom: 1px solid #ff5252;
     box-shadow: 0 1px 0 0 #ff5252
 }
-
+/* ,
+textarea.materialize-textarea.invalid,
+textarea.materialize-textarea.invalid:focus */
 .select-wrapper.invalid~.helper-text[data-error],
 .select-wrapper.valid .helper-text[data-success],
 input:not([type]).invalid~.helper-text[data-error],
@@ -6129,11 +6133,8 @@ input[type=time]:not(.browser-default):focus.valid~.helper-text[data-success],
 input[type=url]:not(.browser-default).invalid~.helper-text[data-error],
 input[type=url]:not(.browser-default).valid~.helper-text[data-success],
 input[type=url]:not(.browser-default):focus.invalid~.helper-text[data-error],
-input[type=url]:not(.browser-default):focus.valid~.helper-text[data-success],
-textarea.materialize-textarea.invalid~.helper-text[data-error],
-textarea.materialize-textarea.valid~.helper-text[data-success],
-textarea.materialize-textarea:focus.invalid~.helper-text[data-error],
-textarea.materialize-textarea:focus.valid~.helper-text[data-success] {
+input[type=url]:not(.browser-default):focus.valid~.helper-text[data-success]
+{
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -6141,7 +6142,10 @@ textarea.materialize-textarea:focus.valid~.helper-text[data-success] {
     pointer-events: none;
     color: transparent
 }
-
+/* textarea.materialize-textarea.invalid~.helper-text[data-error],
+textarea.materialize-textarea.valid~.helper-text[data-success],
+textarea.materialize-textarea:focus.invalid~.helper-text[data-error],
+textarea.materialize-textarea:focus.valid~.helper-text[data-success]  */
 .select-wrapper.valid~.helper-text:after,
 input:not([type]).valid~.helper-text:after,
 input:not([type]):focus.valid~.helper-text:after,
@@ -6166,9 +6170,7 @@ input[type=text]:not(.browser-default):focus.valid~.helper-text:after,
 input[type=time]:not(.browser-default).valid~.helper-text:after,
 input[type=time]:not(.browser-default):focus.valid~.helper-text:after,
 input[type=url]:not(.browser-default).valid~.helper-text:after,
-input[type=url]:not(.browser-default):focus.valid~.helper-text:after,
-textarea.materialize-textarea.valid~.helper-text:after,
-textarea.materialize-textarea:focus.valid~.helper-text:after {
+input[type=url]:not(.browser-default):focus.valid~.helper-text:after {
     content: attr(data-success);
     color: #00bfa5
 }

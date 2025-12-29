@@ -6,9 +6,10 @@ use App\Models\Chat;
 use App\Models\Course;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Carbon\Carbon;
 use App\Models\Coworker;
 use App\Models\Touruser;
-use Illuminate\Support\Carbon;
+// use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Auth;
@@ -84,9 +85,10 @@ class ChatController extends Controller
                 $user2 = User::where('national', $user->national)->where('role', 2)->first();
             }
          
-            return view('melisan.management.chat.list', compact('chats','user','content','mosabeghat','user2'))->with([
+            return view('melisan.management.chat.list', compact('chats','user','content','mosabeghat','user2'),
+            ['show_nav' => false])->with([
                  'pageDescription' => 'مکالمات'
-            ],['show_nav'=>false]);
+            ]);
         }
 
         $courses = $user->courses()->pluck('course_id');
@@ -130,9 +132,10 @@ class ChatController extends Controller
             $user2 = User::where('national', $user->national)->where('role', 2)->first();
         }
             // return $chats;
-        return view('melisan.management.chat.list', compact('chats','user','content','mosabeghat','user2'))->with([
+        return view('melisan.management.chat.list', compact('chats','user','content','mosabeghat','user2'),
+        ['show_nav' => false])->with([
                  'pageDescription' => 'مکالمات'
-        ],['show_nav'=>false]);
+        ]);
 
 
     }
@@ -146,7 +149,7 @@ class ChatController extends Controller
             $chat->seen=1;
         else
             $chat->seen=2;
-        $chat->updated_at=Carbon\Carbon::now();
+        $chat->updated_at=Carbon::now();
         $chat->save();
 
         $message = new \App\Models\Message();

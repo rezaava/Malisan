@@ -11,9 +11,10 @@ use App\Models\Session;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Touruser;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Validator;
 use DB;
+use App\Models\Coworker;
 use App\Models\Course;
 use App\Exports\QuestionsExport;
 use App\Models\Score;
@@ -30,6 +31,7 @@ class QuestionController extends Controller
 
         $my = Auth::user();
         $user = $my;
+        $content = Coworker::where('user_id', $user->id)->first();
         $mosabeghat = Touruser::where('user_id', $user->id)->count();
         if ($user->hasRole('student')) {
             $user2 = User::where('national', $user->national)->where('role', 2)->first();
@@ -63,7 +65,6 @@ class QuestionController extends Controller
                 if (isset($request->os)) {
                     $filter['5'] = 1;
                 }
-
             }
             $course = Course::findOrFail($request->course_id);
             $meetings = $course->sessions()->pluck('id');
@@ -99,13 +100,11 @@ class QuestionController extends Controller
                     if ($question->user_id == Auth::user()->id) {
                         unset($questions[$key]);
                     }
-
                 }
                 if ($filter['6'] == '0') {
                     if ($question->user_id == null) {
                         unset($questions[$key]);
                     }
-
                 }
 
                 $designer = User::findOrFail($question->user_id);
@@ -136,20 +135,18 @@ class QuestionController extends Controller
                 }
 
                 $question['nazar'] = $nazars;
-
             }
 
             if ($request->input('action') == 'excel') {
                 session()->put("questions", $questions);
                 return $excel->download(new QuestionsExport, "malisan_bank" . $course->name . ".xlsx");
             }
-            return view('management.questions.create', compact('course', 'questions', 'filter', 'user', 'mosabeghat', 'user2'))->with([
+            return view('melisan.management.questions.create', compact('course', 'questions', 'content', 'filter', 'user', 'mosabeghat', 'user2'))->with([
                 'pageTitle' => 'صفحه طرح سوال',
                 'pageName' => 'طرح سوال',
                 // 'pageDescription' => $setting->tarahi_soal_desc,
                 // 'pageDescription' => 'دوست من ! توی فرم زیر برای این جلسه سوال طرح کن فقط حواست باشه روند تعریف سوال محدوده !',
             ]);
-
         } else {
             $meeting = Session::findOrFail($request->session_id);
             $course = $meeting->course()->first();
@@ -180,7 +177,6 @@ class QuestionController extends Controller
                 } else {
                     $question['level'] = 'نامشخص';
                 }
-
             }
             $limit = 0;
             if ($my->hasRole('student')) {
@@ -189,7 +185,7 @@ class QuestionController extends Controller
                 }
             }
 
-            return view('management.questions.create', compact('meeting', 'course', 'questions', 'limit', 'user', 'mosabeghat', 'user2'))->with([
+            return view('melisan.management.questions.create', compact('meeting', 'course', 'content', 'questions', 'limit', 'user', 'mosabeghat', 'user2'))->with([
                 'pageTitle' => 'صفحه طرح سوال',
                 'pageName' => 'طرح سوال',
                 'pageDescription' => $setting->tarahi_soal_desc,
@@ -227,91 +223,147 @@ class QuestionController extends Controller
             array('Content-Type' => 'application/json; charset=utf-8'),
             JSON_UNESCAPED_UNICODE
         );
-
-
     }
+
+    // public function create(Request $request)
+    // {
+    //     $data = $request->all();
+    //     if (!$request->question_id)
+    //         $rule = [
+    //             'question' => 'required|unique:questions',
+    //             'answer' => 'required',
+    //             'answer1' => 'required',
+    //             'answer2' => 'required',
+    //             'answer3' => 'required',
+    //             'answer4' => 'required',
+    //         ];
+    //     else
+    //         $rule = [
+    //             'question' => 'required|unique:questions,question,' . $request->question_id,
+    //             'answer' => 'required',
+    //             'answer1' => 'required',
+    //             'answer2' => 'required',
+    //             'answer3' => 'required',
+    //             'answer4' => 'required',
+    //         ];
+    //     $valid = Validator::make($data, $rule);
+    //     if ($valid->fails())
+    //         return response()->json(
+    //             [
+    //                 'status' => 'failed',
+    //                 'message' => $valid->errors()->first(),
+    //             ],
+    //             422,
+    //             array('Content-Type' => 'application/json;charset:utf-8;'),
+    //             JSON_UNESCAPED_UNICODE
+    //         );
+
+
+    //     DB::beginTransaction();
+
+    //     $session = Session::findOrFail($request->session_id);
+    //     $user = Auth::user();
+
+    //     if ($request->question_id)
+    //         $question = Question::findOrFail($request->question_id);
+    //     else
+    //         $question = new Question();
+    //     $question->question = $request->question;
+    //     $question->answer = $request->answer;
+    //     $question->answer1 = $request->answer1;
+    //     $question->answer2 = $request->answer2;
+    //     $question->answer3 = $request->answer3;
+    //     $question->answer4 = $request->answer4;
+    //     if (!$request->question_id) {
+    //         $question->user_id = $user->id;
+    //         $question->session_id = $request->session_id;
+    //     }
+    //     if ($user->hasRole('teacher'))
+    //         $question->status = '1';
+
+    //     try {
+    //         $question->save();
+    //         DB::commit();
+    //         return response()->json(
+    //             [
+    //                 'status' => 'ok',
+    //                 'message' => 'عمل با موفقیت انجام شد',
+    //             ],
+    //             200,
+    //             array('Content-Type' => 'application/json; charset=utf-8'),
+    //             JSON_UNESCAPED_UNICODE
+    //         );
+    //     } catch (\Exception $exception) {
+
+    //         DB::rollBack();
+    //         return response()->json(
+    //             [
+    //                 'status' => 'fail',
+    //                 'message' => 'خطایی در سرور رخ داده است',
+    //                 'error' => $exception,
+    //             ],
+    //             200,
+    //             array('Content-Type' => 'application/json; charset=utf-8'),
+    //             JSON_UNESCAPED_UNICODE
+    //         );
+    //     }
+    // }
 
     public function create(Request $request)
     {
-        $data = $request->all();
-        if (!$request->question_id)
-            $rule = [
+        $valid = Validator::make(
+            $request->all(),
+            [
                 'question' => 'required|unique:questions',
                 'answer' => 'required',
                 'answer1' => 'required',
                 'answer2' => 'required',
                 'answer3' => 'required',
                 'answer4' => 'required',
-            ];
-        else
-            $rule = [
-                'question' => 'required|unique:questions,question,' . $request->question_id,
-                'answer' => 'required',
-                'answer1' => 'required',
-                'answer2' => 'required',
-                'answer3' => 'required',
-                'answer4' => 'required',
-            ];
-        $valid = Validator::make($data, $rule);
-        if ($valid->fails())
-            return response()->json(
-                [
-                    'status' => 'failed',
-                    'message' => $valid->errors()->first(),
-                ],
-                422,
-                array('Content-Type' => 'application/json;charset:utf-8;'),
-                JSON_UNESCAPED_UNICODE
-            );
-
-
+            ],
+            [
+                'question.unique' => 'سوال مطرح شده شما با سوالات خودتان یا دانشجوی دیگر مشابه هست'
+            ]
+        );
+        if ($valid->fails()) {
+            return back()->withErrors($valid);
+        }
         DB::beginTransaction();
 
         $session = Session::findOrFail($request->session_id);
         $user = Auth::user();
 
-        if ($request->question_id)
-            $question = Question::findOrFail($request->question_id);
-        else
-            $question = new Question();
+        $last = Question::orderBy('id', 'desc')->first();
+        $question = new Question();
         $question->question = $request->question;
         $question->answer = $request->answer;
         $question->answer1 = $request->answer1;
         $question->answer2 = $request->answer2;
         $question->answer3 = $request->answer3;
         $question->answer4 = $request->answer4;
-        if (!$request->question_id) {
-            $question->user_id = $user->id;
-            $question->session_id = $request->session_id;
-        }
-        if ($user->hasRole('teacher'))
+        $question->user_id = $user->id;
+        $question->session_id = $request->session_id;
+
+        $last = $last->id + 1;
+        if ($user->hasRole('teacher')) {
             $question->status = '1';
+            $result = $this->anetoTrans($user, 10000, 5, 'طراحی سوال ' . $session->name . $last);
+        } else {
+            // $result=$this->anetoTrans($user,1000,5,'طراحی سوال '.$session->name.$last);
+
+        }
 
         try {
             $question->save();
             DB::commit();
-            return response()->json(
-                [
-                    'status' => 'ok',
-                    'message' => 'عمل با موفقیت انجام شد',
-                ],
-                200,
-                array('Content-Type' => 'application/json; charset=utf-8'),
-                JSON_UNESCAPED_UNICODE
-            );
+
+
+            return redirect()->back()->with('success', 'با موفقیت اضافه شد');
         } catch (\Exception $exception) {
 
             DB::rollBack();
-            return response()->json(
-                [
-                    'status' => 'fail',
-                    'message' => 'خطایی در سرور رخ داده است',
-                    'error' => $exception,
-                ],
-                200,
-                array('Content-Type' => 'application/json; charset=utf-8'),
-                JSON_UNESCAPED_UNICODE
-            );
+            return $exception;
+            return back()->with('error', 'خطایی در سرور رخ داده است');
         }
     }
 
@@ -354,10 +406,8 @@ class QuestionController extends Controller
         if ($user->hasRole('teacher')) {
             $question->status = '1';
             $result = $this->anetoTrans($user, 10000, 5, 'طراحی سوال ' . $session->name . $last);
-
         } else {
             $result = $this->anetoTrans($user, 1000, 5, 'طراحی سوال ' . $session->name . $last);
-
         }
 
         try {
@@ -413,7 +463,6 @@ class QuestionController extends Controller
                         } elseif ($item->score == 4) {
                             $c4++;
                         }
-
                     }
                     if ($c3 == 5) {
                         $question->status = 1;
@@ -464,7 +513,14 @@ class QuestionController extends Controller
         if ($request->isMethod("get")) {
             $edit = Question::findOrFail($id);
             //            $question['score']=Score::where('type','1')->where('sub_id',$question->id)->get();
-
+            $user = Auth::user();
+            if ($user->hasRole('teacher')) {         
+                $user2 = User::where('national', $user->national)->where('role', 3)->first(); 
+            } elseif ($user->hasRole('student')) {
+                $user2 = User::where('national', $user->national)->where('role', 2)->first();
+            }
+            $content = Coworker::where('user_id', $user->id)->first();
+            $mosabeghat = Touruser::where('user_id', $user->id)->count();
             $session = Session::find($edit->session_id);
             $meeting = $session;
             $course = Course::find($session->course_id);
@@ -493,10 +549,9 @@ class QuestionController extends Controller
                 } else {
                     $question['level'] = 'نامشخص';
                 }
-
             }
             $old = URL::previous();
-            return view('management.questions.create', compact('course', 'edit', 'meeting', 'questions', 'old'));
+            return view('melisan.management.questions.create', compact('course', 'edit', 'user','user2','mosabeghat', 'content', 'meeting', 'questions', 'old'));
         } elseif ($request->isMethod("post")) {
 
             $valid = Validator::make($request->all(), [
@@ -551,16 +606,16 @@ class QuestionController extends Controller
         } else {
             abort(404);
         }
-
     }
 
-    public function delete($id = null, Request $request)
+    public function delete(Request $request, $id = null)
     {
         $qu = Question::findOrFail($request->question_id);
         $qu->delete();
-        return redirect()->back()->with('success', 'با موفقیت حذف شد');
 
+        return redirect()->back()->with('success', 'با موفقیت حذف شد');
     }
+
 
     public function star($id = null, Request $request)
     {
@@ -575,6 +630,5 @@ class QuestionController extends Controller
 
         $qu->save();
         return redirect()->back()->with('success', 'با موفقیت ویرایش شد');
-
     }
 }
