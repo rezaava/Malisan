@@ -36,7 +36,10 @@
                                                                                                                                                                                                 </div>
                                                                                                                                                                                             </div> -->
                 @endif
+<<<<<<< HEAD
                 @endif
+=======
+>>>>>>> 5ad25d67343dd020cc33cc5ea051e0a22033c618
             </div>
             <div class="row">
                 <div class="col-md-12 ">
@@ -60,7 +63,7 @@
                                                         data-bs-toggle="dropdown" aria-expanded="false">
                                                         &#8942;
                                                     </button>
-                                                    <ul class="dropdown-menu dropdown-menu-start rounded-4 shadow">
+                                                     <ul class="dropdown-menu dropdown-menu-start rounded-4 shadow">
                                                         <li>
                                                             <a class="dropdown-item"
                                                                 href="{{ route('course.edit', $course->id) }}">✏️ ویرایش</a>
@@ -69,6 +72,7 @@
                                                             <a class="dropdown-item"
                                                                 href="{{ route('course.delete', $course->id) }}"
                                                                 onclick="return confirmDeleteCourse()">🗑 حذف</a>
+                                                                
                                                         </li>
                                                         <li>
                                                             <a class="dropdown-item"
@@ -126,6 +130,7 @@
                     @endforeach
                 </div>
             </div>
+            @endif
         </div>
     </div>
 

@@ -169,11 +169,10 @@ class AuthController extends Controller
 
         if ($user2) {
             Auth::logout();
+            Auth::login($user2);
             if ($user2->hasRole('teacher')) {
-                Auth::login($user2);
                 return redirect()->route('dashboard');
-            } elseif ($user->hasRole('student')) {
-                Auth::login($user2);
+            } elseif ($user2->hasRole('student')) {
                 $courses = $user->courses()->pluck('course_id');
                 $teacherCourses = CourseUser::where('role_id', '3')->whereIn('course_id', $courses)->pluck('user_id');
                 foreach ($teacherCourses as $item) {
@@ -181,10 +180,10 @@ class AuthController extends Controller
                 }
                 $answers = OptionUser::where('user_id', $user->id)->pluck('survey_id');
                 $surveys = Survey::query()->where(function ($query) use ($courses, $teacherCourses) {
-                        $query->whereIn('group', $courses)
-                            ->orWhere('group', '0')
-                            ->orWhereIn('user_id', $teacherCourses);
-                    })
+                    $query->whereIn('group', $courses)
+                        ->orWhere('group', '0')
+                        ->orWhereIn('user_id', $teacherCourses);
+                })
                     ->whereNotIn('id', $answers)
                     ->where('active', true) // استفاده از boolean به جای string
                     ->get();

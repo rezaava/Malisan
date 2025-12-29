@@ -99,9 +99,11 @@ class CourseController extends Controller
             // $student_role = Role::where("name", "student")->first();
 //    $users = $course->users()->where('role_id', $student_role->id)->count();
 // $course['count'] = $users;
-            $course['count'] = $course->users()->hasRole('student')->count();
+// student_role
+            $course['count'] = $course->users()->where('role',3)->count();
             // $teacher_role = Role::where("name", "teacher")->pluck('id');
-            $teacher = $course->users()->hasRole('teacher')->pluck('user_id');
+            // teacher_role
+            $teacher = $course->users()->where('role',2)->pluck('user_id');
             $course['user'] = User::findOrFail($teacher)->first();
             //  $students = $course->users()->where('role_id', $student_role->id)->orderBy('image', 'desc')->take('5')->get();
             //  $course['students'] = $students;
@@ -531,6 +533,7 @@ class CourseController extends Controller
 
     public function create(Request $request)
     {
+        return $request;
         $data = $request->all();
         $rule = [
             'name' => 'required',

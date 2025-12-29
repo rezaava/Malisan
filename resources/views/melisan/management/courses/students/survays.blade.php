@@ -77,7 +77,7 @@
 
                         </div>
                         <div class="input-field col-md-12 ">
-                            <button class="btn " type="submit" name="action" style="font-size:15px">ارسال پاسخ
+                            <button class="btn btn-view-list mt-auto" type="submit" name="action" style="font-size:15px">ارسال پاسخ
                                 <i class="material-icons right custom-send-material-icon"
                                     style="font-size:15px">send</i>
                             </button>

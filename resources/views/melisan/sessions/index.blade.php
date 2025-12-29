@@ -24,292 +24,293 @@
                 'text' => 'جلسه جدید'
             ])
         @endif
-        <p class="p-session" style=" ">جلسه ای یافت  نشد ! </p>
+        <p class="p-session" style=" ">جلسه ای یافت نشد ! </p>
 
     @else
         {{-- حالت با جلسات --}}
         @if($member == 1)
-        <div class="row">
-            <div class="col 12 s12">
-                @if ($user->hasRole('teacher'))
-                    <div class="col s12" style="width: fit-content; padding: 0 5px">
-                        <a onclick="onHelpClick()"
-                           class="mb-6 btn-floating waves-effect waves-light gradient-45deg-amber-amber gradient-shadow tooltipped"
-                           data-position="bottom" data-tooltip="میخوام راهنماییت کنم">
-                            <i class="material-icons dp48">help</i>
+            <div class="row">
+                <div class="col 12 s12">
+                    @if ($user->hasRole('teacher'))
+                        <div class="col s12" style="width: fit-content; padding: 0 5px">
+                            <a onclick="onHelpClick()"
+                               class="mb-6 btn-floating waves-effect waves-light gradient-45deg-amber-amber gradient-shadow tooltipped"
+                               data-position="bottom" data-tooltip="میخوام راهنماییت کنم">
+                                <i class="material-icons dp48">help</i>
+                            </a>
+                        </div>
+                        @include('management.layout.components.btn-back.btn-back')
+                    @endif
+                    
+                    {{-- دکمه‌های کنار هم --}}
+                    <div class="col s12" style="display: flex; gap: 12px; align-items: center; padding: 8px 0; flex-wrap: wrap;">
+                        @if($user->hasRole('student'))
+                            <!-- دکمه عضویت (سبز) -->
+                            <form action="/dashboard/courses/join/{{ $course->id }}" method="post" style="margin: 0;">
+                                @csrf
+                                <button class="btn-floating waves-effect waves-light green tooltipped"
+                                       data-position="bottom" 
+                                       data-tooltip="عضویت در درس"
+                                       style="border: none; cursor: pointer; transform: scale(0.9);">
+                                    <i class="material-icons">check_circle</i>    
+                                </button>
+                            </form>
+                        @endif
+
+                        <!-- دکمه تنظیمات (زرد/نارنجی) -->
+                        <a onclick="showDetail()"
+                           class="btn-floating waves-effect waves-light amber tooltipped"
+                           data-position="bottom" 
+                           data-tooltip="  تنظیمات"
+                           style="cursor: pointer; transform: scale(0.9);">
+                            <i class="material-icons" style="color: #333;">settings</i>
                         </a>
                     </div>
-                    @include('management.layout.components.btn-back.btn-back')
-                @endif
-                
-                {{-- دکمه‌های کنار هم --}}
-                <div class="col s12" style="display: flex; gap: 12px; align-items: center; padding: 8px 0; flex-wrap: wrap;">
-                    @if($user->hasRole('student'))
-                        <!-- دکمه عضویت (سبز) -->
-                        <form action="/dashboard/courses/join/{{ $course->id }}" method="post" style="margin: 0;">
-                            @csrf
-                            <button class="btn-floating waves-effect waves-light green tooltipped"
-                                   data-position="bottom" 
-                                   data-tooltip="عضویت در درس"
-                                   style="border: none; cursor: pointer; transform: scale(0.9);">
-                                <i class="material-icons">check_circle</i>    
-                            </button>
-                        </form>
-                    @endif
-
-                    <!-- دکمه تنظیمات (زرد/نارنجی) -->
-                    <a onclick="showDetail()"
-                       class="btn-floating waves-effect waves-light amber tooltipped"
-                       data-position="bottom" 
-                       data-tooltip="  تنظیمات"
-                       style="cursor: pointer; transform: scale(0.9);">
-                        <i class="material-icons" style="color: #333;">settings</i>
-                    </a>
                 </div>
             </div>
-        </div>
-        
-        <div id="colla" style="display: none">
-            <div class="row">
-                @if ($user->hasRole('teacher'))
-                    <a href="#">
-                        <div class="col s6 m4" style="">
-                            <div class="chip gradient-45deg-purple-deep-orange gradient-shadow white-text" style="width:200px">
-                                <img src="../../../app-assets/images/icon/true.png" alt="Materialize">
-                                اعتراضات(غیر فعال)
-                            </div>
-                        </div>
-                    </a>
-                @endif
-                
-                @if ($user->hasRole('teacher'))
-                    <a href="/dashboard/courses/students?course_id={{ $course->id }}">
-                        <div class="col s6 m4" style="">
-                            <div class="chip gradient-45deg-purple-deep-orange gradient-shadow white-text" style="width:200px">
-                                <img src="../../../app-assets/images/icon/true.png" alt="Materialize">{{ $course->count }} نفر دانشجو
-                            </div>
-                        </div>
-                    </a>
-                @endif
-                
-                @if ($course->davari == 1 && $isJudment)
-                    @if ($user->hasRole('student'))
-                        <a href="/dashboard/referee/foo/?course_id={{ $course->id }}">
-                            <div class="col-md-6 m4">
+            
+            <div id="colla" style="display: none">
+                <div class="row">
+                    @if ($user->hasRole('teacher'))
+                        <a href="#">
+                            <div class="col s6 m4" style="">
                                 <div class="chip gradient-45deg-purple-deep-orange gradient-shadow white-text" style="width:200px">
                                     <img src="../../../app-assets/images/icon/true.png" alt="Materialize">
-                                    داوری دوستان
+                                    اعتراضات(غیر فعال)
                                 </div>
                             </div>
                         </a>
                     @endif
-                @endif
-                
-                @if ($user->hasRole('teacher'))
-                    <a href="/dashboard/allprogress?course_id={{ $course->id }}">
-                        <div class="col-md-6 m4">
-                            <div class="chip gradient-45deg-purple-deep-orange gradient-shadow white-text" style="width:200px">
-                                <img src="../../../app-assets/images/icon/true.png" alt="Materialize">
-                                رصد دانشجویان
+                    
+                    @if ($user->hasRole('teacher'))
+                        <a href="/dashboard/courses/students?course_id={{ $course->id }}">
+                            <div class="col s6 m4" style="">
+                                <div class="chip gradient-45deg-purple-deep-orange gradient-shadow white-text" style="width:200px">
+                                    <img src="../../../app-assets/images/icon/true.png" alt="Materialize">{{ $course->count }} نفر دانشجو
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                @endif
-                
-                @if ($course->faaliat == 1 || $user->hasRole('teacher'))
-                    <a href="/dashboard/evaluation?course_id={{ $course->id }}">
-                        <div class="col s6 m4">
-                            <div class="chip gradient-45deg-purple-deep-orange gradient-shadow white-text" style="width:200px">
-                                <img src="../../../app-assets/images/icon/true.png" alt="Materialize">
-                                @if ($user->hasRole('teacher'))
-                                    پایش و ارزیابی
-                                @elseif($user->hasRole('student'))
-                                    فعالیتهای من
-                                @endif
-                            </div>
-                        </div>
-                    </a>
-                @endif
-                
-                @if ($user->hasRole('teacher'))
-                    <a href="/dashboard/courses/setting?course_id={{ $course->id }}">
-                        <div class="col s6 m4">
-                            <div class="chip gradient-45deg-purple-deep-orange gradient-shadow white-text" style="width:200px">
-                                <img src="../../../app-assets/images/icon/true.png" alt="Materialize">
-                                تنظیمات
-                            </div>
-                        </div>
-                    </a>
-                @endif
-                
-                @if ($user->hasRole('teacher'))
-                    <a href="/dashboard/courses/bank?course_id={{ $course->id }}">
-                        <div class="col s6 m4">
-                            <div class="chip gradient-45deg-purple-deep-orange gradient-shadow white-text" style="width:200px">
-                                <img src="../../../app-assets/images/icon/true.png" alt="Materialize">
-                                بانک سوالات
-                            </div>
-                        </div>
-                    </a>
-                @endif
-                
-                @if ($user->hasRole('teacher'))
-                    <a href="/dashboard/azmon?id={{ $course->id }}">
-                        <div class="col s6 m4">
-                            <div class="chip gradient-45deg-purple-deep-orange gradient-shadow white-text" style="width:200px">
-                                <img src="../../../app-assets/images/icon/true.png" alt="Materialize">
-                                تعریف آزمون
-                            </div>
-                        </div>
-                    </a>
-                @endif
-                
-                @if ($user->hasRole('teacher'))
-                    <a href="/dashboard/survey?course_id={{ $course->id }}">
-                        <div class="col s6 m4">
-                            <div class="chip gradient-45deg-purple-deep-orange gradient-shadow white-text" style="width:200px">
-                                <img src="../../../app-assets/images/icon/true.png" alt="Materialize">
-                                نظرسنجی
-                            </div>
-                        </div>
-                    </a>
-                @endif
-                
-                @if ($user->hasRole('teacher'))
-                    <a href="/dashboard/kholaseha?course_id={{ $course->id }}">
-                        <div class="col s6 m4">
-                            <div class="chip gradient-45deg-purple-deep-orange gradient-shadow white-text" style="width:200px">
-                                <img src="../../../app-assets/images/icon/true.png" alt="Materialize">
-                                لیست گزارش دانشجویان
-                            </div>
-                        </div>
-                    </a>
-                @endif
-                
-                @if ($course->quiz == 1)
-                    @if ($user->hasRole('student'))
-                        @if ($course->sessions()->count() > 0 && $course->quizCount($course) == false && $khodazmaii == 1)
-                            <a @if($course->sessions()->count() > 0 && $course->quizCount($course) == false) href="/dashboard/quiz?course_id={{ $course->id }}" @else disabled @endif>
-                                <div class="col s6 m4">
+                        </a>
+                    @endif
+                    
+                    @if ($course->davari == 1 && $isJudment)
+                        @if ($user->hasRole('student'))
+                            <a href="/dashboard/referee/foo/?course_id={{ $course->id }}">
+                                <div class="col-md-6 m4">
                                     <div class="chip gradient-45deg-purple-deep-orange gradient-shadow white-text" style="width:200px">
                                         <img src="../../../app-assets/images/icon/true.png" alt="Materialize">
-                                        خودآزمایی
+                                        داوری دوستان
                                     </div>
                                 </div>
                             </a>
                         @endif
                     @endif
-                @endif
-                
-                @if ($course->pishraft == 1)
-                    @if ($user->hasRole('student'))
-                        <a href="/dashboard/progress?course_id={{ $course->id }}&user={{ \Illuminate\Support\Facades\Auth::user()->id }}">
-                            <div class="col s6 m4" style=" ">
+                    
+                    @if ($user->hasRole('teacher'))
+                        <a href="/dashboard/allprogress?course_id={{ $course->id }}">
+                            <div class="col-md-6 m4">
                                 <div class="chip gradient-45deg-purple-deep-orange gradient-shadow white-text" style="width:200px">
                                     <img src="../../../app-assets/images/icon/true.png" alt="Materialize">
-                                    پیشرفت درسی
+                                    رصد دانشجویان
                                 </div>
                             </div>
                         </a>
                     @endif
-                @endif
+                    
+                    @if ($course->faaliat == 1 || $user->hasRole('teacher'))
+                        <a href="/dashboard/evaluation?course_id={{ $course->id }}">
+                            <div class="col s6 m4">
+                                <div class="chip gradient-45deg-purple-deep-orange gradient-shadow white-text" style="width:200px">
+                                    <img src="../../../app-assets/images/icon/true.png" alt="Materialize">
+                                    @if ($user->hasRole('teacher'))
+                                        پایش و ارزیابی
+                                    @elseif($user->hasRole('student'))
+                                        فعالیتهای من
+                                    @endif
+                                </div>
+                            </div>
+                        </a>
+                    @endif
+                    
+                    @if ($user->hasRole('teacher'))
+                        <a href="/dashboard/courses/setting?course_id={{ $course->id }}">
+                            <div class="col s6 m4">
+                                <div class="chip gradient-45deg-purple-deep-orange gradient-shadow white-text" style="width:200px">
+                                    <img src="../../../app-assets/images/icon/true.png" alt="Materialize">
+                                    تنظیمات
+                                </div>
+                            </div>
+                        </a>
+                    @endif
+                    
+                    @if ($user->hasRole('teacher'))
+                        <a href="/dashboard/courses/bank?course_id={{ $course->id }}">
+                            <div class="col s6 m4">
+                                <div class="chip gradient-45deg-purple-deep-orange gradient-shadow white-text" style="width:200px">
+                                    <img src="../../../app-assets/images/icon/true.png" alt="Materialize">
+                                    بانک سوالات
+                                </div>
+                            </div>
+                        </a>
+                    @endif
+                    
+                    @if ($user->hasRole('teacher'))
+                        <a href="/dashboard/azmon?id={{ $course->id }}">
+                            <div class="col s6 m4">
+                                <div class="chip gradient-45deg-purple-deep-orange gradient-shadow white-text" style="width:200px">
+                                    <img src="../../../app-assets/images/icon/true.png" alt="Materialize">
+                                    تعریف آزمون
+                                </div>
+                            </div>
+                        </a>
+                    @endif
+                    
+                    @if ($user->hasRole('teacher'))
+                        <a href="/dashboard/survey?course_id={{ $course->id }}">
+                            <div class="col s6 m4">
+                                <div class="chip gradient-45deg-purple-deep-orange gradient-shadow white-text" style="width:200px">
+                                    <img src="../../../app-assets/images/icon/true.png" alt="Materialize">
+                                    نظرسنجی
+                                </div>
+                            </div>
+                        </a>
+                    @endif
+                    
+                    @if ($user->hasRole('teacher'))
+                        <a href="/dashboard/kholaseha?course_id={{ $course->id }}">
+                            <div class="col s6 m4">
+                                <div class="chip gradient-45deg-purple-deep-orange gradient-shadow white-text" style="width:200px">
+                                    <img src="../../../app-assets/images/icon/true.png" alt="Materialize">
+                                    لیست گزارش دانشجویان
+                                </div>
+                            </div>
+                        </a>
+                    @endif
+                    
+                    @if ($course->quiz == 1)
+                        @if ($user->hasRole('student'))
+                            @if ($course->sessions()->count() > 0 && $course->quizCount($course) == false && $khodazmaii == 1)
+                                <a @if($course->sessions()->count() > 0 && $course->quizCount($course) == false) href="/dashboard/quiz?course_id={{ $course->id }}" @else disabled @endif>
+                                    <div class="col s6 m4">
+                                        <div class="chip gradient-45deg-purple-deep-orange gradient-shadow white-text" style="width:200px">
+                                            <img src="../../../app-assets/images/icon/true.png" alt="Materialize">
+                                            خودآزمایی
+                                        </div>
+                                    </div>
+                                </a>
+                            @endif
+                        @endif
+                    @endif
+                    
+                    @if ($course->pishraft == 1)
+                        @if ($user->hasRole('student'))
+                            <a href="/dashboard/progress?course_id={{ $course->id }}&user={{ \Illuminate\Support\Facades\Auth::user()->id }}">
+                                <div class="col s6 m4" style=" ">
+                                    <div class="chip gradient-45deg-purple-deep-orange gradient-shadow white-text" style="width:200px">
+                                        <img src="../../../app-assets/images/icon/true.png" alt="Materialize">
+                                        پیشرفت درسی
+                                    </div>
+                                </div>
+                            </a>
+                        @endif
+                    @endif
+                </div>
             </div>
-        </div>
-        @endif {{-- پایان if($member == 1) --}}
+        @endif 
+        {{-- پایان if($member == 1) --}}
 
         @if ($user->hasRole('teacher'))
-        <div class="row">
-            <div class="col-md-12">
-                <div id="checkboxes" class="card card-tabs bg-card" style="padding: 30px; background: rgba(255, 255, 255, 0.07); backdrop-filter: blur(20px);">
-                    <div class="">
-                        <h5 class=" ">وضعیت درس</h5>
-                        <div id="view-checkboxes" class="row">
-                            <p style="font-size: medium;">
-                                مدرس گرامی ! شما می‌توانید تنظیمات بیشتر درس خود را در باکس زیر کنترل نمایید .
-                                <code class="language-markup">فعال بودن</code>
-                                به معنای وجود دسترسی و
-                                <code class="language-markup">غیر فعال بودن</code>
-                                به معنای نبود دسترسی می‌باشد .
-                            </p>
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="checkboxes" class="card card-tabs bg-card" style="padding: 30px; background: rgba(255, 255, 255, 0.07); backdrop-filter: blur(20px);">
+                        <div class="">
+                            <h5 class=" ">وضعیت درس</h5>
+                            <div id="view-checkboxes" class="row">
+                                <p style="font-size: medium;">
+                                    مدرس گرامی ! شما می‌توانید تنظیمات بیشتر درس خود را در باکس زیر کنترل نمایید .
+                                    <code class="language-markup">فعال بودن</code>
+                                    به معنای وجود دسترسی و
+                                    <code class="language-markup">غیر فعال بودن</code>
+                                    به معنای نبود دسترسی می‌باشد .
+                                </p>
 
-                            <p class="col-md-3 ">
-                                <label>
-                                    <input type="checkbox" @if ($course->active == 1) checked @endif
-                                           onchange="window.location.href='{{ route('course.active', $course->id) }}'">
-                                    <span style="color: #d3d2d2ff;">در حال برگزاری</span>
-                                    <span class="slider round"></span>
-                                </label>
-                            </p>
-                            
-                            <p class="col-md-3 ">
-                                <label>
-                                    <input type="checkbox" @if ($course->archieve == 1) checked @endif
-                                           onchange="window.location.href='{{ route('course.arch.post', $course->id) }}'">
-                                    <span style="color: #d3d2d2ff;"> ارشیو </span>
-                                    <span class="slider round"></span>
-                                </label>
-                            </p>
-                            
-                            @if ($course->active == 1)
-                                <p class="col-md-3">
+                                <p class="col-md-3 ">
                                     <label>
-                                        <input type="checkbox" @if ($course->private == 1) checked @endif
-                                               onchange="window.location.href='{{ route('course.private', $course->id) }}'">
-                                        <span style="color: #d3d2d2ff;">انتشار به صورت دوره</span>
+                                        <input type="checkbox" @if ($course->active == 1) checked @endif
+                                               onchange="window.location.href='{{ route('course.active', $course->id) }}'">
+                                        <span style="color: #d3d2d2ff;">در حال برگزاری</span>
                                         <span class="slider round"></span>
                                     </label>
                                 </p>
                                 
                                 <p class="col-md-3 ">
                                     <label>
-                                        <input type="checkbox" @if ($course->status == 1) checked @endif
-                                               onchange="window.location.href='{{ route('course.status', $course->id) }}'">
-                                        <span style="color: #d3d2d2ff;">نمایش جلسات درس</span>
+                                        <input type="checkbox" @if ($course->archieve == 1) checked @endif
+                                               onchange="window.location.href='{{ route('course.arch.post', $course->id) }}'">
+                                        <span style="color: #d3d2d2ff;"> ارشیو </span>
                                         <span class="slider round"></span>
                                     </label>
                                 </p>
                                 
-                                <p class="col-md-3 ">
-                                    <label>
-                                        <input type="checkbox" @if ($course->davari == 1) checked @endif
-                                               onchange="window.location.href='{{ route('course.davari', $course->id) }}'">
-                                        <span style="color: #d3d2d2ff;">امکان انجام داوری</span>
-                                        <span class="slider round"></span>
-                                    </label>
-                                </p>
-                                
-                                <p class="col-md-3 ">
-                                    <label>
-                                        <input type="checkbox" @if ($course->quiz == 1) checked @endif
-                                               onchange="window.location.href='{{ route('course.quiz', $course->id) }}'">
-                                        <span style="color: #d3d2d2ff;">شرکت در خود آزمایی</span>
-                                        <span class="slider round"></span>
-                                    </label>
-                                </p>
-                                
-                                <p class="col-md-3 m4 mb-1">
-                                    <label>
-                                        <input type="checkbox" @if ($course->faaliat == 1) checked @endif
-                                               onchange="window.location.href='{{ route('course.faaliat', $course->id) }}'">
-                                        <span style="color: #d3d2d2ff;">مشاهده فعالیت ها</span>
-                                        <span class="slider round"></span>
-                                    </label>
-                                </p>
-                                
-                                <p class="col-md-3 ">
-                                    <label>
-                                        <input type="checkbox" @if ($course->pishraft == 1) checked @endif
-                                               onchange="window.location.href='{{ route('course.pishraft', $course->id) }}'">
-                                        <span style="color: #d3d2d2ff;">مشاهده پیشرفت درسی</span>
-                                        <span class="slider round"></span>
-                                    </label>
-                                </p>
-                            @endif
+                                @if ($course->active == 1)
+                                    <p class="col-md-3">
+                                        <label>
+                                            <input type="checkbox" @if ($course->private == 1) checked @endif
+                                                   onchange="window.location.href='{{ route('course.private', $course->id) }}'">
+                                            <span style="color: #d3d2d2ff;">انتشار به صورت دوره</span>
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </p>
+                                    
+                                    <p class="col-md-3 ">
+                                        <label>
+                                            <input type="checkbox" @if ($course->status == 1) checked @endif
+                                                   onchange="window.location.href='{{ route('course.status', $course->id) }}'">
+                                            <span style="color: #d3d2d2ff;">نمایش جلسات درس</span>
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </p>
+                                    
+                                    <p class="col-md-3 ">
+                                        <label>
+                                            <input type="checkbox" @if ($course->davari == 1) checked @endif
+                                                   onchange="window.location.href='{{ route('course.davari', $course->id) }}'">
+                                            <span style="color: #d3d2d2ff;">امکان انجام داوری</span>
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </p>
+                                    
+                                    <p class="col-md-3 ">
+                                        <label>
+                                            <input type="checkbox" @if ($course->quiz == 1) checked @endif
+                                                   onchange="window.location.href='{{ route('course.quiz', $course->id) }}'">
+                                            <span style="color: #d3d2d2ff;">شرکت در خود آزمایی</span>
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </p>
+                                    
+                                    <p class="col-md-3 m4 mb-1">
+                                        <label>
+                                            <input type="checkbox" @if ($course->faaliat == 1) checked @endif
+                                                   onchange="window.location.href='{{ route('course.faaliat', $course->id) }}'">
+                                            <span style="color: #d3d2d2ff;">مشاهده فعالیت ها</span>
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </p>
+                                    
+                                    <p class="col-md-3 ">
+                                        <label>
+                                            <input type="checkbox" @if ($course->pishraft == 1) checked @endif
+                                                   onchange="window.location.href='{{ route('course.pishraft', $course->id) }}'">
+                                            <span style="color: #d3d2d2ff;">مشاهده پیشرفت درسی</span>
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </p>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
         @endif
 
         <section class="tabs-vertical mt-1 section">
@@ -504,6 +505,6 @@
             </div>
         </section>
     @endif
-     {{-- پایان else (حالت با جلسات) --}}
+    {{-- پایان else (حالت با جلسات) --}}
 </div>
 @endsection
