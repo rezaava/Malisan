@@ -43,6 +43,10 @@ class CourseController extends Controller
             $user2 = User::where('national', $user->national)->where('role', 3)->first();
             $courses = $user->courses()->get();
             foreach ($courses as $course) {
+                     if (!$course->header) {
+                    $course->header = rand(1, 33);
+                    $course->save();
+                }
                 $teacher = $course->users()->where('role_id', '2')->pluck('user_id');
                 $course['teacher'] = User::findOrFail($teacher)->first();
             }
@@ -51,6 +55,11 @@ class CourseController extends Controller
             // active درس های فعال
             $courses = $user->courses()->where('active', '1')->get();
             foreach ($courses as $course) {
+                if (!$course->header) {
+                    $course->header = rand(1, 33);
+                    $course->save();
+                }
+
                 $students = $course->users()->where('role_id', '3')->count();
                 $course['students'] = $students;
             }
@@ -202,10 +211,10 @@ class CourseController extends Controller
         return redirect()->back()->with('success', ' با موفقیت انجام شد.');
 
     }
-       public function create()
+    public function create()
     {
-        
-        $user =Auth::user();
+
+        $user = Auth::user();
         $content = Coworker::where('user_id', $user->id)->first();
         $mosabeghat = Touruser::where('user_id', $user->id)->count();
         if ($user->hasRole('student')) {
@@ -213,112 +222,244 @@ class CourseController extends Controller
         } elseif ('teacher') {
             $user2 = User::where('national', $user->national)->where('role', 3)->first();
         }
-          return view('melisan.management.courses.insert', compact( 'content','user', 'user2', 'mosabeghat'));
+        return view('melisan.management.courses.insert', compact('content', 'user', 'user2', 'mosabeghat'));
     }
-   public function createPost(Request $request)
+    public function createPost(Request $request)
     {
-   
-        //  $tekrari = 1;
-        // while ($tekrari) {
-        //     $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        //     // ایجاد یک رشته تصادفی با طول بیشتر
-        //     $randomString = '';
-        //     for ($i = 0; $i < 5; $i++) {
-        //         $randomString .= $characters[rand(0, strlen($characters) - 1)];
+
+
+
+
+        //    if ($request->isMethod("get")) {
+        //         $old = null;
+        //         if ($request->copy) {
+        //             $old = Course::find($request->copy);
+        //         }
+        //         return view('management.courses.teachers.create', compact('old'))->with([
+        //             'pageTitle' => 'صفحه ایجاد دروس',
+        //             'pageName' => 'ایجاد درس',
+        //             'pageDescription' => 'مدرس گرامی! برای ایجاد درس جدید لطفا فرم زیرا را تکمیل نمایید',
+        //         ]);
+        //     } elseif ($request->isMethod("post")) {
+
+        $valid = Validator::make($request->all(), [
+            'name' => 'required',
+
+        ]);
+        if ($valid->fails()) {
+            return back()->withErrors($valid);
+        }
+        // DB::beginTransaction();
+        $user = Auth::user();
+        $role = Role::where("name", "teacher")->first();
+
+        $tekrari = 1;
+        while ($tekrari) {
+            $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            // ایجاد یک رشته تصادفی با طول بیشتر
+            $code = '';
+            for ($i = 0; $i < 5; $i++) {
+                $code .= $characters[rand(0, strlen($characters) - 1)];
+            }
+            $old = Course::where('code', $code)->first();
+            if (!$old)
+                $tekrari = 0;
+        }
+
+        $course = new Course();
+        $course->name = $request->name;
+        $link = str_replace('http://', '', $request->majazi);
+        $link = str_replace('https://', '', $link);
+        //            return $link;
+        $course->majazi = $link;
+        $course->max_session = 16;
+        $course->code = $code;
+
+        // try {
+        $course->save();
+
+        $setting = new Setting();
+        $setting->course_id = $course->id;
+        $setting->save();
+
+        $score = new Scoring();
+        $score->course_id = $course->id;
+        $score->save();
+
+        $course->users()->attach($user, ['role_id' => $role->id]);
+        if ($course) {
+            return redirect('/dashboard/courses/list')->with('success', ' درس ' . $course->name . ' با شناسه' . $course->code . 'ذخیره شد ')->with('crete', "ok");
+
+        } else {
+            return back()->with('error', 'خطایی در سرور رخ داده است');
+        }
+        //                copy
+        // if ($request->copy) {
+        //     $old = Course::find($request->copy);
+        //     $sessions = Session::where('course_id', $old->id)->orderBy('id', 'asc')->get();
+        //     $i = 0;
+
+        //     foreach ($sessions as $session) {
+        //         $ss = new Session();
+
+        //         $ss->course_id = $course->id;
+        //         $ss->text = $session->text;
+        //         $ss->file = $session->file;
+        //         $ss->link = $session->link;
+        //         $ss->majazi = $session->majazi;
+        //         if ($i == 0)
+        //             $ss->active = 1;
+        //         else
+        //             $ss->active = 0;
+        //         $i++;
+        //         $ss->number = $session->number;
+        //         $ss->name = $session->name;
+        //         $ss->save();
         //     }
-        //     $old = Category::where('code', $randomString)->first();
-        //     if (!$old)
-        //         $tekrari = 0;
         // }
+        //                endcopy
+        // DB::commit();
+        // return "sa";
+        // $result = $this->anetoTrans($user, 50000, 5, 'ایجاد درس ' . $course->name);
+        // return $result;
+        // $msg = "دانشجوی عزیز، برای دسترسی به درس " . $course->name . " ابتدا از طریق سایت WWW.MALISAN.IR در سامانه آموزشی ملیسان با هویت واقعی ثبت نام کنید، سپس با استفاده از شناسه " . $course->code . " در درس ذکر شده عضو شوید.";
+        // return redirect('/dashboard/courses/list')->with('success', $msg);
+        //    return redirect('/dashboard/courses/list')->with('success', ' درس ' . $request->name . ' با شناسه' . $request->code)->with('crete', "ok");
+        // } catch (\Exception $exception) {
 
+        // DB::rollBack();
+        // return $exception;
+        // return back()->with('error', 'خطایی در سرور رخ داده است');
 
-       if ($request->isMethod("get")) {
-            $old = null;
-            if ($request->copy) {
-                $old = Course::find($request->copy);
-            }
-            return view('management.courses.teachers.create', compact('old'))->with([
-                'pageTitle' => 'صفحه ایجاد دروس',
-                'pageName' => 'ایجاد درس',
-                'pageDescription' => 'مدرس گرامی! برای ایجاد درس جدید لطفا فرم زیرا را تکمیل نمایید',
+    }
+    public function edit(Request $request)
+    {
+        $user = Auth::user();
+        $content = Coworker::where('user_id', $user->id)->first();
+        if ($user->hasRole('teacher')) {
+            $user2 = User::where('national', $user->national)->where('role', 3)->first();
+        } elseif ($user->hasRole('student')) {
+            $user2 = User::where('national', $user->national)->where('role', 2)->first();
+        }
+        $mosabeghat = Touruser::where('user_id', $user->id)->count();
+        $course = Course::findOrFail($request->id);
+        $user = Auth::user();
+        $teacher = CourseUser::where('user_id', $user->id)
+            ->where('course_id', $course->id)->first();
+        if (!$teacher) {
+            return back()->with('error', 'شما مجاز نیستید');
+        }
+
+        return view(
+            'melisan.management.courses.teachers.edit',
+            compact('course', 'user', 'user2', 'content', 'mosabeghat')
+        )
+            ->with([
+                'pageTitle' => 'صفحه ویرایش درس',
+                'pageName' => 'ویرایش درس',
+                'pageDescription' => 'مدرس گرامی ! برای ویرایش درس خود فرم زیر را تکمیل نمایید',
             ]);
-        } elseif ($request->isMethod("post")) {
+        ;
 
-            $valid = Validator::make($request->all(), [
-                'name' => 'required',
-//                'max_session' => 'required',
-                //                'code'=>'required|unique:courses',
+    }
+    public function editPost(Request $request)
+    {
+
+        $valid = Validator::make($request->all(), [
+            'name' => 'required',
+            //                'max_session' => 'required',
+            //                'code'=>'required|unique:courses',
+        ]);
+        if ($valid->fails()) {
+            return back()->withErrors($valid);
+        }
+
+        $user = Auth::user();
+        $role = Role::where("name", "teacher")->first();
+        $course = Course::findOrFail($request->id);
+        $course->name = $request->name;
+        $link = str_replace('http://', '', $request->majazi);
+        $link = str_replace('https://', '', $link);
+        //            return $link;
+        $course->majazi = $link;
+        //            $course->max_session = $request->max_session;
+
+        $course->save();
+        if ($course) {
+            return redirect("/dashboard/courses/list")->with('success', ' درس با موفقیت ویرایش شد');
+        } else {
+            return back()->with('error', 'خطایی در سرور رخ داده است');
+        }
+    }
+    public function delete($id)
+    {
+        $course = Course::findOrfail($id);
+        $sessions = Session::where('course_id', $course->id)->get();
+        foreach ($sessions as $session) {
+            $session->softdelete();
+        }
+        $Quiz = Quiz::where('course_id', $course->id)->get();
+        foreach ($Quiz as $item) {
+            $item->delete();
+        }
+        $course->delete();
+
+
+
+
+
+        return redirect()->route('course.list')->with('success', 'حذف با موفقیت انجام شد.');
+
+    }
+    public function join()
+    {
+        $user = Auth::user();
+        $mosabeghat = Touruser::where('user_id', $user->id)->count();
+        if ($user->hasRole('student')) {
+            $user2 = User::where('national', $user->national)->where('role', 2)->first();
+        } elseif ('teacher') {
+            $user2 = User::where('national', $user->national)->where('role', 3)->first();
+        }
+        $content = Coworker::where('user_id', $user->id)->first();
+
+        return view('melisan.management.courses.students.create', compact('content', 'user2', 'user', 'mosabeghat'))
+            ->with([
+                'pageTitle' => 'عضویت در کلاس',
+                'pageName' => 'عضویت در کلاس',
+                'pageDescription' => 'دوست من ! لیست درس هاتو برات نمایش دادم',
             ]);
-            if ($valid->fails()) {
-                return back()->withErrors($valid);
-            }
-            DB::beginTransaction();
-            $user = Auth::user();
-            $role = Role::where("name", "teacher")->first();
-            $code = Str::random(5);
-            $uniq = Course::where('code', $code)->first();
-            while ($uniq) {
-                $code = Str::random(5);
-                $uniq = Course::where('code', $code)->first();
-            }
-            $course = new Course();
-            $course->name = $request->name;
-            $link = str_replace('http://', '', $request->majazi);
-            $link = str_replace('https://', '', $link);
-//            return $link;
-            $course->majazi = $link;
-            $course->max_session = 16;
-            $course->code = $code;
-            try {
-                $course->save();
-                $setting = new Setting();
-                $setting->course_id = $course->id;
-                $setting->save();
+    }
+    public function joinPost(Request $request)
+    {
+        $valid = Validator::make($request->all(), [
+            'code' => 'required',
+        ]);
+        // return $valid;
+        if ($valid->fails()) {
+            return back()->withErrors($valid);
+        }
+        $user = Auth::user();
+        $role = Role::where("name", "student")->first();
 
-                $score = new Scoring();
-                $score->course_id = $course->id;
-                $score->save();
+        //        $course = Course::find($request->code);
+        $course = Course::where('code', $request->code)->first();
+        if ($course) {
+            $repeat = $user->courses()->where('course_id', $course->id)->first();
 
+            if ($repeat) {
+                return back()->with('error', 'کلاس تکراری است');
+            } else {
                 $course->users()->attach($user, ['role_id' => $role->id]);
 
-//                copy
-                if ($request->copy) {
-                    $old = Course::find($request->copy);
-                    $sessions = Session::where('course_id', $old->id)->orderBy('id', 'asc')->get();
-                    $i = 0;
-                    foreach ($sessions as $session) {
-                        $ss = new Session();
-
-                        $ss->course_id = $course->id;
-                        $ss->text = $session->text;
-                        $ss->file = $session->file;
-                        $ss->link = $session->link;
-                        $ss->majazi = $session->majazi;
-                        if ($i == 0)
-                            $ss->active = 1;
-                        else
-                            $ss->active = 0;
-                        $i++;
-                        $ss->number = $session->number;
-                        $ss->name = $session->name;
-                        $ss->save();
-                    }
-                }
-//                endcopy
-                DB::commit();
-                // return "sa";
-                $result=$this->anetoTrans($user,50000,5,'ایجاد درس '.$course->name);
-                // return $result;
-                $msg = "دانشجوی عزیز، برای دسترسی به درس " . $course->name . " ابتدا از طریق سایت WWW.MALISAN.IR در سامانه آموزشی ملیسان با هویت واقعی ثبت نام کنید، سپس با استفاده از شناسه " . $course->code . " در درس ذکر شده عضو شوید.";
-                return redirect('/dashboard/courses/list')->with('success', $msg);
-//                return redirect('/dashboard/courses/list')->with('success', ' درس ' . $request->name . ' با شناسه' . $request->code)->with('crete', "ok");
-            } catch (\Exception $exception) {
-
-                DB::rollBack();
-                return $exception;
-                return back()->with('error', 'خطایی در سرور رخ داده است');
+                // $result = $this->anetoTrans($user, 2000, 5, 'ورود درس ' . $course->name);
+                return redirect()->back()->with('success', 'با موفقیت اضافه شد');
             }
+
+            // return back()->with('error', 'خطایی در سرور رخ داده است');
+
         }
+        return redirect()->back()->with('error', 'شناسه درس وارد شده نا معتبر است');
+
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function progress(Request $request)
@@ -612,34 +753,8 @@ class CourseController extends Controller
         //            }
     }
 
-    public function join($id)
-    {
 
-        DB::beginTransaction();
-        $user = Auth::user();
-        $role = Role::where("name", "student")->first();
 
-        //        $course = Course::find($request->code);
-        $course = Course::where('id', $id)->first();
-        if ($course) {
-            $repeat = $user->courses()->where('course_id', $course->id)->first();
-
-            if ($repeat)
-                return redirect()->back()->with('success', 'کلاس تکراری است');
-            try {
-                $course->users()->attach($user, ['role_id' => $role->id]);
-                DB::commit();
-                return redirect()->back()->with('success', 'با موفقیت وارد کلاس شدید');
-
-            } catch (\Exception $exception) {
-                DB::rollBack();
-                return redirect()->back()->with('success', 'خطایی در سرور رخ داده است', );
-
-            }
-        }
-    }
-
- 
     public function sessionCreate(Request $request)
     {
         $data = $request->all();

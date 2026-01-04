@@ -99,7 +99,8 @@ Route::middleware('auth')->group(function () {
                     Route::any('/update/{id}', [CourseController::class, 'update'])->name('course.update');
                     Route::any('/setting', [CourseController::class, 'setting'])->name('setting');
                     Route::any('/edit-setting', [CourseController::class, 'editSetting']);
-                    Route::any('/edit/{id}', [CourseController::class, 'edit'])->name('course.edit');
+                    Route::get('/edit/{id}', [CourseController::class, 'edit'])->name('course.edit');
+           Route::post('/editpost/{id}', [CourseController::class, 'editPost'])->name('course.editpost');
 
                     Route::post('/amali/{id}', [CourseController::class, 'amali'])->name('course.amali');
                 });
@@ -114,12 +115,14 @@ Route::middleware('auth')->group(function () {
                 //                    Route::get('/destroy-user/{id}/{cid}', 'CourseController@destroyUser')->name('destroyUser');
 
                 Route::group(['middleware' => ['role:student']], function () {
-                    Route::any('/join/{id}', [CourseController::class, 'join']);
+                    Route::get('/join', [CourseController::class, 'join']);
+                     Route::post('/joinPost', [CourseController::class, 'joinPost']);
                 });
                 Route::group(['prefix' => 'sessions'], function () {
                     Route::get('/', [SessionController::class, 'list'])->name('session.list');
                     Route::group(['middleware' => ['role:teacher']], function () {
-                        Route::any('/create', [SessionController::class, 'create'])->name('session.create');
+                        Route::get('/create', [SessionController::class, 'create'])->name('session.create');
+                           Route::post('/createPost', [SessionController::class, 'createPost'])->name('session.createPost');
                         Route::get('/delete-item', [SessionController::class, 'deleteItem']);
                         Route::any('/edit/{id}', [SessionController::class, 'edit'])->name('session.edit');
                         Route::any('/active/{id}', [SessionController::class, 'active']);

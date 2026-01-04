@@ -1,6 +1,4 @@
-<style>
-  
-</style>
+
 
 <div class="top-header-dashboard">
 
@@ -31,7 +29,7 @@
             <li class="   " aria-current="page"><span>لیست دروس</span></li>
         @elseif(Route::current()->getName() == 'progress')
             <li class=" ">
-                <a href="/dashboard">
+                <a href="/dashboard">داشبورد
                 </a>
             </li>
             <li class="  " aria-current="page">
@@ -49,7 +47,7 @@
             </li>
         @elseif(Route::current()->getName() == 'course.students')
             <li class=" ">
-                <a href="/dashboard">
+                <a href="/dashboard">داشبورد
                 </a>
             </li>
             <li class="  " aria-current="page"><a href="/dashboard/courses/sessions?course_id={{$course->id}}">
@@ -58,7 +56,7 @@
         @elseif(Route::current()->getName() == 'exercise.show')
             <li class=" "><a href="/dashboard">
 
-
+داشبورد
                 </a></li>
             <li class="  " aria-current="page"><a href="/dashboard/courses/sessions?course_id={{$course->id}}">
                     <span>درس {{$course->name}}</span></a></li>
@@ -67,7 +65,7 @@
             </li>
         @elseif(Route::current()->getName() == 'exercise.edit')
             <li class=" "><a href="/dashboard">
-
+داشبورد
                 </a></li>
             <li class="  " aria-current="page"><a href="/dashboard/courses/sessions?course_id={{$course->id}}">
                     <span>درس {{$course->name}}</span></a></li>
@@ -81,20 +79,20 @@
         @elseif(Route::current()->getName() == 'question.show')
             <li class=" "><a href="/dashboard">
 
-
+داشبورد
                 </a></li>
             <li class="  " aria-current="page"><a href="/dashboard/courses/sessions?course_id={{$course->id}}">
                     <span>درس {{$course->name}}</span></a></li>
             <li class="   " aria-current="page"><span>سوالات</span></li>
         @elseif(Route::current()->getName() == 'users.list')
             <li class=" "><a href="/dashboard">
-
+داشبورد
 
                 </a></li>
             <li class="   " aria-current="page"><span>لیست کاربران</span></li>
         @elseif(Route::current()->getName() == 'bank')
             <li class=" "><a href="/dashboard">
-
+داشبورد
 
                 </a></li>
             <li class="  " aria-current="page"><a href="/dashboard/courses/sessions?course_id={{$course->id}}">
@@ -103,7 +101,7 @@
         @elseif(Route::current()->getName() == 'quiz.list')
             <li class=" "><a href="/dashboard">
 
-
+داشبورد
                 </a></li>
             <li class="  " aria-current="page"><a href="/dashboard/courses/sessions?course_id={{$course->id}}">
                     <span>درس {{$course->name}}</span></a></li>
@@ -113,7 +111,7 @@
         @elseif(Route::current()->getName() == 'quiz.view')
             <li class=" "><a href="/dashboard">
 
-
+داشبورد
                 </a></li>
             <li class="  " aria-current="page"><a href="/dashboard/courses/sessions?course_id={{$course->id}}">
                     <span>درس {{$course->name}}</span></a></li>
@@ -125,7 +123,7 @@
         @elseif(Route::current()->getName() == 'session.create')
             <li class=" "><a href="/dashboard">
 
-
+داشبورد
                 </a></li>
             <li class="  " aria-current="page"><a href="/dashboard/courses/sessions?course_id={{$course->id}}">
                     <span>درس {{$course->name}}</span></a></li>
@@ -139,7 +137,7 @@
         @elseif(Route::current()->getName() == 'session.list')
             <li class=" "><a href="/dashboard">
 
-
+داشبورد
                 </a></li>
             <li class="   " aria-current="page">
                 <span>درس {{$course->name}} </span>
@@ -147,7 +145,7 @@
 
         @elseif(Route::current()->getName() == 'disc.show')
             <li class=" "><a href="/dashboard">
-
+داشبورد
 
 
                 </a></li>
@@ -158,9 +156,7 @@
 
 
         @elseif(Route::current()->getName() == 'survey.cat')
-            <li class=" "><a href="/dashboard">
-
-
+            <li class=" "><a href="/dashboard">داشبورد
                 </a></li>
             @if($user->hasRole('admin'))
                 <li class="   " aria-current="page"><span>دسته بندی های نظرسنجی</span></li>
@@ -170,7 +166,7 @@
         @elseif(Route::current()->getName() == 'survey.list')
             <li class=" "><a href="/dashboard">
 
-
+داشبورد
                 </a></li>
             <li class="  " aria-current="page"><a href="/dashboard/survey/cats">
                     <span>نظر سنجی </span></a></li>
@@ -186,14 +182,14 @@
         @elseif(Route::current()->getName() == 'setting')
             <li class=" "><a href="/dashboard">
 
-
+داشبورد
                 </a></li>
             <li class="  " aria-current="page"><a href="/dashboard/courses/sessions?course_id={{$course->id}}">
                     <span>درس {{$course->name}}</span></a></li>
             <li class="   " aria-current="page"><span>تنظیمات</span></li>
         @elseif(Route::current()->getName() == 'referee')
             <li class=" "><a href="/dashboard">
-
+داشبورد
                 </a></li>
             <li class="  " aria-current="page"><a href="/dashboard/courses/sessions?course_id={{$course->id}}">
                     <span>درس {{$course->name}}</span></a></li>
@@ -202,7 +198,7 @@
             </li>
         @elseif(Route::current()->getName() == 'eva')
             <li class=" "><a href="/dashboard">
-
+داشبورد
                 </a></li>
             <li class="  " aria-current="page"><a href="/dashboard/courses/sessions?course_id={{$course->id}}">
                     <span>درس {{$course->name}}</span></a></li>
@@ -216,7 +212,7 @@
                 </li>
             @endif
         @else
-            <li class=" "><a href="/dashboard">
+            <li class=" "><a href="/dashboard">داشبورد
                 </a></li>
 
         @endif

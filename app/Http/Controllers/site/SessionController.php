@@ -179,7 +179,7 @@ class SessionController extends Controller
             $student = 1;
         }
 
-        return view('melisan.sessions.index', compact('setting', 'content', 'user2', 'mosabeghat', 'khodazmaii', 'sessions', 'course', 'student', 'isJudment', 'member', 'user'))
+        return view('melisan.management.sessions.index', compact('setting', 'content', 'user2', 'mosabeghat', 'khodazmaii', 'sessions', 'course', 'student', 'isJudment', 'member', 'user'))
             ->with([
                 'pageTitle' => 'صفحه مدیریت درس',
                 'pageName' => 'درس',
@@ -212,77 +212,88 @@ class SessionController extends Controller
 
     public function create(Request $request)
     {
-        if ($request->isMethod("get")) {
-            $course = Course::findOrFail($request->course_id);
-            $sessions = Session::where('course_id', $course->id)->count();
-            $session = $sessions + 1;
-            return view('management.sessions.create', compact('course', 'session'))->with([
-                'pageTitle' => 'صفحه افزودن جلسه',
-                'pageName' => 'افزودن جلسه',
-                'pageDescription' => 'مدرس گرامی! برای ایجاد جلسه جدید لطفا فرم زیر را تکمیل نمایید .',
-            ]);
-        } elseif ($request->isMethod("post")) {
-            $data = $request->all();
-
-            $rule = [
-                'number' => 'required',
-                'name' => 'required',
-                // "file" => "mimes:pdf",
-            ];
-            $message = [
-                "file" => "فرمت فایل اشتباه است",
-            ];
-            $valid = Validator::make($data, $rule, $message);
-            if ($valid->fails()) {
-                return redirect()->back()->withErrors($valid)->withInput();
-            }
-
-            DB::beginTransaction();
-            $course = Course::findOrFail($request->course_id);
-            $meeting = new Session();
-            $meeting->name = $request->name;
-            $meeting->text = $request->text;
-            $link = str_replace('http://', '', $request->majazi);
-            $link = str_replace('https://', '', $link);
-            //            return $link;
-            $meeting->majazi = $link;
-
-            $l_link = str_replace('http://', '', $request->link);
-            $l_link = str_replace('https://', '', $l_link);
-            $meeting->link = $l_link;
-            $meeting->number = $request->number;
-            $meeting->aparat = $request->aparat;
-            $meeting->course_id = $course->id;
-            if ($request->active) {
-                $meeting->active = '1';
-            } else {
-                $meeting->active = '0';
-            }
-
-            if ($request->hasFile('file')) {
-                $file = $request->file('file');
-                $file_name = $request->course_id . "_" . time() . "." . $file->getClientOriginalExtension();
-                $destination_path = 'files/session';
-                $file->move($destination_path, $file_name);
-                $meeting->file = '/' . $file_name;
-            }
-            $user = Auth::user();
-
-            try {
-                $meeting->save();
-                DB::commit();
-                $result = $this->anetoTrans($user, 25000, 5, 'ایجاد جلسه ' . $course->name);
-
-                return redirect('/dashboard/courses/sessions?course_id=' . $course->id)->with('success', 'محتوای درس جدید با موفقیت بارگذاری شد');
-            } catch (\Exception $exception) {
-
-                DB::rollBack();
-                // return $exception;
-                return back()->with('error', 'خطایی در سرور رخ داده است');
-            }
+        $user = Auth::user();
+        if ($user->hasRole('student')) {
+            $user2 = User::where('national', $user->national)->where('role', 2)->first();
+        } elseif ($user->hasRole('teacher')) {
+         $user2 = User::where('national', $user->national)->where('role', 3)->first();
         }
-    }
+        $content = Coworker::where('user_id', $user->id)->first();
+        $mosabeghat = Touruser::where('user_id', $user->id)->count();
 
+        $course = Course::findOrFail($request->course_id);
+        $sessions = Session::where('course_id', $course->id)->count();
+        $session = $sessions + 1;
+        return view('melisan.management.sessions.create',
+         compact('course', 'session','user','user2','mosabeghat','content'))->with([
+            'pageTitle' => 'صفحه افزودن جلسه',
+            'pageName' => 'افزودن جلسه',
+            'pageDescription' => 'مدرس گرامی! برای ایجاد جلسه جدید لطفا فرم زیر را تکمیل نمایید .',
+        ]);
+
+    }
+    public function createPost(Request $request)
+    {
+        $data = $request->all();
+
+        $rule = [
+            'number' => 'required',
+            'name' => 'required',
+            // "file" => "mimes:pdf",
+        ];
+        $message = [
+            "file" => "فرمت فایل اشتباه است",
+        ];
+        $valid = Validator::make($data, $rule, $message);
+        if ($valid->fails()) {
+            return redirect()->back()->withErrors($valid)->withInput();
+        }
+
+        DB::beginTransaction();
+        $course = Course::findOrFail($request->course_id);
+        $meeting = new Session();
+        $meeting->name = $request->name;
+        $meeting->text = $request->text;
+        $link = str_replace('http://', '', $request->majazi);
+        $link = str_replace('https://', '', $link);
+        //            return $link;
+        $meeting->majazi = $link;
+
+        $l_link = str_replace('http://', '', $request->link);
+        $l_link = str_replace('https://', '', $l_link);
+        $meeting->link = $l_link;
+        $meeting->number = $request->number;
+        $meeting->aparat = $request->aparat;
+        $meeting->course_id = $course->id;
+        if ($request->active) {
+            $meeting->active = '1';
+        } else {
+            $meeting->active = '0';
+        }
+
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $file_name = $request->course_id . "_" . time() . "." . $file->getClientOriginalExtension();
+            $destination_path = 'files/session';
+            $file->move($destination_path, $file_name);
+            $meeting->file = '/' . $file_name;
+        }
+        $user = Auth::user();
+
+        try {
+            $meeting->save();
+            DB::commit();
+            $result = $this->anetoTrans($user, 25000, 5, 'ایجاد جلسه ' . $course->name);
+
+            return redirect('/dashboard/courses/sessions?course_id=' . $course->id)->with('success', 'محتوای درس جدید با موفقیت بارگذاری شد');
+        } catch (\Exception $exception) {
+
+            DB::rollBack();
+            // return $exception;
+            return back()->with('error', 'خطایی در سرور رخ داده است');
+        }
+
+    }
     public function edit(Request $request, $id)
     {
         $user = Auth::user();
