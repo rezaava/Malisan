@@ -19,11 +19,7 @@
 
             <div class="avatar pro1">
                 <img src="{{ asset($user->image) }}" alt="Profile">
-<<<<<<< HEAD
-                     
-=======
             
->>>>>>> 5ad25d67343dd020cc33cc5ea051e0a22033c618
             </div>
 
             <div class="name pro1"> {{ $user->name }}{{ $user->family }}</div>
@@ -70,7 +66,5 @@
 @endsection
 
 @section('js')
-
-
 
 @endsection

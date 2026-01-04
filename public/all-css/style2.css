@@ -133,8 +133,8 @@
     /* مهم برای <a> */
     align-items: center;
     justify-content: center;
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     background: linear-gradient(135deg, #6a11cb, #2575fc);
     color: #fff;
     border-radius: 50%;
@@ -155,10 +155,10 @@
 /* آیکون + شناور */
 .add-btn-list .icon-list {
     flex-shrink: 0;
-    transition: transform 0.3s ease, text-shadow 0.3s ease;
+    transition: transform 0.4s ease, text-shadow 0.4s ease;
     animation: float 2s ease-in-out infinite;
     margin-right: 12%;
-
+margin-top: 2%;
 }
 
 @keyframes float {
@@ -184,6 +184,8 @@
     max-width: 0;
     transition: max-width 0.5s ease, opacity 0.5s ease, transform 0.5s ease, text-shadow 0.5s ease;
     transform: translateX(20px);
+
+    
 }
 
 /* هاور */
@@ -267,8 +269,20 @@ a {
 #arch-course {
     background: linear-gradient(135deg, #6a11cb, #2575fc);
     color: #fff;
+    border-radius: 50px;
+font-size: 32px;
+width: 50px;
+height: 50px;
+    transition: width 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55), border-radius 0.5s, box-shadow 0.3s, background 0.5s ease;
 }
+/*شناور بودن دکمه */
+#arch-course .icon-list {
+    flex-shrink: 0;
+    transition: transform 0.4s ease, text-shadow 0.4s ease;
+    animation: float 2s ease-in-out infinite;
+    margin-right: 12%;
 
+}
 .course-card-3nogte {
     border: none;
     border-radius: 22px;
@@ -962,4 +976,129 @@ textarea.form-control-pro2 {
 
 .title-pro2 {
     color: white;
+}
+/* insert courses */
+body.insert-courses {
+    font-family: 'Vazirmatn', sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-card-insert-courses {
+    width: 360px;
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(9px);
+    border-radius: 22px;
+    padding: 35px 30px;
+    text-align: center;
+    color: #fff;
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.3);
+    margin: auto;
+}
+
+.stats-insert-courses {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.stat-insert-courses {
+    flex: 1;
+}
+
+.stat-insert-courses span {
+    font-size: 20px;
+    font-weight: bold;
+    display: block;
+}
+
+.stat-insert-courses small {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+
+
+.actions-insert-courses {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-insert-courses {
+    flex: 1;
+    padding: 10px;
+    border-radius: 30px;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.btn.primary-insert-courses {
+    background: #fff;
+    color: #764ba2;
+    width: 100%;
+}
+
+.btn.primary-insert-courses:hover {
+    background: #f1f1f1;
+}
+
+   .input-insert-courses {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: white;
+            text-align: center;
+        }
+        
+        .input-insert-courses:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+        
+        .input-insert-courses::placeholder {
+            color: #999;
+        }
+/* Media Queries برای تمام سایزها */
+@media (max-width: 1200px) {
+    .profile-card-insert-courses { width: 320px; padding: 28px 22px; }
+
+    .stat-insert-courses span { font-size: 18px; }
+
+}
+
+@media (max-width: 992px) {
+    .profile-card-insert-courses { width: 300px; padding: 25px 20px; }
+    .stat-insert-courses span { font-size: 17px; }
+}
+
+@media (max-width: 768px) {
+    .profile-card-insert-courses { width: 270px; padding: 22px 18px; }
+    .stat-insert-courses span { font-size: 16px; }
+    .actions-insert-courses { flex-direction: column; gap: 10px; }
+}
+
+@media (max-width: 576px) {
+    .profile-card-insert-courses { width: 90%; padding: 20px 15px; }
+    .stat-insert-courses span { font-size: 15px; }
+}
+
+@media (max-width: 400px) {
+    .profile-card-insert-courses { width: 95%; padding: 18px 12px; }
+    .stat-insert-courses span { font-size: 14px; }
+    .btn-insert-courses { font-size: 12px; padding: 8px; }
 }

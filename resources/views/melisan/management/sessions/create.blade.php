@@ -1,22 +1,22 @@
-@extends('management.layout.master')
-@section('add-styles')
-<script src="https://cdn.ckeditor.com/ckeditor5/35.4.0/classic/ckeditor.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/quill/quill.snow.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/quill/quill.bubble.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/dropify/css/dropify.min.css') }}">
+@extends('melisan.layout.master')
+@section('styles')
 @endsection
-@section('title' , 'ویرایش جلسه')
+@section('title' , 'ایجاد جلسه')
 @section('main-content')
     <div class="row">
-        <div class="col s12">
+        <div class="col-md-12">
             <div id="icon-prefixes" class="card card-tabs">
                 <div class="card-content">
                     <div id="view-icon-prefixes" class="active">
                         <div class="row">
-                            <form class="col s12"
-                                  action="@if(isset($meeting)){{route('session.edit',$meeting->id)}}@else{{route('session.create', ["course_id" => $course->id])}}@endif"
-                                  method="post" enctype="multipart/form-data" {{--onkeypress="return event.keyCode != 13;"--}}  >
+                            <form class="col -md-12"
+                                  action="
+                                  @if(isset($meeting)){{route('session.edit',$meeting->id)}}
+                                  @else
+                                  {{route('session.create', ["course_id" => $course->id])}}
+                                  @endif 
+                                  "
+                                  method="post" enctype="multipart/form-data" >
                                 @csrf
                                 @if(isset($meeting))
                                 <div class="row" style="text-align: center">
@@ -29,13 +29,13 @@
                                 @endif
                                 <div class="row">
                                     <div class="input-field" hidden>
-                                        <i class="material-icons dp48 prefix">format_list_numbered</i>
+                                        <i class="material-icons ">format_list_numbered</i>
                                         <input readonly name="number" id="number" type="number" required
                                                class="validate"
                                                value="@if(isset($meeting)){{$meeting->number}}@else{{$session}}@endif">
                                         <label class="contact-input" for="number">شماره جلسه</label>
                                     </div>
-                                    <div class="input-field col s12">
+                                    <div class="input-field col-md-12">
                                         <i class="material-icons dp48 prefix">short_text</i>
                                         <input id="name" name="name" type="text" required class="validate"
                                                value="@if(isset($meeting)){{$meeting->name}}@endif">
@@ -43,7 +43,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="input-field col s6">
+                                    <div class="input-field col-md-6">
                                         <i class="material-icons dp48 prefix">insert_link</i>
                                         <input id="link" name="link" type="text" class="validate"
                                                value="@if(isset($meeting)){{$meeting->link}}@endif">
@@ -51,7 +51,7 @@
                                             لینک درس اگر در جای دیگر بارگذاری شده است (اختیاری)
                                         </label>
                                     </div>
-                                    <div class="input-field col s6">
+                                    <div class="input-field col-md-6">
                                         <i class="material-icons dp48 prefix">phonelink</i>
                                         <input id="majazi" name="majazi" type="text" class="validate"
                                                value="@if(isset($meeting)){{$meeting->majazi}}@endif">
@@ -118,7 +118,7 @@
                       <!--                                                  </div>-->
                       <!--                                              </div>-->
                       <!--                                          </div>-->
-                      <!--                                      </div>-->
+                                                           <!-- </div> -->
                                                         </div>
                                                     </div>
                                                 </div>
@@ -213,33 +213,4 @@
             </div>
         </div>
     </div>
-@endsection
-@section('js')
-<script>
-    ClassicEditor
-        .create( document.querySelector( '#editor' ) )
-        .catch( error => {
-            console.error( error );
-        } );
-</script>
-
-
-    <script src="{{ asset('app-assets/vendors/quill/katex.min.js') }}"></script>
-    <script src="{{ asset('app-assets/vendors/quill/highlight.min.js') }}"></script>
-    <script src="{{ asset('app-assets/vendors/quill/quill.min.js') }}"></script>
-    <script src="{{ asset('app-assets/js/scripts/form-editor.min.js') }}"></script>
-    <script src="{{ asset('app-assets/vendors/dropify/js/dropify.min.js') }}"></script>
-    <script src="{{ asset('app-assets/js-rtl/scripts/form-file-uploads-rtl.min.js') }}"></script>
-    <script>
-        var quill = new Quill('#editor', {
-            modules: {
-                toolbar: '#toolbar'
-            },
-            theme: 'snow',
-            
-        });
-
-
-
-    </script>
 @endsection
