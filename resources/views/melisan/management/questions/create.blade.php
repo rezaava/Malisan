@@ -293,21 +293,15 @@
                         <div class="card-content">
                             <textarea id="textarea2"
                                 class="materialize-textarea" id="change2"
-                                name="question" placeholder="سوال را وارد کنید">@if (\Route::current()->getName() == 'editQ')
-                                            {{$edit->question}}
-                                        @endif</textarea>
+                                name="question" placeholder="سوال را وارد کنید">@if (\Route::current()->getName() == 'editQ'){{$edit->question}}@endif</textarea>
                             <div class="card-title">
                                 <div class="row">
 
-                                    {{-- <div class="col">--}}
-                                    {{-- <h4 class="card-title">پیشوندهای آیکون</h4>--}}
-                                    {{-- </div>--}}
+
                                 </div>
                             </div>
                             <div id="view-icon-prefixes" class="active">
-                                {{-- <p>برای واضح تر شدن برچسب ورودی فرم می توانید یک پیشوند آیکون اضافه کنید. فقط یک--}}
-                                {{-- کلاس با یک نماد اضافه کنید--}}
-                                {{-- <code class=" language-markup">prefix</code> قبل از ورودی و برچسب.</p>--}}
+
                                 <br>
                                 <div class="row" style="margin-right:30px">
                                     <div class="row">
@@ -321,9 +315,7 @@
                                             </label>
                                             <textarea id="textarea2" style="color: #B4E50D;border-color: #B4E50D;"
                                                 class="materialize-textarea" id="change2"
-                                                name="answer1">@if (\Route::current()->getName() == 'editQ')
-                                                                {{$edit->answer1}}
-                                                            @endif</textarea>
+                                                name="answer1">@if (\Route::current()->getName() == 'editQ'){{$edit->answer1}}@endif</textarea>
                                         </p>
                                         <p class="mb-1">
                                             <label>
@@ -334,9 +326,7 @@
                                             </label>
                                             <textarea
                                                 class="materialize-textarea" name="answer2"
-                                                id="description">@if (\Route::current()->getName() == 'editQ')
-                                                                {{$edit->answer2}}
-                                                            @endif</textarea>
+                                                id="description">@if (\Route::current()->getName() == 'editQ'){{$edit->answer2}}@endif</textarea>
                                         </p>
                                     </div>
                                     <div class="row">
@@ -349,9 +339,7 @@
                                             </label>
                                             <textarea id="textarea2"
                                                 class="materialize-textarea" name="answer3"
-                                                id="description">@if (\Route::current()->getName() == 'editQ')
-                                                                {{$edit->answer3}}
-                                                            @endif</textarea>
+                                                id="description">@if (\Route::current()->getName() == 'editQ'){{$edit->answer3}}@endif</textarea>
                                         </p>
                                         <p class="mb-1">
                                             <label>
@@ -362,9 +350,7 @@
                                             </label>
                                             <textarea id="textarea2"
                                                 class="materialize-textarea" name="answer4"
-                                                id="description">@if (\Route::current()->getName() == 'editQ')
-                                                                {{$edit->answer4}}
-                                                            @endif</textarea>
+                                                id="description">@if (\Route::current()->getName() == 'editQ'){{$edit->answer4}}@endif</textarea>
                                         </p>
                                     </div>
                                     <div class="card-footer2">
@@ -434,10 +420,10 @@
             @if(isset($question->status))
             @if($question->status =='1' ||$question->status =='2')
 
-            <label>سطح سوال : {{$question->level}} <span style="color: green">از این سوال در آزمون ها استفاده شده است</span>
+            <label style="text-align: center;margin-top: 8px;">سطح سوال : {{$question->level}} <span style="color: #B4E50D">از این سوال در آزمون ها استفاده شده است</span>
             </label>
             @else
-            <label>سطح سوال : {{$question->level}} <span style="color: red">از این سوال در آزمون ها استفاده نشده است</span>
+            <label style="text-align: center;margin-top: 8px;">سطح سوال : {{$question->level}} <span style="color: red">از این سوال در آزمون ها استفاده نشده است</span>
             </label>
             @endif
             @endif
@@ -550,7 +536,7 @@
                                                 <textarea class="form-control btn-square" name="comment"
                                                     id="comment">@if(isset($question))
                {{$question->comment}}
-           @endif</textarea>
+                @endif</textarea>
                                             </div>
                                         </div>
                                         <span class="text-danger" id="comment"

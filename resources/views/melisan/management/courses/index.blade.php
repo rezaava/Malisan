@@ -36,10 +36,6 @@
                                                                                                                                                                                                 </div>
                                                                                                                                                                                             </div> -->
                 @endif
-<<<<<<< HEAD
-                @endif
-=======
->>>>>>> 5ad25d67343dd020cc33cc5ea051e0a22033c618
             </div>
             <div class="row">
                 <div class="col-md-12 ">
