@@ -32,23 +32,18 @@
     @yield('add-styles')
     <!-- Boxicons -->
     <!-- <link rel="stylesheet" type="text/css" href="{{ asset('all-css/style.min.css') }}"> -->
-
     <link rel="stylesheet" href="{{ asset('all-css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('all-css/style2.css') }}">
     <link rel="stylesheet" href="{{ asset('all-css/style3.css') }}">
-   
     <!-- <link href="all-css/assets/fonts/Boxicons.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="{{ asset('app-assets/css-rtl/custom/style.css') }}">
-
-
-
     <!-- <link rel="stylesheet" type="text/css"
         href="{{ asset('app-assets/css-rtl/themes/vertical-menu-nav-dark-template/materialize.min.css') }}">
     <link rel="stylesheet" type="text/css"
         href="{{ asset('app-assets/css-rtl/themes/vertical-menu-nav-dark-template/style.min.css') }}"> -->
 
     <style>
-        .main-master {
+        /* .main-master {
             padding-right: 50px;
             margin-top: 5%;
             margin-right: 15%;
@@ -70,69 +65,59 @@
                 margin-top: 15%;
                 margin-right: 5%;
             }
-        }
+        } */
     </style>
 
 
-    </head>
+    </header>
 
     <body class="" data-open="click" data-menu="vertical-modern-menu" data-col="2-columns">
-        <div class="global-bg"></div>
+        <!-- <div class="global-bg"></div> -->
 
-        <div class="container_fluid">
+        <div class="container_fluid" style="  height: 100%">
 
             <!-- BEGIN: Header-->
             @include('melisan.layout.partials.top-header')
- <!-- پیام موفقیت و خطا -->
-        <div class="alertCat">
-            @if(session('success'))
-                <div class="alert-success-custom">
-                    <div class="alert-content">
-                        <span class="alert-icon">✓</span>
-                        <span class="alert-message">{{ session('success') }}</span>
-                        <button class="alert-close" onclick="this.parentElement.parentElement.style.display='none'">×</button>
+            <!-- پیام موفقیت و خطا -->
+            <div class="alertCat">
+                @if(session('success'))
+                    <div class="alert-success-custom">
+                        <div class="alert-content">
+                            <span class="alert-icon">✓</span>
+                            <span class="alert-message">{{ session('success') }}</span>
+                            <button class="alert-close"
+                                onclick="this.parentElement.parentElement.style.display='none'">×</button>
+                        </div>
                     </div>
-                </div>
-            @elseif(session('error'))
-                <div class="alert-error-custom">
-                    <div class="alert-content">
-                        <span class="alert-icon">!</span>
-                        <span class="alert-message">{{ session('error') }}</span>
-                        <button class="alert-close" onclick="this.parentElement.parentElement.style.display='none'">×</button>
+                @elseif(session('error'))
+                    <div class="alert-error-custom">
+                        <div class="alert-content">
+                            <span class="alert-icon">!</span>
+                            <span class="alert-message">{{ session('error') }}</span>
+                            <button class="alert-close"
+                                onclick="this.parentElement.parentElement.style.display='none'">×</button>
+                        </div>
                     </div>
-                </div>
-            @endif
-        </div>
-
-
+                @endif
+            </div>
 
             <!-- BEGIN: SideNav-->
-            @include('melisan.layout.partials.aside')
+                @include('melisan.layout.partials.aside')
 
             <!-- BEGIN: Page Main-->
-            <div id="main" style="" class="main-master">
+            <div id="main" style="  flex: 1;" class="main-master">
 
                 @if($show_nav ?? true) {{-- پیش‌فرض true --}}
-                        @include('melisan.layout.partials.page-detial')
+                    @include('melisan.layout.partials.page-detial')
                 @endif
-
-                <div class="container-dushbord">
-                    <br>
-                    @yield('main-content')
-                </div>
-                <br><br><br><br>
+                  @yield('main-content')             
                 <!-- BEGIN: footer-->
-                <footer class="footer-dashbord mt-3">
-                    <div class="container-dushbord ">
-                        <span>
-                            &copy; 2020
-                            <a href="http://mana-group.ir/" style="color: black;">تیم مانا</a>
-                            تمامی حقوق محفوظ است.</span>
-                        <span class="right hide-on-small-only"> </span>
-                    </div>
-                </footer>
-
-            </div>
+                 <br><br>
+                     @include('melisan.layout.partials.footer')
+                 </div>
+          
+    </div>
+        
     </body>
 
     <script src="{{ asset('app-assets/js/vendors.min.js') }}"></script>

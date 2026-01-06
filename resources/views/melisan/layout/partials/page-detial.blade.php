@@ -1,4 +1,6 @@
-
+<style>
+  
+</style>
 
 <div class="top-header-dashboard">
 
@@ -56,7 +58,7 @@
         @elseif(Route::current()->getName() == 'exercise.show')
             <li class=" "><a href="/dashboard">
 
-داشبورد
+
                 </a></li>
             <li class="  " aria-current="page"><a href="/dashboard/courses/sessions?course_id={{$course->id}}">
                     <span>درس {{$course->name}}</span></a></li>
@@ -79,7 +81,7 @@
         @elseif(Route::current()->getName() == 'question.show')
             <li class=" "><a href="/dashboard">
 
-داشبورد
+
                 </a></li>
             <li class="  " aria-current="page"><a href="/dashboard/courses/sessions?course_id={{$course->id}}">
                     <span>درس {{$course->name}}</span></a></li>
@@ -181,8 +183,9 @@
 
         @elseif(Route::current()->getName() == 'setting')
             <li class=" "><a href="/dashboard">
-
 داشبورد
+
+
                 </a></li>
             <li class="  " aria-current="page"><a href="/dashboard/courses/sessions?course_id={{$course->id}}">
                     <span>درس {{$course->name}}</span></a></li>
@@ -190,6 +193,7 @@
         @elseif(Route::current()->getName() == 'referee')
             <li class=" "><a href="/dashboard">
 داشبورد
+
                 </a></li>
             <li class="  " aria-current="page"><a href="/dashboard/courses/sessions?course_id={{$course->id}}">
                     <span>درس {{$course->name}}</span></a></li>
@@ -199,6 +203,7 @@
         @elseif(Route::current()->getName() == 'eva')
             <li class=" "><a href="/dashboard">
 داشبورد
+
                 </a></li>
             <li class="  " aria-current="page"><a href="/dashboard/courses/sessions?course_id={{$course->id}}">
                     <span>درس {{$course->name}}</span></a></li>
@@ -213,6 +218,7 @@
             @endif
         @else
             <li class=" "><a href="/dashboard">داشبورد
+
                 </a></li>
 
         @endif

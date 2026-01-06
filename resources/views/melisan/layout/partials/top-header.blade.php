@@ -1,8 +1,13 @@
 <nav class="navbar " id="menu">
+    <!-- هامبورگر منو -->
+
     <div class="nav-container">
+
         <!-- سمت راست - لوگو و نام سایت -->
 
         <div class="logo-section">
+          <div class="overlay-menu2" id="overlay"></div>
+
             <a href="#" class="logo">
                 <img src="{{ asset('files/main.png') }}" alt="" class="logo-icon">
                 <div class="logo-text">
@@ -22,7 +27,7 @@
                         style="font-size: 20px;">❓
                     </a>
                 </li>
-               
+
                 <!-- آیکون پیام‌ها -->
                 <li>
                     <a class="" href="/dashboard/chat" style="font-size: 20px;">💬</a>
@@ -30,11 +35,11 @@
                 <li>
 
                     <!-- پروفایل به صورت آیکون -->
-                    <a class="" href="/dashboard/user/{{ $user->id}}">
+                    <!-- <a class="" href="/dashboard/user/{{ $user->id}}">
                         <span class="avatar-status avatar-online">
                             <img src="{{ asset($user->image) }}" alt="profile">
                         </span>
-                    </a>
+                    </a> -->
                 </li>
             </ul>
         </div>
