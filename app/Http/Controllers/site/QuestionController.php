@@ -12,8 +12,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Touruser;
 use Illuminate\Support\Facades\Auth;
-use Validator;
-use DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use App\Models\Coworker;
 use App\Models\Course;
 use App\Exports\QuestionsExport;
@@ -347,7 +347,7 @@ class QuestionController extends Controller
         $last = $last->id + 1;
         if ($user->hasRole('teacher')) {
             $question->status = '1';
-            $result = $this->anetoTrans($user, 10000, 5, 'طراحی سوال ' . $session->name . $last);
+            // $result = $this->anetoTrans($user, 10000, 5, 'طراحی سوال ' . $session->name . $last);
         } else {
             // $result=$this->anetoTrans($user,1000,5,'طراحی سوال '.$session->name.$last);
 
@@ -508,11 +508,11 @@ class QuestionController extends Controller
         }
     }
 
-    public function edit(Request $request, $id = null)
+    public function edit($id = null)
     {
-        if ($request->isMethod("get")) {
+        
             $edit = Question::findOrFail($id);
-            //            $question['score']=Score::where('type','1')->where('sub_id',$question->id)->get();
+            //  $question['score']=Score::where('type','1')->where('sub_id',$question->id)->get();
             $user = Auth::user();
             if ($user->hasRole('teacher')) {         
                 $user2 = User::where('national', $user->national)->where('role', 3)->first(); 
@@ -552,59 +552,59 @@ class QuestionController extends Controller
             }
             $old = URL::previous();
             return view('melisan.management.questions.create', compact('course', 'edit', 'user','user2','mosabeghat', 'content', 'meeting', 'questions', 'old'));
-        } elseif ($request->isMethod("post")) {
+        
+    }
 
-            $valid = Validator::make($request->all(), [
-                //                'question' => 'required',
-                'question' => 'required|unique:questions,question,' . $request->question_id,
-                'answer' => 'required',
-                'answer1' => 'required',
-                'answer2' => 'required',
-                'answer3' => 'required',
-                'answer4' => 'required',
-            ]);
-            if ($valid->fails()) {
-                return back()->withErrors($valid);
+    public function editpost(Request $request){
+
+        $valid = Validator::make($request->all(), [
+            //                'question' => 'required',
+            'question' => 'required|unique:questions,question,' . $request->question_id,
+            'answer' => 'required',
+            'answer1' => 'required',
+            'answer2' => 'required',
+            'answer3' => 'required',
+            'answer4' => 'required',
+        ]);
+        if ($valid->fails()) {
+            return back()->withErrors($valid);
+        }
+
+        DB::beginTransaction();
+        $question = Question::find($request->question_id);
+        $session = Session::find($question->session_id);
+        $course = Course::find($session->course_id);
+
+        $question->question = $request->question;
+        $question->answer = $request->answer;
+        $question->answer1 = $request->answer1;
+        $question->answer2 = $request->answer2;
+        $question->answer3 = $request->answer3;
+        $question->answer4 = $request->answer4;
+
+        $user = Auth::user();
+        if (!$user->hasRole('teacher')) {
+            $question->status = null;
+        }
+
+        try {
+            $question->save();
+            $scores = Score::where('type', 1)->where('sub_id', $question->id)->get();
+            foreach ($scores as $item) {
+                $item->delete();
             }
+            DB::commit();
 
-            DB::beginTransaction();
-            $question = Question::find($request->question_id);
-            $session = Session::find($question->session_id);
-            $course = Course::find($session->course_id);
-
-            $question->question = $request->question;
-            $question->answer = $request->answer;
-            $question->answer1 = $request->answer1;
-            $question->answer2 = $request->answer2;
-            $question->answer3 = $request->answer3;
-            $question->answer4 = $request->answer4;
-
-            $user = Auth::user();
-            if (!$user->hasRole('teacher')) {
-                $question->status = null;
+            if (isset($request->old_route)) {
+                return redirect($request->old_route)->with('success', 'با موفقیت ویرایش شد');
             }
+            return redirect()->back()->with('success', 'با موفقیت ویرایش شد');
+            //                return redirect("/dashboard/evaluation?course_id=" . $course->id)->with('success', 'با موفقیت ویرایش شد');
+        } catch (\Exception $exception) {
 
-            try {
-                $question->save();
-                $scores = Score::where('type', 1)->where('sub_id', $question->id)->get();
-                foreach ($scores as $item) {
-                    $item->delete();
-                }
-                DB::commit();
-
-                if (isset($request->old_route)) {
-                    return redirect($request->old_route)->with('success', 'با موفقیت ویرایش شد');
-                }
-                return redirect()->back()->with('success', 'با موفقیت ویرایش شد');
-                //                return redirect("/dashboard/evaluation?course_id=" . $course->id)->with('success', 'با موفقیت ویرایش شد');
-            } catch (\Exception $exception) {
-
-                DB::rollBack();
-                // return $exception;
-                return back()->with('error', 'خطایی در سرور رخ داده است');
-            }
-        } else {
-            abort(404);
+            DB::rollBack();
+            // return $exception;
+            return back()->with('error', 'خطایی در سرور رخ داده است');
         }
     }
 
